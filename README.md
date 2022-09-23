@@ -1,2 +1,3 @@
-# gananayantra-rusting
+# Gananayantra-Rusting
+
 Gananayantra Rusting  inspired through calculator.net/
