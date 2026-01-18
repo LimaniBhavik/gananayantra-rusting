@@ -13,6 +13,7 @@ fn main() {
         println!("6. Auto Industry");
         println!("7. Investment Industry");
         println!("8. Retirement Industry");
+        println!("9. Tax and Salary Industry");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -30,6 +31,7 @@ fn main() {
             "6" => calculators::auto::run_menu(),
             "7" => calculators::investment_ind::run_menu(),
             "8" => calculators::retirement_ind::run_menu(),
+            "9" => calculators::tax_salary::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

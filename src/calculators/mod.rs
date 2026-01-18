@@ -15,3 +15,4 @@ pub mod ecommerce;
 pub mod auto;
 pub mod investment_ind;
 pub mod retirement_ind;
+pub mod tax_salary;
