@@ -14,6 +14,10 @@ pub fn run_menu() {
         println!("9. Income Tax Calculator (Simple Est.)");
         println!("10. Salary Calculator");
         println!("11. Sales Tax Calculator");
+        println!("12. Amortization Calculator");
+        println!("13. Mortgage Payoff Calculator");
+        println!("14. House Affordability Calculator");
+        println!("15. Rent Calculator");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -29,6 +33,10 @@ pub fn run_menu() {
             9 => income_tax(),
             10 => salary(),
             11 => sales_tax(),
+            12 => amortization(),
+            13 => mortgage_payoff(),
+            14 => house_affordability(),
+            15 => rent_calc(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -198,4 +206,79 @@ fn sales_tax() {
     let tax = amount * (rate / 100.0);
     println!("Tax Amount: {:.2}", tax);
     println!("Total Price: {:.2}", amount + tax);
+}
+
+fn amortization() {
+    println!("\n--- Amortization Calculator ---");
+    let loan_amount = read_input("Loan Amount: ");
+    let interest_rate = read_input("Annual Interest Rate (%): ");
+    let loan_term = read_input("Loan Term (years): ");
+
+    let monthly_rate = (interest_rate / 100.0) / 12.0;
+    let num_payments = (loan_term * 12.0) as i32;
+
+    if monthly_rate > 0.0 {
+        let monthly_payment = loan_amount * (monthly_rate * (1.0 + monthly_rate).powf(num_payments as f64)) / ((1.0 + monthly_rate).powf(num_payments as f64) - 1.0);
+        println!("{:<10} {:<15} {:<15} {:<15}", "Month", "Interest", "Principal", "Remaining");
+        let mut balance = loan_amount;
+        for i in 1..=num_payments {
+            let interest = balance * monthly_rate;
+            let principal = monthly_payment - interest;
+            balance -= principal;
+            if i % 12 == 0 || i == num_payments {
+                println!("{:<10} {:<15.2} {:<15.2} {:<15.2}", i, interest, principal, balance.max(0.0));
+            }
+        }
+    }
+}
+
+fn mortgage_payoff() {
+    println!("\n--- Mortgage Payoff Calculator ---");
+    let balance = read_input("Current Balance: ");
+    let rate = read_input("Interest Rate (%): ");
+    let current_payment = read_input("Current Monthly Payment: ");
+    let extra_payment = read_input("Extra Monthly Payment: ");
+
+    let monthly_rate = (rate / 100.0) / 12.0;
+    let mut balance_standard = balance;
+    let mut balance_extra = balance;
+    let mut months_standard = 0;
+    let mut months_extra = 0;
+
+    while balance_standard > 0.0 && months_standard < 600 {
+        balance_standard = balance_standard * (1.0 + monthly_rate) - current_payment;
+        months_standard += 1;
+    }
+
+    while balance_extra > 0.0 && months_extra < 600 {
+        balance_extra = balance_extra * (1.0 + monthly_rate) - (current_payment + extra_payment);
+        months_extra += 1;
+    }
+
+    println!("Standard payoff: {} months ({:.1} years)", months_standard, months_standard as f64 / 12.0);
+    println!("Extra payoff: {} months ({:.1} years)", months_extra, months_extra as f64 / 12.0);
+    println!("Time saved: {} months", months_standard - months_extra);
+}
+
+fn house_affordability() {
+    println!("\n--- House Affordability Calculator ---");
+    let annual_income = read_input("Annual Gross Income: ");
+    let monthly_debts = read_input("Monthly Debts (loans, etc.): ");
+    let down_payment = read_input("Down Payment: ");
+    
+    let monthly_income = annual_income / 12.0;
+    // Conservative 28% rule
+    let max_monthly_payment = (monthly_income * 0.28).min(monthly_income * 0.36 - monthly_debts);
+    
+    println!("Based on the 28/36 rule:");
+    println!("Max Monthly Mortgage Payment: {:.2}", max_monthly_payment.max(0.0));
+    println!("Estimated Affordable House Price (w/ $0 down): {:.2}", max_monthly_payment * 150.0); // Rough estimate
+    println!("Total Buying Power (inc. down payment): {:.2}", max_monthly_payment * 150.0 + down_payment);
+}
+
+fn rent_calc() {
+    println!("\n--- Rent Calculator ---");
+    let annual_income = read_input("Annual Gross Income: ");
+    let monthly_rent = annual_income / 12.0 * 0.30;
+    println!("Recommended maximum monthly rent (30% rule): {:.2}", monthly_rent);
 }
