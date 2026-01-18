@@ -24,6 +24,11 @@ pub fn run_menu() {
         println!("19. Rental Property Calculator");
         println!("20. APR Calculator");
         println!("21. FHA Loan Calculator");
+        println!("22. VA Mortgage Calculator");
+        println!("23. Home Equity Loan Calculator");
+        println!("24. HELOC Calculator");
+        println!("25. Down Payment Calculator");
+        println!("26. Rent vs. Buy Calculator");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -49,6 +54,11 @@ pub fn run_menu() {
             19 => rental_property(),
             20 => apr_calc(),
             21 => fha_loan(),
+            22 => va_mortgage(),
+            23 => home_equity(),
+            24 => heloc_calc(),
+            25 => down_payment_calc(),
+            26 => rent_vs_buy(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -404,4 +414,74 @@ fn fha_loan() {
     println!("FHA Minimum Down Payment (3.5%): {:.2}", down_payment);
     println!("Base Loan Amount: {:.2}", loan_amount);
     println!("Estimated Monthly MIP: {:.2}", mip);
+}
+
+fn va_mortgage() {
+    println!("\n--- VA Mortgage Calculator ---");
+    let price = read_input("Home Price: ");
+    let rate = read_input("Interest Rate (%): ");
+    let term = read_input("Term (years): ");
+    let funding_fee_percent = read_input("VA Funding Fee (%): ");
+
+    let loan_amount = price; // Often 0% down
+    let funding_fee = loan_amount * (funding_fee_percent / 100.0);
+    let total_loan = loan_amount + funding_fee;
+    
+    let r = (rate / 100.0) / 12.0;
+    let n = term * 12.0;
+    let payment = total_loan * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
+
+    println!("Total Loan Amount (inc. Funding Fee): {:.2}", total_loan);
+    println!("Monthly Payment (P&I): {:.2}", payment);
+}
+
+fn home_equity() {
+    println!("\n--- Home Equity Loan Calculator ---");
+    let market_value = read_input("Current Market Value: ");
+    let mortgage_balance = read_input("Current Mortgage Balance: ");
+    let max_ltv = read_input("Max LTV % (typically 80%): ");
+
+    let max_loan = market_value * (max_ltv / 100.0);
+    let available_equity = (max_loan - mortgage_balance).max(0.0);
+
+    println!("Max Loan Amount at {}% LTV: {:.2}", max_ltv, max_loan);
+    println!("Estimated Available Equity for Loan: {:.2}", available_equity);
+}
+
+fn heloc_calc() {
+    println!("\n--- HELOC Calculator (Simplified) ---");
+    let draw_amount = read_input("Amount to Draw: ");
+    let rate = read_input("Interest Rate (%): ");
+    
+    let monthly_interest_only = draw_amount * (rate / 100.0) / 12.0;
+    println!("Estimated Monthly Interest-Only Payment: {:.2}", monthly_interest_only);
+}
+
+fn down_payment_calc() {
+    println!("\n--- Down Payment Calculator ---");
+    let price = read_input("Home Price: ");
+    let target_percent = read_input("Target Down Payment % (e.g., 20): ");
+
+    let amount = price * (target_percent / 100.0);
+    println!("Required Down Payment: {:.2}", amount);
+    println!("Remaining Loan Amount: {:.2}", price - amount);
+}
+
+fn rent_vs_buy() {
+    println!("\n--- Rent vs. Buy Calculator (Simplified) ---");
+    let monthly_rent = read_input("Monthly Rent: ");
+    let home_price = read_input("Home Price: ");
+    let years = read_input("Years to Compare: ");
+    
+    let total_rent = monthly_rent * 12.0 * years;
+    // Simplified: Buy cost = price + 1% maintenance/year + 2% closing
+    let total_buy_cost = home_price + (home_price * 0.01 * years) + (home_price * 0.02);
+
+    println!("Total Cost to Rent ({} years): {:.2}", years, total_rent);
+    println!("Estimated Cost to Buy & Maintain: {:.2}", total_buy_cost);
+    if total_rent < total_buy_cost {
+        println!("Outcome: Renting is likely cheaper for this period.");
+    } else {
+        println!("Outcome: Buying may be more beneficial over this period.");
+    }
 }
