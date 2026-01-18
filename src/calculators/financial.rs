@@ -20,6 +20,10 @@ pub fn run_menu() {
         println!("15. Rent Calculator");
         println!("16. Debt-to-Income (DTI) Ratio Calculator");
         println!("17. Real Estate Investment Calculator");
+        println!("18. Refinance Calculator");
+        println!("19. Rental Property Calculator");
+        println!("20. APR Calculator");
+        println!("21. FHA Loan Calculator");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -41,6 +45,10 @@ pub fn run_menu() {
             15 => rent_calc(),
             16 => dti_ratio(),
             17 => real_estate_investment(),
+            18 => refinance(),
+            19 => rental_property(),
+            20 => apr_calc(),
+            21 => fha_loan(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -318,4 +326,82 @@ fn real_estate_investment() {
     println!("Annual Gross Revenue: {:.2}", annual_revenue);
     println!("Net Operating Income (NOI): {:.2}", net_operating_income);
     println!("Capitalization Rate (Cap Rate): {:.2}%", cap_rate);
+}
+
+fn refinance() {
+    println!("\n--- Refinance Calculator ---");
+    let current_balance = read_input("Current Loan Balance: ");
+    let current_rate = read_input("Current Interest Rate (%): ");
+    let remaining_term = read_input("Remaining Term (years): ");
+    let new_rate = read_input("New Interest Rate (%): ");
+    let new_term = read_input("New Term (years): ");
+    let costs = read_input("Refinancing Costs (closing, etc.): ");
+
+    let r_old = (current_rate / 100.0) / 12.0;
+    let n_old = remaining_term * 12.0;
+    let p_old = current_balance * (r_old * (1.0 + r_old).powf(n_old)) / ((1.0 + r_old).powf(n_old) - 1.0);
+
+    let r_new = (new_rate / 100.0) / 12.0;
+    let n_new = new_term * 12.0;
+    let p_new = current_balance * (r_new * (1.0 + r_new).powf(n_new)) / ((1.0 + r_new).powf(n_new) - 1.0);
+
+    let monthly_savings = p_old - p_new;
+    println!("Current Monthly Payment: {:.2}", p_old);
+    println!("New Monthly Payment: {:.2}", p_new);
+    println!("Monthly Savings: {:.2}", monthly_savings);
+    if monthly_savings > 0.0 {
+        println!("Break-even Point: {:.1} months", costs / monthly_savings);
+    }
+}
+
+fn rental_property() {
+    println!("\n--- Rental Property Calculator ---");
+    let price = read_input("Purchase Price: ");
+    let rent = read_input("Monthly Rent: ");
+    let expenses = read_input("Monthly Expenses (Tax, Ins, Maint): ");
+    let down_payment = read_input("Down Payment: ");
+
+    let monthly_cash_flow = rent - expenses;
+    let annual_cash_flow = monthly_cash_flow * 12.0;
+    let coc_return = (annual_cash_flow / down_payment) * 100.0;
+
+    println!("Monthly Cash Flow: {:.2}", monthly_cash_flow);
+    println!("Annual Cash Flow: {:.2}", annual_cash_flow);
+    println!("Cash-on-Cash Return: {:.2}%", coc_return);
+}
+
+fn apr_calc() {
+    println!("\n--- APR Calculator (Simplified) ---");
+    let loan_amount = read_input("Loan Amount: ");
+    let costs = read_input("Upfront Costs/Fees: ");
+    let rate = read_input("Interest Rate (%): ");
+    let term = read_input("Term (years): ");
+
+    let r = (rate / 100.0) / 12.0;
+    let n = term * 12.0;
+    let payment = loan_amount * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
+    
+    // Iterative approach to find APR (simplified)
+    let net_loan = loan_amount - costs;
+    let mut apr = rate;
+    for _ in 0..10 {
+        let r_apr = (apr / 100.0) / 12.0;
+        let p_apr = net_loan * (r_apr * (1.0 + r_apr).powf(n)) / ((1.0 + r_apr).powf(n) - 1.0);
+        if p_apr < payment { apr += 0.1; } else { apr -= 0.05; }
+    }
+
+    println!("Nominal Rate: {:.2}%", rate);
+    println!("Estimated APR: {:.2}%", apr);
+}
+
+fn fha_loan() {
+    println!("\n--- FHA Loan Calculator (Simplified) ---");
+    let price = read_input("Home Price: ");
+    let down_payment = price * 0.035; // Standard 3.5%
+    let loan_amount = price - down_payment;
+    let mip = (loan_amount * 0.0055) / 12.0; // Typical 0.55% MIP
+
+    println!("FHA Minimum Down Payment (3.5%): {:.2}", down_payment);
+    println!("Base Loan Amount: {:.2}", loan_amount);
+    println!("Estimated Monthly MIP: {:.2}", mip);
 }
