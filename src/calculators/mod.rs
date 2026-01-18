@@ -8,3 +8,7 @@ pub mod pregnancy;
 pub mod conception;
 pub mod due_date;
 pub mod utils;
+pub mod financial;
+pub mod math;
+pub mod advertising;
+pub mod ecommerce;

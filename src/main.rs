@@ -4,7 +4,35 @@ use std::io::{self, Write};
 
 fn main() {
     loop {
-        println!("\n=== Health & Wellness Calculator (WHO Guidelines) ===");
+        println!("\n=== Gananayantra-Rusting Calculator ===");
+        println!("1. Fitness & Health");
+        println!("2. Financial (Loan)");
+        println!("3. Math");
+        println!("4. Advertising (CPM)");
+        println!("5. E-Commerce");
+        println!("0. Exit");
+        print!("Select a category: ");
+        io::stdout().flush().unwrap();
+
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).unwrap();
+        let choice = choice.trim();
+
+        match choice {
+            "1" => health_menu(),
+            "2" => calculators::financial::run(),
+            "3" => calculators::math::run(),
+            "4" => calculators::advertising::run(),
+            "5" => calculators::ecommerce::run(),
+            "0" => break,
+            _ => println!("Invalid choice."),
+        }
+    }
+}
+
+fn health_menu() {
+    loop {
+        println!("\n--- Fitness & Health ---");
         println!("1. BMI Calculator");
         println!("2. Calorie Calculator");
         println!("3. Body Fat Calculator");
@@ -14,7 +42,7 @@ fn main() {
         println!("7. Pregnancy Calculator");
         println!("8. Pregnancy Conception Calculator");
         println!("9. Due Date Calculator");
-        println!("0. Exit");
+        println!("0. Back");
         print!("Select an option: ");
         io::stdout().flush().unwrap();
 
@@ -33,7 +61,7 @@ fn main() {
             "8" => calculators::conception::run(),
             "9" => calculators::due_date::run(),
             "0" => break,
-            _ => println!("Invalid choice, please try again."),
+            _ => println!("Invalid choice."),
         }
     }
 }
