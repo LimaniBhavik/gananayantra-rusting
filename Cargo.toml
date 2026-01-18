@@ -1,6 +1,6 @@
 [package]
 name = "gananayantra-rusting"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "A comprehensive health and wellness calculator in Rust based on WHO guidelines."
 license = "MIT"

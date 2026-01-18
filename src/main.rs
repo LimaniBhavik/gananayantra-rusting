@@ -20,7 +20,7 @@ fn main() {
 
         match choice {
             "1" => health_menu(),
-            "2" => calculators::financial::run(),
+            "2" => calculators::financial::run_menu(),
             "3" => calculators::math::run(),
             "4" => calculators::advertising::run(),
             "5" => calculators::ecommerce::run(),
