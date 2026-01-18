@@ -2,6 +2,12 @@
 name = "gananayantra-rusting"
 version = "0.1.0"
 edition = "2021"
+description = "A comprehensive health and wellness calculator in Rust based on WHO guidelines."
+license = "MIT"
+repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
+readme = "README.md"
+keywords = ["health", "calculator", "bmi", "bmr", "pregnancy"]
+categories = ["science", "command-line-utilities"]
 
 [dependencies]
 chrono = "0.4"
