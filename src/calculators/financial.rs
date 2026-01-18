@@ -29,6 +29,14 @@ pub fn run_menu() {
         println!("24. HELOC Calculator");
         println!("25. Down Payment Calculator");
         println!("26. Rent vs. Buy Calculator");
+        println!("27. Credit Card Payoff Calculator");
+        println!("28. Debt Consolidation Calculator");
+        println!("29. Student Loan Calculator");
+        println!("30. VAT Calculator");
+        println!("31. Depreciation Calculator (Straight-Line)");
+        println!("32. Personal/Boat/Other Loan Calculator");
+        println!("33. Lease Calculator (General)");
+        println!("34. Commission Calculator");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -59,6 +67,14 @@ pub fn run_menu() {
             24 => heloc_calc(),
             25 => down_payment_calc(),
             26 => rent_vs_buy(),
+            27 => credit_card_payoff(),
+            28 => debt_consolidation(),
+            29 => student_loan(),
+            30 => vat_calculator(),
+            31 => depreciation_calc(),
+            32 => general_loan_calc(),
+            33 => general_lease_calc(),
+            34 => commission_calc(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -484,4 +500,119 @@ fn rent_vs_buy() {
     } else {
         println!("Outcome: Buying may be more beneficial over this period.");
     }
+}
+
+fn credit_card_payoff() {
+    println!("\n--- Credit Card Payoff Calculator ---");
+    let balance = read_input("Balance: ");
+    let rate = read_input("Interest Rate (%): ");
+    let monthly_payment = read_input("Monthly Payment: ");
+
+    let r = (rate / 100.0) / 12.0;
+    if monthly_payment <= balance * r {
+        println!("Error: Payment must be greater than monthly interest ({:.2}).", balance * r);
+        return;
+    }
+
+    let n = -(1.0 - (balance * r / monthly_payment)).ln() / (1.0 + r).ln();
+    println!("Months to Pay Off: {:.1}", n);
+    println!("Total Interest Paid: {:.2}", (monthly_payment * n) - balance);
+}
+
+fn debt_consolidation() {
+    println!("\n--- Debt Consolidation Calculator ---");
+    let total_debt = read_input("Total Debt to Consolidate: ");
+    let current_weighted_rate = read_input("Current Weighted Avg Interest Rate (%): ");
+    let new_loan_rate = read_input("New Consolidation Loan Rate (%): ");
+    let term = read_input("Term (months): ");
+
+    let r1 = (current_weighted_rate / 100.0) / 12.0;
+    let r2 = (new_loan_rate / 100.0) / 12.0;
+
+    let p1 = total_debt * (r1 * (1.0 + r1).powf(term)) / ((1.0 + r1).powf(term) - 1.0);
+    let p2 = total_debt * (r2 * (1.0 + r2).powf(term)) / ((1.0 + r2).powf(term) - 1.0);
+
+    println!("Current Monthly Payment: {:.2}", p1);
+    println!("New Monthly Payment: {:.2}", p2);
+    println!("Monthly Savings: {:.2}", p1 - p2);
+    println!("Total Savings over Life of Loan: {:.2}", (p1 - p2) * term);
+}
+
+fn student_loan() {
+    println!("\n--- Student Loan Calculator ---");
+    let loan = read_input("Loan Amount: ");
+    let rate = read_input("Interest Rate (%): ");
+    let term_years = read_input("Term (years): ");
+
+    let r = (rate / 100.0) / 12.0;
+    let n = term_years * 12.0;
+    let payment = loan * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
+
+    println!("Monthly Payment: {:.2}", payment);
+    println!("Total Interest: {:.2}", (payment * n) - loan);
+}
+
+fn vat_calculator() {
+    println!("\n--- VAT Calculator ---");
+    let amount = read_input("Amount: ");
+    let vat_rate = read_input("VAT Rate (%): ");
+    println!("1. Add VAT to Amount");
+    println!("2. Remove VAT from Amount");
+    let mode = read_input("Choice: ");
+
+    if mode == 1.0 {
+        let vat = amount * (vat_rate / 100.0);
+        println!("VAT Amount: {:.2}", vat);
+        println!("Total with VAT: {:.2}", amount + vat);
+    } else {
+        let base = amount / (1.0 + vat_rate / 100.0);
+        println!("Base Amount: {:.2}", base);
+        println!("VAT Amount: {:.2}", amount - base);
+    }
+}
+
+fn depreciation_calc() {
+    println!("\n--- Straight-Line Depreciation ---");
+    let cost = read_input("Asset Cost: ");
+    let salvage = read_input("Salvage Value: ");
+    let life = read_input("Useful Life (years): ");
+
+    let annual = (cost - salvage) / life;
+    println!("Annual Depreciation: {:.2}", annual);
+    println!("Monthly Depreciation: {:.2}", annual / 12.0);
+}
+
+fn general_loan_calc() {
+    println!("\n--- General Loan Calculator (Boat/Personal/Other) ---");
+    let amount = read_input("Loan Amount: ");
+    let rate = read_input("Annual Rate (%): ");
+    let term_months = read_input("Term (months): ");
+
+    let r = (rate / 100.0) / 12.0;
+    let n = term_months;
+    let payment = amount * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
+
+    println!("Monthly Payment: {:.2}", payment);
+    println!("Total Payment: {:.2}", payment * n);
+}
+
+fn general_lease_calc() {
+    println!("\n--- General Lease Calculator ---");
+    let value = read_input("Gross Cap Cost: ");
+    let residual = read_input("Residual Value: ");
+    let term = read_input("Term (months): ");
+    let rate = read_input("Money Factor: ");
+
+    let dep = (value - residual) / term;
+    let finance = (value + residual) * rate;
+    println!("Base Monthly Payment: {:.2}", dep + finance);
+}
+
+fn commission_calc() {
+    println!("\n--- Commission Calculator ---");
+    let sales = read_input("Total Sales Amount: ");
+    let rate = read_input("Commission Rate (%): ");
+
+    let commission = sales * (rate / 100.0);
+    println!("Total Commission: {:.2}", commission);
 }
