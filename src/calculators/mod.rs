@@ -17,3 +17,6 @@ pub mod investment_ind;
 pub mod retirement_ind;
 pub mod tax_salary;
 pub mod health_expanded;
+pub mod advanced_math;
+pub mod statistics;
+pub mod geometry;

@@ -15,6 +15,9 @@ fn main() {
         println!("8. Retirement Industry");
         println!("9. Tax and Salary Industry");
         println!("10. Fitness & Health (Expanded)");
+        println!("11. Advanced Math");
+        println!("12. Statistics");
+        println!("13. Geometry");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -34,6 +37,9 @@ fn main() {
             "8" => calculators::retirement_ind::run_menu(),
             "9" => calculators::tax_salary::run_menu(),
             "10" => calculators::health_expanded::run_menu(),
+            "11" => calculators::advanced_math::run_menu(),
+            "12" => calculators::statistics::run_menu(),
+            "13" => calculators::geometry::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

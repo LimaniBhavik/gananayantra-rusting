@@ -23,6 +23,11 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 - **Taxes**: Income Tax (Simplified), Marriage Tax Penalty/Bonus, Estate Tax.
 - **Salary**: Take-Home Pay, Salary Unit Converter (Hourly/Weekly/Annual).
 
+### 5. Advanced Math & Statistics
+- **Math**: Percentage, Random Numbers, Exponents/Roots, Logarithms, Quadratic Formula, GCD/LCM, Binary/Hex.
+- **Statistics**: Mean/Median/Mode, Standard Deviation, Z-Score, Probability, Permutations/Combinations, Confidence Intervals.
+- **Geometry**: Area, Volume, Surface Area, Slope, Distance, Pythagorean Theorem.
+
 ## 💻 Usage
 
 ### Running the CLI

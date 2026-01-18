@@ -1,6 +1,6 @@
 [package]
 name = "gananayantra-rusting"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 description = "A multi-purpose calculator suite including Health, Financial, Math, Advertising, and E-Commerce tools."
 license = "MIT"
