@@ -18,6 +18,8 @@ pub fn run_menu() {
         println!("13. Mortgage Payoff Calculator");
         println!("14. House Affordability Calculator");
         println!("15. Rent Calculator");
+        println!("16. Debt-to-Income (DTI) Ratio Calculator");
+        println!("17. Real Estate Investment Calculator");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -37,6 +39,8 @@ pub fn run_menu() {
             13 => mortgage_payoff(),
             14 => house_affordability(),
             15 => rent_calc(),
+            16 => dti_ratio(),
+            17 => real_estate_investment(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -281,4 +285,37 @@ fn rent_calc() {
     let annual_income = read_input("Annual Gross Income: ");
     let monthly_rent = annual_income / 12.0 * 0.30;
     println!("Recommended maximum monthly rent (30% rule): {:.2}", monthly_rent);
+}
+
+fn dti_ratio() {
+    println!("\n--- Debt-to-Income (DTI) Ratio Calculator ---");
+    let monthly_income = read_input("Monthly Gross Income: ");
+    let monthly_debt = read_input("Total Monthly Debt Payments: ");
+    
+    if monthly_income > 0.0 {
+        let dti = (monthly_debt / monthly_income) * 100.0;
+        println!("Your DTI Ratio is: {:.2}%", dti);
+        if dti <= 36.0 {
+            println!("Status: Excellent (Conventional limit is 36%)");
+        } else if dti <= 43.0 {
+            println!("Status: Good (FHA limit is typically 43%)");
+        } else {
+            println!("Status: High (May be difficult to qualify for some loans)");
+        }
+    }
+}
+
+fn real_estate_investment() {
+    println!("\n--- Real Estate Investment Calculator ---");
+    let price = read_input("Property Purchase Price: ");
+    let monthly_rent = read_input("Expected Monthly Rent: ");
+    let annual_expenses = read_input("Total Annual Expenses (Tax, Ins, Maint): ");
+    
+    let annual_revenue = monthly_rent * 12.0;
+    let net_operating_income = annual_revenue - annual_expenses;
+    let cap_rate = (net_operating_income / price) * 100.0;
+    
+    println!("Annual Gross Revenue: {:.2}", annual_revenue);
+    println!("Net Operating Income (NOI): {:.2}", net_operating_income);
+    println!("Capitalization Rate (Cap Rate): {:.2}%", cap_rate);
 }
