@@ -11,6 +11,7 @@ fn main() {
         println!("4. Advertising (CPM)");
         println!("5. E-Commerce");
         println!("6. Auto Industry");
+        println!("7. Investment Industry");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -26,6 +27,7 @@ fn main() {
             "4" => calculators::advertising::run(),
             "5" => calculators::ecommerce::run(),
             "6" => calculators::auto::run_menu(),
+            "7" => calculators::investment_ind::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

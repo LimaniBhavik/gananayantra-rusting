@@ -13,3 +13,4 @@ pub mod math;
 pub mod advertising;
 pub mod ecommerce;
 pub mod auto;
+pub mod investment_ind;
