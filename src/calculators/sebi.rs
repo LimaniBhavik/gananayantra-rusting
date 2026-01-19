@@ -4,14 +4,156 @@ pub fn run_menu() {
     loop {
         println!("\n--- SEBI Investor Tools ---");
         println!("1. SEBI Net Worth Calculator");
+        println!("2. SIP & Goal SIP Calculator");
+        println!("3. EMI Calculator");
+        println!("4. Rate of Return & Bond Yield");
+        println!("5. Future & Present Value (TVM)");
+        println!("6. Retirement Planning (Investment & Income)");
+        println!("7. Insurance Needs Calculator");
+        println!("8. Goal Planner & Asset Allocation");
+        println!("9. Power of Compounding & Cost of Delay");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
         match choice as i32 {
             1 => net_worth_calc(),
+            2 => sip_menu(),
+            3 => emi_calc(),
+            4 => return_menu(),
+            5 => tvm_menu(),
+            6 => retirement_menu(),
+            7 => insurance_menu(),
+            8 => goal_menu(),
+            9 => compounding_menu(),
             0 => break,
             _ => println!("Invalid choice."),
         }
+    }
+}
+
+fn sip_menu() {
+    println!("\n--- Mutual Fund (SIP) Calculators ---");
+    println!("1. Standard SIP");
+    println!("2. Goal-Based SIP");
+    let c = read_input("Choice: ");
+    if c == 1.0 {
+        let p = read_input("Monthly SIP: ");
+        let r = read_input("Expected Return (%): ") / 100.0 / 12.0;
+        let n = read_input("Years: ") * 12.0;
+        let fv = p * (((1.0 + r).powf(n) - 1.0) / r) * (1.0 + r);
+        println!("Future Value of SIP: {:.2}", fv);
+    } else {
+        let goal = read_input("Target Goal: ");
+        let r = read_input("Expected Return (%): ") / 100.0 / 12.0;
+        let n = read_input("Years: ") * 12.0;
+        let p = goal / ((((1.0 + r).powf(n) - 1.0) / r) * (1.0 + r));
+        println!("Monthly SIP Required: {:.2}", p);
+    }
+}
+
+fn emi_calc() {
+    let p = read_input("Loan Amount: ");
+    let r = read_input("Rate of Interest (%): ") / 100.0 / 12.0;
+    let n = read_input("Tenure (Years): ") * 12.0;
+    let emi = p * r * (1.0 + r).powf(n) / ((1.0 + r).powf(n) - 1.0);
+    println!("Monthly EMI: {:.2}", emi);
+}
+
+fn return_menu() {
+    println!("1. Rate of Return  2. Bond Yield");
+    let c = read_input("Choice: ");
+    if c == 1.0 {
+        let initial = read_input("Initial: ");
+        let final_val = read_input("Final: ");
+        let years = read_input("Years: ");
+        let cagr = ((final_val / initial).powf(1.0 / years) - 1.0) * 100.0;
+        println!("Annualized Return (CAGR): {:.2}%", cagr);
+    } else {
+        let coupon = read_input("Annual Coupon: ");
+        let market_price = read_input("Market Price: ");
+        println!("Current Yield: {:.2}%", (coupon / market_price) * 100.0);
+    }
+}
+
+fn tvm_menu() {
+    println!("1. Future Value  2. Present Value  3. Inflation Impact");
+    let c = read_input("Choice: ");
+    let rate = read_input("Rate/Inflation (%): ") / 100.0;
+    let n = read_input("Years: ");
+    if c == 1.0 {
+        let pv = read_input("Present Value: ");
+        println!("Future Value: {:.2}", pv * (1.0 + rate).powf(n));
+    } else if c == 2.0 {
+        let fv = read_input("Future Value: ");
+        println!("Present Value: {:.2}", fv / (1.0 + rate).powf(n));
+    } else {
+        let amount = read_input("Amount Today: ");
+        println!("Value in {} years: {:.2}", n, amount / (1.0 + rate).powf(n));
+    }
+}
+
+fn retirement_menu() {
+    println!("1. Retirement Tracker  2. Annual Income Needed");
+    let c = read_input("Choice: ");
+    if c == 1.0 {
+        let current = read_input("Current Savings: ");
+        let monthly = read_input("Monthly Contribution: ");
+        let r = read_input("Return Rate (%): ") / 100.0 / 12.0;
+        let n = read_input("Years to Retire: ") * 12.0;
+        let fv = current * (1.0 + r).powf(n) + monthly * (((1.0 + r).powf(n) - 1.0) / r);
+        println!("Projected Corpus: {:.2}", fv);
+    } else {
+        let expenses = read_input("Current Monthly Expenses: ");
+        let inflation = read_input("Inflation Rate (%): ") / 100.0;
+        let n = read_input("Years to Retire: ");
+        let future_exp = expenses * (1.0 + inflation).powf(n);
+        println!("Monthly Income Needed at Retirement: {:.2}", future_exp);
+    }
+}
+
+fn insurance_menu() {
+    println!("--- Insurance Needs ---");
+    let monthly_exp = read_input("Monthly Expenses: ");
+    let liabilities = read_input("Total Liabilities: ");
+    let cover = (monthly_exp * 12.0 * 15.0) + liabilities; // 15x income + debt
+    println!("Suggested Life Insurance Cover: {:.2}", cover);
+}
+
+fn goal_menu() {
+    println!("1. Visual Goal Planner  2. Asset Allocation");
+    let c = read_input("Choice: ");
+    if c == 1.0 {
+        let goal_amount = read_input("Target Amount: ");
+        let years = read_input("Years: ");
+        let r = read_input("Return (%): ") / 100.0 / 12.0;
+        let monthly = goal_amount / ((((1.0 + r).powf(years * 12.0) - 1.0) / r) * (1.0 + r));
+        println!("You need to save {:.2} monthly for {} years.", monthly, years);
+    } else {
+        let age = read_input("Current Age: ");
+        let equity = 100.0 - age;
+        println!("Suggested Asset Allocation: Equity {}%, Debt {}%", equity, 100.0 - equity);
+    }
+}
+
+fn compounding_menu() {
+    println!("1. Power of Compounding  2. Cost of Delay (1% Impact)");
+    let c = read_input("Choice: ");
+    if c == 1.0 {
+        let p = read_input("Principal: ");
+        let r = read_input("Rate (%): ") / 100.0;
+        let t = read_input("Years: ");
+        println!("Value after {} years: {:.2}", t, p * (1.0 + r).powf(t));
+    } else {
+        let p = read_input("Monthly SIP: ");
+        let years = read_input("Years: ");
+        let r1: f64 = 12.0 / 100.0 / 12.0;
+        let r2: f64 = 11.0 / 100.0 / 12.0;
+        let n_calc: f64 = years * 12.0;
+        let fv1 = p * (((1.0 + r1).powf(n_calc) - 1.0) / r1);
+        let fv2 = p * (((1.0 + r2).powf(n_calc) - 1.0) / r2);
+        println!("Corpus at 12%: {:.2}", fv1);
+        println!("Corpus at 11% (1% less): {:.2}", fv2);
+        println!("Impact of 1% difference: {:.2}", fv1 - fv2);
     }
 }
 
