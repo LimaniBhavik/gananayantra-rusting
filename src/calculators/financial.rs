@@ -382,7 +382,7 @@ fn refinance() {
 
 fn rental_property() {
     println!("\n--- Rental Property Calculator ---");
-    let price = read_input("Purchase Price: ");
+    let _price = read_input("Purchase Price: ");
     let rent = read_input("Monthly Rent: ");
     let expenses = read_input("Monthly Expenses (Tax, Ins, Maint): ");
     let down_payment = read_input("Down Payment: ");

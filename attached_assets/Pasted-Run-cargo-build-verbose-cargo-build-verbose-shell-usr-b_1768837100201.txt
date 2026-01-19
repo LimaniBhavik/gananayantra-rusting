@@ -1,0 +1,69 @@
+Run cargo build --verbose
+  cargo build --verbose
+  shell: /usr/bin/bash -e {0}
+  env:
+    CARGO_TERM_COLOR: always
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded iana-time-zone v0.1.64
+  Downloaded autocfg v1.5.0
+  Downloaded num-traits v0.2.19
+  Downloaded chrono v0.4.43
+   Compiling autocfg v1.5.0
+   Compiling iana-time-zone v0.1.64
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name autocfg --edition=2015 /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/autocfg-1.5.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=3504f85799756c67 -C extra-filename=-38d501c17e68b38c --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --cap-lints allow`
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name iana_time_zone --edition=2021 /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/iana-time-zone-0.1.64/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --cfg 'feature="fallback"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("fallback"))' -C metadata=9d1725c82c2714eb -C extra-filename=-91a919a59a327a2f --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --cap-lints allow`
+   Compiling num-traits v0.2.19
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name build_script_build --edition=2021 /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-traits-0.2.19/build.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C embed-bitcode=no --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("default", "i128", "libm", "std"))' -C metadata=25437215e1b370e5 -C extra-filename=-969e82bab0dd1580 --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/build/num-traits-969e82bab0dd1580 -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --extern autocfg=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps/libautocfg-38d501c17e68b38c.rlib --cap-lints allow`
+     Running `/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/build/num-traits-969e82bab0dd1580/build-script-build`
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name num_traits --edition=2021 /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-traits-0.2.19/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("default", "i128", "libm", "std"))' -C metadata=82b578f24df8bd02 -C extra-filename=-07f710555770832d --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --cap-lints allow --cfg has_total_cmp --check-cfg 'cfg(has_total_cmp)'`
+   Compiling chrono v0.4.43
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name chrono --edition=2021 /home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/chrono-0.4.43/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --cfg 'feature="alloc"' --cfg 'feature="clock"' --cfg 'feature="default"' --cfg 'feature="iana-time-zone"' --cfg 'feature="js-sys"' --cfg 'feature="now"' --cfg 'feature="oldtime"' --cfg 'feature="std"' --cfg 'feature="wasm-bindgen"' --cfg 'feature="wasmbind"' --cfg 'feature="winapi"' --cfg 'feature="windows-link"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("__internal_bench", "alloc", "arbitrary", "clock", "core-error", "default", "defmt", "iana-time-zone", "js-sys", "libc", "now", "oldtime", "pure-rust-locales", "rkyv", "rkyv-16", "rkyv-32", "rkyv-64", "rkyv-validation", "serde", "std", "unstable-locales", "wasm-bindgen", "wasmbind", "winapi", "windows-link"))' -C metadata=65d60bcd221bd302 -C extra-filename=-1e9f3159ac4185e0 --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --extern iana_time_zone=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps/libiana_time_zone-91a919a59a327a2f.rmeta --extern num_traits=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps/libnum_traits-07f710555770832d.rmeta --cap-lints allow`
+   Compiling gananayantra-rusting v0.9.6 (/home/runner/work/gananayantra-rusting/gananayantra-rusting)
+     Running `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name gananayantra_rusting --edition=2021 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=2b69e94af7f4b404 -C extra-filename=-575a5f0f222c665e --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -C incremental=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/incremental -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --extern chrono=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps/libchrono-1e9f3159ac4185e0.rlib`
+warning: unnecessary parentheses around assigned value
+  --> src/calculators/retirement_ind.rs:64:13
+   |
+64 |     let r = (annual_return / 100.0);
+   |             ^                     ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+64 -     let r = (annual_return / 100.0);
+64 +     let r = annual_return / 100.0 ;
+   |
+
+error[E0689]: can't call method `powf` on ambiguous numeric type `{float}`
+   --> src/calculators/tax_salary.rs:527:45
+    |
+527 |     let interest = principal * (1.0 + rate).powf(years) - principal;
+    |                                             ^^^^
+
+warning: unused variable: `weight`
+ --> src/calculators/body_fat.rs:6:9
+  |
+6 |     let weight = read_input("Enter weight (kg): ");
+  |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_weight`
+  |
+  = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `price`
+   --> src/calculators/financial.rs:385:9
+    |
+385 |     let price = read_input("Purchase Price: ");
+    |         ^^^^^ help: if this is intentional, prefix it with an underscore: `_price`
+
+warning: unused variable: `msrp`
+  --> src/calculators/auto.rs:84:9
+   |
+84 |     let msrp = read_input("MSRP: ");
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_msrp`
+
+For more information about this error, try `rustc --explain E0689`.
+warning: `gananayantra-rusting` (bin "gananayantra-rusting") generated 4 warnings
+error: could not compile `gananayantra-rusting` (bin "gananayantra-rusting") due to 1 previous error; 4 warnings emitted
+
+Caused by:
+  process didn't exit successfully: `/home/runner/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name gananayantra_rusting --edition=2021 src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=2b69e94af7f4b404 -C extra-filename=-575a5f0f222c665e --out-dir /home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps -C incremental=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/incremental -L dependency=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps --extern chrono=/home/runner/work/gananayantra-rusting/gananayantra-rusting/target/debug/deps/libchrono-1e9f3159ac4185e0.rlib` (exit status: 1)
+Error: Process completed with exit code 101.

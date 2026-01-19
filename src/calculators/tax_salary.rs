@@ -524,7 +524,7 @@ fn nsc_interest_calc() {
     let principal = read_input("Principal Invested: ");
     let rate = 7.7 / 100.0; // Current approx rate
     let years = read_input("Years completed: ");
-    let interest = principal * (1.0 + rate).powf(years) - principal;
+    let interest = principal * (1.0 + rate as f64).powf(years) - principal;
     println!("Accumulated Interest: {:.2}", interest);
 }
 

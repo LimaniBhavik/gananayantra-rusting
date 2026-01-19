@@ -81,7 +81,7 @@ fn cash_back_vs_interest() {
 
 fn auto_lease() {
     println!("\n--- Auto Lease Calculator ---");
-    let msrp = read_input("MSRP: ");
+    let _msrp = read_input("MSRP: ");
     let capitalized_cost = read_input("Negotiated Cap Cost: ");
     let residual_value = read_input("Residual Value (at end of lease): ");
     let money_factor = read_input("Money Factor (e.g., 0.00125): ");

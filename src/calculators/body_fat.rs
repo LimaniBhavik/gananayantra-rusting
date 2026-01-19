@@ -3,7 +3,7 @@ use crate::calculators::utils::read_input;
 pub fn run() {
     println!("\n--- Body Fat Calculator (U.S. Navy Method) ---");
     let gender = crate::calculators::utils::read_string("Enter gender (m/f): ");
-    let weight = read_input("Enter weight (kg): ");
+    let _weight = read_input("Enter weight (kg): ");
     let height = read_input("Enter height (cm): ");
     let neck = read_input("Enter neck circumference (cm): ");
     let waist = read_input("Enter waist circumference (cm): ");

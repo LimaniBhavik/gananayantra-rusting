@@ -61,7 +61,7 @@ fn k401_calc() {
     let annual_match = (salary * (employer_match / 100.0)).min(annual_contribution * (match_limit / 100.0));
     let total_annual = annual_contribution + annual_match;
 
-    let r = (annual_return / 100.0);
+    let r = annual_return / 100.0;
     let mut balance = current_balance;
     for _ in 0..(years as i32) {
         balance = (balance + total_annual) * (1.0 + r);
