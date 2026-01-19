@@ -24,9 +24,10 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 - **Advanced Tax (India)**: 
   - **Old vs New Regime**: Side-by-side comparison for FY 24-25.
   - **Deductions**: HRA Exemption, Section 80G (Donations), Transport/Education Allowances.
-  - **Business & Professional**: Presumptive Taxation (44ADA), AMT (Alternate Minimum Tax), Partners Remuneration (Sec 40b), Deferred Tax.
-  - **Capital Gains**: Indexation (CII), Period of Holding, Exemptions.
+  - **Business & Professional**: Presumptive Taxation (44AD/44AE/44ADA), AMT (Alternate Minimum Tax), Partners Remuneration (Sec 40b), Deferred Tax, Depreciation Calculator (Block of Assets), Agent Commission (Ad-hoc).
+  - **Capital Gains**: Indexation (CII), Period of Holding (STCG vs LTCG), Exemptions.
   - **Compliance**: Residential Status (Resident/NRI), TDS & Late Fees (Sec 201/234E), Interest u/s 234A-D, Updated Return eligibility.
+  - **Income Sources**: Income from House Property (NAV/Standard Deduction), Relief u/s 89 (Arrears).
   - **Perquisites**: Rent Free Accommodation, Motor Car Facility, Concessional Loans.
 - **Salary**: Take-Home Pay, Salary Unit Converter (Hourly/Weekly/Annual).
 

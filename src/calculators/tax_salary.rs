@@ -18,6 +18,12 @@ pub fn run_menu() {
         println!("13. Residential Status Calculator");
         println!("14. TDS & Late Fees/Interest");
         println!("15. Section 80G Donation");
+        println!("16. Period of Holding (Capital Asset)");
+        println!("17. Agent Commission (Ad-hoc)");
+        println!("18. Presumptive Income (44AD/44AE)");
+        println!("19. Depreciation Calculator");
+        println!("20. Income from House Property");
+        println!("21. Relief u/s 89");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -37,6 +43,12 @@ pub fn run_menu() {
             13 => residential_status(),
             14 => tds_and_late_fees(),
             15 => deduction_80g(),
+            16 => capital_asset_holding_period(),
+            17 => agent_commission(),
+            18 => presumptive_ad_ae(),
+            19 => depreciation_calc(),
+            20 => house_property_income(),
+            21 => relief_section_89(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -307,4 +319,107 @@ fn deduction_80g() {
     let choice = read_input("Choice: ");
     let deduction = if choice == 1.0 { donation } else { donation * 0.5 };
     println!("Allowable Deduction: {:.2}", deduction);
+}
+
+fn capital_asset_holding_period() {
+    println!("\n--- Period of Holding (Capital Asset) ---");
+    println!("1. Immovable Property (Land/Building)");
+    println!("2. Unlisted Shares");
+    println!("3. Listed Shares/Equity Mutual Funds");
+    println!("4. Other Assets");
+    let asset_type = read_input("Asset Type: ");
+    let months = read_input("Months of holding: ");
+    
+    let threshold = match asset_type as i32 {
+        1 | 2 => 24.0,
+        3 => 12.0,
+        _ => 36.0,
+    };
+    
+    if months >= threshold {
+        println!("Nature: Long-Term Capital Asset (LTCA)");
+    } else {
+        println!("Nature: Short-Term Capital Asset (STCA)");
+    }
+}
+
+fn agent_commission() {
+    println!("\n--- Agent Commission Ad-hoc Deduction ---");
+    let commission = read_input("Gross Commission: ");
+    if commission <= 60000.0 {
+        let deduction = commission * 0.50; // Ad-hoc 50% for insurance agents
+        println!("Ad-hoc Deduction: {:.2}", deduction);
+        println!("Taxable Income: {:.2}", commission - deduction);
+    } else {
+        println!("Commission > 60,000. Standard rules apply (maintain accounts).");
+    }
+}
+
+fn presumptive_ad_ae() {
+    println!("\n--- Presumptive Income (44AD / 44AE) ---");
+    println!("1. Sec 44AD (Business - 8%/6%)");
+    println!("2. Sec 44AE (Transporters)");
+    let choice = read_input("Select Section: ");
+    
+    if choice == 1.0 {
+        let turnover = read_input("Gross Turnover: ");
+        let digital = read_input("Turnover through digital modes: ");
+        let income = (digital * 0.06) + ((turnover - digital) * 0.08);
+        println!("Presumptive Income: {:.2}", income);
+    } else {
+        let heavy = read_input("Number of Heavy Goods Vehicles: ");
+        let others = read_input("Number of Other Goods Vehicles: ");
+        let months = read_input("Number of months (total for all): ");
+        let income = (heavy * 1000.0 * 12.0 * months / (heavy + others).max(1.0)) + (others * 7500.0 * months); // Rough monthly estimation
+        println!("Estimated Presumptive Income: {:.2}", income);
+    }
+}
+
+fn depreciation_calc() {
+    println!("\n--- Depreciation Calculator ---");
+    let cost = read_input("Actual Cost of Asset: ");
+    println!("1. Buildings (10%)");
+    println!("2. Furniture (10%)");
+    println!("3. Plant & Machinery (15%)");
+    println!("4. Computers (40%)");
+    let choice = read_input("Asset Block Choice: ");
+    
+    let rate = match choice as i32 {
+        1 | 2 => 0.10,
+        4 => 0.40,
+        _ => 0.15,
+    };
+    
+    let days = read_input("Days used (>180? Enter 181 else 179): ");
+    let factor = if days >= 180.0 { 1.0 } else { 0.5 };
+    
+    println!("Depreciation Allowable: {:.2}", cost * rate * factor);
+}
+
+fn house_property_income() {
+    println!("\n--- Income from House Property ---");
+    let rent = read_input("Annual Rent Received: ");
+    let tax_paid = read_input("Municipal Taxes Paid: ");
+    let nav = (rent - tax_paid).max(0.0);
+    let standard_deduction = nav * 0.30;
+    let interest = read_input("Interest on Home Loan: ");
+    
+    let income = nav - standard_deduction - interest;
+    println!("Net Annual Value (NAV): {:.2}", nav);
+    println!("Standard Deduction (30%): {:.2}", standard_deduction);
+    println!("Taxable Income from House Property: {:.2}", income);
+}
+
+fn relief_section_89() {
+    println!("\n--- Relief u/s 89 (Arrears of Salary) ---");
+    let tax_arrears_current = read_input("Tax on Total Income (incl. Arrears) in Current Year: ");
+    let tax_no_arrears_current = read_input("Tax on Total Income (excl. Arrears) in Current Year: ");
+    let extra_tax_current = tax_arrears_current - tax_no_arrears_current;
+    
+    let tax_arrears_past = read_input("Tax on Total Income (incl. Arrears) in Past Year: ");
+    let tax_no_arrears_past = read_input("Tax on Total Income (excl. Arrears) in Past Year: ");
+    let extra_tax_past = tax_arrears_past - tax_no_arrears_past;
+    
+    let relief = (extra_tax_current - extra_tax_past).max(0.0);
+    println!("Relief u/s 89: {:.2}", relief);
 }
