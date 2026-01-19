@@ -28,6 +28,12 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 - **Statistics**: Mean/Median/Mode, Standard Deviation, Z-Score, Probability, Permutations/Combinations, Confidence Intervals.
 - **Geometry**: Area, Volume, Surface Area, Slope, Distance, Pythagorean Theorem.
 
+### 6. Specialized Industries
+- **Date & Time**: Age, Duration, Day of Week.
+- **Building**: Square Footage, Concrete, BTU, Tile.
+- **Science**: Density, Speed, Roman Numerals, GDP.
+- **Electronics**: Ohm's Law, Resistors, Voltage Drop.
+
 ## 💻 Usage
 
 ### Running the CLI

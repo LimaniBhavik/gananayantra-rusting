@@ -18,6 +18,10 @@ fn main() {
         println!("11. Advanced Math");
         println!("12. Statistics");
         println!("13. Geometry");
+        println!("14. Date and Time");
+        println!("15. Housing and Building");
+        println!("16. Science and Measurements");
+        println!("17. Electronics");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -40,6 +44,10 @@ fn main() {
             "11" => calculators::advanced_math::run_menu(),
             "12" => calculators::statistics::run_menu(),
             "13" => calculators::geometry::run_menu(),
+            "14" => calculators::date_time::run_menu(),
+            "15" => calculators::building::run_menu(),
+            "16" => calculators::science::run_menu(),
+            "17" => calculators::electronics::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }
