@@ -12,6 +12,12 @@ pub fn run_menu() {
         println!("7. Transport & Education Allowance");
         println!("8. Presumptive Taxation (44ADA)");
         println!("9. Old vs New Regime Comparison");
+        println!("10. AMT (Alternate Minimum Tax)");
+        println!("11. Partners Remuneration (40b)");
+        println!("12. Capital Gains Indexation");
+        println!("13. Residential Status Calculator");
+        println!("14. TDS & Late Fees/Interest");
+        println!("15. Section 80G Donation");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -25,6 +31,12 @@ pub fn run_menu() {
             7 => allowance_calculator(),
             8 => presumptive_tax_44ada(),
             9 => tax_regime_comparison(),
+            10 => amt_calculator(),
+            11 => partners_remuneration(),
+            12 => capital_gains_indexation(),
+            13 => residential_status(),
+            14 => tds_and_late_fees(),
+            15 => deduction_80g(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -225,4 +237,74 @@ fn tax_regime_comparison() {
     } else {
         println!("New Regime is better by {:.2}", old_tax - new_tax);
     }
+}
+
+fn amt_calculator() {
+    println!("\n--- Alternate Minimum Tax (AMT) ---");
+    let total_income = read_input("Regular Total Income: ");
+    let deductions = read_input("Deductions claimed u/s 10AA/35AD/Chapter VI-A (80IA-80RRB): ");
+    let adjusted_total_income = total_income + deductions;
+    let amt_rate = 18.5 / 100.0;
+    let amt = adjusted_total_income * amt_rate;
+    println!("Adjusted Total Income: {:.2}", adjusted_total_income);
+    println!("AMT Payable (18.5%): {:.2}", amt);
+}
+
+fn partners_remuneration() {
+    println!("\n--- Partners Remuneration u/s 40(b) ---");
+    let book_profit = read_input("Book Profit of Firm: ");
+    let limit: f64 = if book_profit <= 0.0 {
+        150000.0
+    } else if book_profit <= 300000.0 {
+        let pct_90 = book_profit * 0.90;
+        if 150000.0 > pct_90 { 150000.0 } else { pct_90 }
+    } else {
+        270000.0 + (book_profit - 300000.0) * 0.60
+    };
+    println!("Max Allowable Remuneration: {:.2}", limit);
+}
+
+fn capital_gains_indexation() {
+    println!("\n--- Indexed Cost of Acquisition ---");
+    let cost = read_input("Cost of Acquisition: ");
+    let year_buy = read_input("CII of Purchase Year: ");
+    let year_sell = read_input("CII of Sale Year (e.g. 2024 CII = 363): ");
+    let indexed_cost = cost * (year_sell / year_buy);
+    println!("Indexed Cost: {:.2}", indexed_cost);
+}
+
+fn residential_status() {
+    println!("\n--- Residential Status Calculator ---");
+    let days_current = read_input("Days in India (Current FY): ");
+    let days_4yrs = read_input("Days in India (Past 4 FYs): ");
+    if days_current >= 182.0 || (days_current >= 60.0 && days_4yrs >= 365.0) {
+        println!("Status: Resident");
+    } else {
+        println!("Status: Non-Resident (NRI)");
+    }
+}
+
+fn tds_and_late_fees() {
+    println!("\n--- TDS & Late Filing Fees ---");
+    let amount = read_input("Payment Amount: ");
+    let tds_rate = read_input("TDS Rate (%): ");
+    let months_delay = read_input("Months delay in deposit: ");
+    
+    let tds = amount * (tds_rate / 100.0);
+    let interest = tds * 0.015 * months_delay;
+    let fee = 200.0 * months_delay.min(tds / 200.0); // Simplified Sec 234E
+    
+    println!("TDS to Deduct: {:.2}", tds);
+    println!("Interest u/s 201(1A): {:.2}", interest);
+    println!("Late Filing Fee (approx): {:.2}", fee);
+}
+
+fn deduction_80g() {
+    println!("\n--- Section 80G Deduction ---");
+    let donation = read_input("Donation Amount: ");
+    println!("1. 100% Exemption (e.g. PM Relief Fund)");
+    println!("2. 50% Exemption");
+    let choice = read_input("Choice: ");
+    let deduction = if choice == 1.0 { donation } else { donation * 0.5 };
+    println!("Allowable Deduction: {:.2}", deduction);
 }
