@@ -29,6 +29,8 @@ pub fn run_menu() {
         println!("24. Deductions (80C, 80D, 80DD, 80TTA, 80U)");
         println!("25. Interest on NSC");
         println!("26. Loss Set-off & Carry Forward");
+        println!("27. Rent Free Accommodation (Perquisite)");
+        println!("28. Deferred Tax Calculator (AS 22)");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -59,6 +61,8 @@ pub fn run_menu() {
             24 => common_deductions_menu(),
             25 => nsc_interest_calc(),
             26 => loss_set_off_calc(),
+            27 => rent_free_accommodation(),
+            28 => deferred_tax_calc(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -531,4 +535,45 @@ fn loss_set_off_calc() {
     let set_off = hp_loss.min(business_income).min(200000.0);
     println!("Set-off Allowed: {:.2}", set_off);
     println!("Remaining Loss to Carry Forward: {:.2}", hp_loss - set_off);
+}
+
+fn rent_free_accommodation() {
+    println!("\n--- Rent Free Accommodation (Perquisite) ---");
+    let salary = read_input("Salary for RFA calculation: ");
+    println!("1. Owned by Employer");
+    println!("2. Taken on Lease by Employer");
+    let choice = read_input("Choice: ");
+    
+    let perq_value = if choice == 1.0 {
+        println!("City Population:");
+        println!("1. > 25 Lakhs (15% of salary)");
+        println!("2. 10-25 Lakhs (10% of salary)");
+        println!("3. < 10 Lakhs (7.5% of salary)");
+        let pop_choice = read_input("Choice: ");
+        if pop_choice == 1.0 { salary * 0.15 }
+        else if pop_choice == 2.0 { salary * 0.10 }
+        else { salary * 0.075 }
+    } else {
+        let lease_rent = read_input("Lease Rent paid by employer: ");
+        (salary * 0.15).min(lease_rent)
+    };
+    
+    let recovery = read_input("Amount recovered from employee: ");
+    println!("Taxable Perquisite Value: {:.2}", (perq_value - recovery).max(0.0));
+}
+
+fn deferred_tax_calc() {
+    println!("\n--- Deferred Tax Calculator (AS 22) ---");
+    let accounting_income = read_input("Accounting Income: ");
+    let taxable_income = read_input("Taxable Income: ");
+    let tax_rate = read_input("Effective Tax Rate (%): ") / 100.0;
+    
+    let diff = accounting_income - taxable_income;
+    let deferred_tax = diff * tax_rate;
+    
+    if deferred_tax > 0.0 {
+        println!("Deferred Tax Liability (DTL): {:.2}", deferred_tax);
+    } else {
+        println!("Deferred Tax Asset (DTA): {:.2}", deferred_tax.abs());
+    }
 }
