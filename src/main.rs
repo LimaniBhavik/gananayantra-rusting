@@ -27,6 +27,7 @@ fn main() {
         println!("20. Weather");
         println!("21. Transportation");
         println!("22. Entertainment");
+        println!("23. SEBI Investor Tools");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -58,6 +59,7 @@ fn main() {
             "20" => calculators::weather::run_menu(),
             "21" => calculators::transport::run_menu(),
             "22" => calculators::entertainment::run_menu(),
+            "23" => calculators::sebi::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

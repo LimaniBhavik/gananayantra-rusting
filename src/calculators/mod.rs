@@ -29,3 +29,4 @@ pub mod utility;
 pub mod weather;
 pub mod transport;
 pub mod entertainment;
+pub mod sebi;
