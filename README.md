@@ -41,6 +41,10 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 - **Transport**: Fuel Cost, MPG, Horsepower.
 - **Entertainment**: Dice Roller, Love Calculator.
 
+### 8. Professional Network & CCTV
+- **CCTV**: Lens Focal Length, Viewing Angle, Identification Settings.
+- **Network**: RAID Capacity, IPv4 Subnetting, mW to dBm, Wireless Link Signal.
+
 ## 💻 Usage
 
 ### Running the CLI

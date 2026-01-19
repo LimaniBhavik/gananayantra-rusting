@@ -28,6 +28,7 @@ fn main() {
         println!("21. Transportation");
         println!("22. Entertainment");
         println!("23. SEBI Investor Tools");
+        println!("24. Network & CCTV Tools");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -60,6 +61,7 @@ fn main() {
             "21" => calculators::transport::run_menu(),
             "22" => calculators::entertainment::run_menu(),
             "23" => calculators::sebi::run_menu(),
+            "24" => calculators::network_cctv::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }
