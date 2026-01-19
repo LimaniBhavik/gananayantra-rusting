@@ -8,6 +8,10 @@ pub fn run_menu() {
         println!("3. Marriage Tax Calculator (Penalty/Bonus)");
         println!("4. Estate Tax Calculator");
         println!("5. Take-Home-Paycheck Calculator");
+        println!("6. HRA Exemption Calculator");
+        println!("7. Transport & Education Allowance");
+        println!("8. Presumptive Taxation (44ADA)");
+        println!("9. Old vs New Regime Comparison");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -17,6 +21,10 @@ pub fn run_menu() {
             3 => marriage_tax_calc(),
             4 => estate_tax_calc(),
             5 => paycheck_calc(),
+            6 => hra_calculator(),
+            7 => allowance_calculator(),
+            8 => presumptive_tax_44ada(),
+            9 => tax_regime_comparison(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -132,4 +140,89 @@ fn paycheck_calc() {
     println!("Estimated Taxes: {:.2}", tax);
     println!("Other Deductions: {:.2}", deductions);
     println!("Net Take-Home Pay: {:.2}", net_pay);
+}
+
+fn hra_calculator() {
+    println!("\n--- HRA Exemption Calculator (India) ---");
+    let basic_salary = read_input("Basic Salary (Annual): ");
+    let da = read_input("DA (if part of retirement benefits): ");
+    let hra_received = read_input("HRA Received: ");
+    let rent_paid = read_input("Actual Rent Paid: ");
+    let is_metro = read_input("Living in Metro City? (1 for Yes, 0 for No): ");
+
+    let salary = basic_salary + da;
+    let opt1 = hra_received;
+    let opt2 = rent_paid - (0.10 * salary);
+    let opt3 = if is_metro == 1.0 { 0.50 * salary } else { 0.40 * salary };
+
+    let exemption = opt1.min(opt2.max(0.0)).min(opt3);
+    println!("Exempt HRA: {:.2}", exemption);
+    println!("Taxable HRA: {:.2}", hra_received - exemption);
+}
+
+fn allowance_calculator() {
+    println!("\n--- Transport & Education Allowance ---");
+    println!("1. Transport Allowance (Blind/Handicapped only for exempt)");
+    println!("2. Children Education Allowance");
+    println!("3. Hostel Allowance");
+    let choice = read_input("Choice: ");
+
+    match choice as i32 {
+        1 => {
+            let received = read_input("Allowance Received: ");
+            let exempt: f64 = 3200.0 * 12.0; // Standard for handicapped
+            println!("Exempt: {:.2}, Taxable: {:.2}", exempt.min(received), (received - exempt).max(0.0));
+        }
+        2 => {
+            let received = read_input("Allowance Received: ");
+            let kids = read_input("Number of kids (Max 2 for exempt): ");
+            let exempt: f64 = 100.0 * kids.min(2.0) * 12.0;
+            println!("Exempt: {:.2}, Taxable: {:.2}", exempt.min(received), (received - exempt).max(0.0));
+        }
+        3 => {
+            let received = read_input("Allowance Received: ");
+            let kids = read_input("Number of kids (Max 2 for exempt): ");
+            let exempt: f64 = 300.0 * kids.min(2.0) * 12.0;
+            println!("Exempt: {:.2}, Taxable: {:.2}", exempt.min(received), (received - exempt).max(0.0));
+        }
+        _ => println!("Invalid choice."),
+    }
+}
+
+fn presumptive_tax_44ada() {
+    println!("\n--- Presumptive Taxation u/s 44ADA ---");
+    let gross_receipts = read_input("Total Gross Receipts: ");
+    if gross_receipts > 7500000.0 {
+        println!("Limit exceeded (75L). Presumptive scheme may not apply.");
+    }
+    let income = gross_receipts * 0.50;
+    println!("Presumptive Income (50%): {:.2}", income);
+}
+
+fn tax_regime_comparison() {
+    println!("\n--- Old vs New Tax Regime (India FY 24-25) ---");
+    let income = read_input("Total Taxable Income: ");
+    let deductions = read_input("Total Deductions (80C, etc. - only for Old): ");
+
+    let old_taxable = (income - deductions - 50000.0).max(0.0); // Standard deduction
+    let old_tax = if old_taxable <= 250000.0 { 0.0 }
+        else if old_taxable <= 500000.0 { (old_taxable - 250000.0) * 0.05 }
+        else if old_taxable <= 1000000.0 { 12500.0 + (old_taxable - 500000.0) * 0.20 }
+        else { 112500.0 + (old_taxable - 1000000.0) * 0.30 };
+
+    let new_taxable = (income - 75000.0).max(0.0); // New Standard deduction
+    let new_tax = if new_taxable <= 300000.0 { 0.0 }
+        else if new_taxable <= 700000.0 { (new_taxable - 300000.0) * 0.05 }
+        else if new_taxable <= 1000000.0 { 20000.0 + (new_taxable - 700000.0) * 0.10 }
+        else if new_taxable <= 1200000.0 { 50000.0 + (new_taxable - 1000000.0) * 0.15 }
+        else if new_taxable <= 1500000.0 { 80000.0 + (new_taxable - 1200000.0) * 0.20 }
+        else { 140000.0 + (new_taxable - 1500000.0) * 0.30 };
+
+    println!("Old Regime Tax: {:.2}", old_tax);
+    println!("New Regime Tax: {:.2}", new_tax);
+    if old_tax < new_tax {
+        println!("Old Regime is better by {:.2}", new_tax - old_tax);
+    } else {
+        println!("New Regime is better by {:.2}", old_tax - new_tax);
+    }
 }

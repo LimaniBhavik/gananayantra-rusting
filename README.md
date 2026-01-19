@@ -21,6 +21,7 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 
 ### 4. Tax & Salary
 - **Taxes**: Income Tax (Simplified), Marriage Tax Penalty/Bonus, Estate Tax.
+- **Advanced Tax (India)**: Old vs New Regime comparison, HRA Exemption, Transport/Education Allowances, Presumptive Taxation (44ADA).
 - **Salary**: Take-Home Pay, Salary Unit Converter (Hourly/Weekly/Annual).
 
 ### 5. Advanced Math & Statistics
