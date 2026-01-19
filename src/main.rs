@@ -22,6 +22,11 @@ fn main() {
         println!("15. Housing and Building");
         println!("16. Science and Measurements");
         println!("17. Electronics");
+        println!("18. Internet Tools");
+        println!("19. Everyday Utility");
+        println!("20. Weather");
+        println!("21. Transportation");
+        println!("22. Entertainment");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -48,6 +53,11 @@ fn main() {
             "15" => calculators::building::run_menu(),
             "16" => calculators::science::run_menu(),
             "17" => calculators::electronics::run_menu(),
+            "18" => calculators::internet::run_menu(),
+            "19" => calculators::utility::run_menu(),
+            "20" => calculators::weather::run_menu(),
+            "21" => calculators::transport::run_menu(),
+            "22" => calculators::entertainment::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

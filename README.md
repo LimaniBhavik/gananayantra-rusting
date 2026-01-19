@@ -34,6 +34,13 @@ A comprehensive multi-purpose calculator suite implemented in Rust, covering Hea
 - **Science**: Density, Speed, Roman Numerals, GDP.
 - **Electronics**: Ohm's Law, Resistors, Voltage Drop.
 
+### 7. Lifestyle & Utility
+- **Internet**: Password Generator, Bandwidth.
+- **Utility**: GPA, Tip, Shoe Size, Sleep.
+- **Weather**: Wind Chill, Heat Index.
+- **Transport**: Fuel Cost, MPG, Horsepower.
+- **Entertainment**: Dice Roller, Love Calculator.
+
 ## 💻 Usage
 
 ### Running the CLI

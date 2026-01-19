@@ -24,3 +24,8 @@ pub mod date_time;
 pub mod building;
 pub mod science;
 pub mod electronics;
+pub mod internet;
+pub mod utility;
+pub mod weather;
+pub mod transport;
+pub mod entertainment;
