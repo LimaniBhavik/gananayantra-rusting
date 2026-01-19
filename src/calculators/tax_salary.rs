@@ -24,6 +24,11 @@ pub fn run_menu() {
         println!("19. Depreciation Calculator");
         println!("20. Income from House Property");
         println!("21. Relief u/s 89");
+        println!("22. Gratuity Exemption");
+        println!("23. Leave Encashment");
+        println!("24. Deductions (80C, 80D, 80DD, 80TTA, 80U)");
+        println!("25. Interest on NSC");
+        println!("26. Loss Set-off & Carry Forward");
         println!("0. Back");
         let choice = read_input("Select an option: ");
 
@@ -49,6 +54,11 @@ pub fn run_menu() {
             19 => depreciation_calc(),
             20 => house_property_income(),
             21 => relief_section_89(),
+            22 => gratuity_calc(),
+            23 => leave_encashment_calc(),
+            24 => common_deductions_menu(),
+            25 => nsc_interest_calc(),
+            26 => loss_set_off_calc(),
             0 => break,
             _ => println!("Invalid choice."),
         }
@@ -422,4 +432,103 @@ fn relief_section_89() {
     
     let relief = (extra_tax_current - extra_tax_past).max(0.0);
     println!("Relief u/s 89: {:.2}", relief);
+}
+
+fn gratuity_calc() {
+    println!("\n--- Gratuity Exemption Calculator ---");
+    let is_gov = read_input("Is Government Employee? (1 for Yes, 0 for No): ");
+    let amount = read_input("Gratuity Received: ");
+    
+    if is_gov == 1.0 {
+        println!("Exempt Amount: {:.2}", amount);
+        println!("Taxable Amount: 0.00");
+    } else {
+        let salary = read_input("Last Drawn Salary (Basic + DA): ");
+        let years = read_input("Completed Years of Service: ");
+        let covered = read_input("Covered under Gratuity Act? (1 for Yes, 0 for No): ");
+        
+        let limit = 2000000.0;
+        let stat_limit = if covered == 1.0 {
+            (15.0 / 26.0) * salary * years
+        } else {
+            0.5 * salary * years
+        };
+        
+        let exempt = amount.min(limit).min(stat_limit);
+        println!("Exempt Amount: {:.2}", exempt);
+        println!("Taxable Amount: {:.2}", amount - exempt);
+    }
+}
+
+fn leave_encashment_calc() {
+    println!("\n--- Leave Encashment Calculator ---");
+    let is_gov = read_input("Is Government Employee? (1 for Yes, 0 for No): ");
+    let amount = read_input("Leave Encashment Received: ");
+    
+    if is_gov == 1.0 {
+        println!("Exempt Amount: {:.2}", amount);
+    } else {
+        let avg_salary = read_input("Average Salary (Last 10 Months): ");
+        let leave_balance = read_input("Leave Balance (in months): ");
+        let limit = 2500000.0; // Budget 2023 update
+        
+        let exempt = amount.min(limit).min(avg_salary * 10.0).min(avg_salary * leave_balance);
+        println!("Exempt Amount: {:.2}", exempt);
+        println!("Taxable Amount: {:.2}", amount - exempt);
+    }
+}
+
+fn common_deductions_menu() {
+    println!("\n--- Deductions (Chapter VI-A) ---");
+    println!("1. Sec 80C (Investment/Insurance - Max 1.5L)");
+    println!("2. Sec 80D (Health Insurance)");
+    println!("3. Sec 80DD (Disabled Dependent)");
+    println!("4. Sec 80TTA (Savings Interest - Max 10k)");
+    println!("5. Sec 80U (Self Disability)");
+    let choice = read_input("Select Section: ");
+    
+    match choice as i32 {
+        1 => {
+            let inv = read_input("Investment Amount: ");
+            println!("Allowable Deduction: {:.2}", inv.min(150000.0));
+        }
+        2 => {
+            let self_p = read_input("Premium for Self/Family: ");
+            let parents = read_input("Premium for Parents: ");
+            let is_sr = read_input("Are parents Senior Citizens? (1 for Yes, 0 for No): ");
+            let limit_parents = if is_sr == 1.0 { 50000.0 } else { 25000.0 };
+            println!("Allowable Deduction: {:.2}", self_p.min(25000.0) + parents.min(limit_parents));
+        }
+        3 => {
+            let severe = read_input("Severe Disability (>80%)? (1 for Yes, 0 for No): ");
+            println!("Allowable Deduction: {:.2}", if severe == 1.0 { 125000.0 } else { 75000.0 });
+        }
+        4 => {
+            let interest = read_input("Savings Bank Interest: ");
+            println!("Allowable Deduction: {:.2}", interest.min(10000.0));
+        }
+        5 => {
+            let severe = read_input("Severe Disability (>80%)? (1 for Yes, 0 for No): ");
+            println!("Allowable Deduction: {:.2}", if severe == 1.0 { 125000.0 } else { 75000.0 });
+        }
+        _ => println!("Invalid choice."),
+    }
+}
+
+fn nsc_interest_calc() {
+    println!("\n--- Interest on NSC (VIII Issue) ---");
+    let principal = read_input("Principal Invested: ");
+    let rate = 7.7 / 100.0; // Current approx rate
+    let years = read_input("Years completed: ");
+    let interest = principal * (1.0 + rate).powf(years) - principal;
+    println!("Accumulated Interest: {:.2}", interest);
+}
+
+fn loss_set_off_calc() {
+    println!("\n--- Loss Set-off & Carry Forward ---");
+    let hp_loss = read_input("House Property Loss: ");
+    let business_income = read_input("Business Income: ");
+    let set_off = hp_loss.min(business_income).min(200000.0);
+    println!("Set-off Allowed: {:.2}", set_off);
+    println!("Remaining Loss to Carry Forward: {:.2}", hp_loss - set_off);
 }
