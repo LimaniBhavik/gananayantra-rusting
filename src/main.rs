@@ -5,6 +5,8 @@ mod geo;
 mod water;
 mod space;
 mod utilities;
+mod health;
+mod finance;
 
 use std::io::{self, Write};
 
