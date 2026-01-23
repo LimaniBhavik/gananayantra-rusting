@@ -1,4 +1,5 @@
 mod calculators;
+mod finance_investment;
 
 use std::io::{self, Write};
 
@@ -29,6 +30,7 @@ fn main() {
         println!("22. Entertainment");
         println!("23. SEBI Investor Tools");
         println!("24. Network & CCTV Tools");
+        println!("25. Finance & Investment (New)");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -62,6 +64,7 @@ fn main() {
             "22" => calculators::entertainment::run_menu(),
             "23" => calculators::sebi::run_menu(),
             "24" => calculators::network_cctv::run_menu(),
+            "25" => finance_investment::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }
