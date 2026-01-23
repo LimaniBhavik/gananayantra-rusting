@@ -37,3 +37,43 @@ pub fn calculate_roi(initial_investment: f64, final_value: f64) -> Result<f64, S
     let roi_percentage = ((final_value - initial_investment) / initial_investment) * 100.0;
     Ok(roi_percentage)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_calculate_roi_valid() {
+        let result = calculate_roi(100.0, 150.0);
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), 50.0);
+    }
+
+    #[test]
+    fn test_calculate_roi_loss() {
+        let result = calculate_roi(100.0, 50.0);
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), -50.0);
+    }
+
+    #[test]
+    fn test_calculate_roi_zero_investment() {
+        let result = calculate_roi(0.0, 150.0);
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Initial investment must be greater than 0.");
+    }
+
+    #[test]
+    fn test_calculate_roi_negative_investment() {
+        let result = calculate_roi(-10.0, 150.0);
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Initial investment must be greater than 0.");
+    }
+
+    #[test]
+    fn test_calculate_roi_negative_final_value() {
+        let result = calculate_roi(100.0, -10.0);
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Final value cannot be negative.");
+    }
+}
