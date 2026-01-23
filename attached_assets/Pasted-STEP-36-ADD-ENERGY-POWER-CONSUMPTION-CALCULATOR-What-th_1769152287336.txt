@@ -1,0 +1,145 @@
+STEP 36: ADD ENERGY → POWER CONSUMPTION CALCULATOR
+🎯 What this calculator does
+
+Calculates energy consumed in kilowatt-hours (kWh).
+
+Formula
+
+Energy (kWh)
+=
+Power (kW)
+×
+Time (hours)
+Energy (kWh)=Power (kW)×Time (hours)
+
+This is used for:
+
+Electricity bills
+
+Appliance usage
+
+Solar / battery planning
+
+✅ STEP 37: CREATE FILE
+
+Create a new file:
+
+src/energy/power_consumption.rs
+
+✅ STEP 38: ADD PURE CALCULATION LOGIC
+
+Paste this code:
+
+pub fn calculate_energy_consumption(
+    power_kw: f64,
+    hours: f64,
+) -> Result<f64, String> {
+    if power_kw < 0.0 {
+        return Err("Power cannot be negative".to_string());
+    }
+    if hours < 0.0 {
+        return Err("Hours cannot be negative".to_string());
+    }
+
+    Ok(power_kw * hours)
+}
+
+✅ STEP 39: REGISTER MODULE
+
+Open:
+
+src/energy/mod.rs
+
+
+Add:
+
+pub mod power_consumption;
+
+✅ STEP 40: CALL FROM main.rs
+
+Update src/main.rs:
+
+fn main() {
+    println!("Welcome to gananayantra-rusting!");
+
+    let roi = finance::roi::calculate_roi(1000.0, 1200.0);
+    println!("ROI Result: {:?}", roi);
+
+    let fv = finance::tvm::future_value(10000.0, 0.08, 5);
+    println!("Future Value Result: {:?}", fv);
+
+    let ci = finance::compound_interest::calculate_compound_interest(
+        5000.0,
+        0.07,
+        10.0,
+        4,
+    );
+    println!("Compound Interest Result: {:?}", ci);
+
+    let percent = utilities::percentage::percentage_of(200.0, 15.0);
+    println!("15% of 200 = {:?}", percent);
+
+    let energy = energy::power_consumption::calculate_energy_consumption(1.5, 8.0);
+    println!("Energy Consumption (kWh): {:?}", energy);
+}
+
+✅ STEP 41: RUN & VERIFY
+
+Click Run
+
+Expected output:
+
+Energy Consumption (kWh): Ok(12.0)
+
+
+✅ Energy calculator works.
+
+✅ STEP 42: ADD UNIT TEST
+
+At the bottom of power_consumption.rs:
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_energy_consumption() {
+        let result = calculate_energy_consumption(1.5, 8.0).unwrap();
+        assert_eq!(result, 12.0);
+    }
+}
+
+
+Run:
+
+cargo test
+
+🧠 STATUS CHECKPOINT
+
+You now have three industries live:
+
+Finance
+
+ROI
+
+TVM
+
+Compound Interest
+
+Utilities
+
+Percentage
+
+Energy
+
+Power Consumption
+
+All:
+
+Modular
+
+Validated
+
+Tested
+
+Production-grade
