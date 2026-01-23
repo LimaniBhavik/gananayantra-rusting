@@ -7,6 +7,10 @@ mod space;
 mod utilities;
 mod health;
 mod finance;
+mod math;
+mod auto;
+mod specialized;
+mod utility_lifestyle;
 
 use std::io::{self, Write};
 
@@ -36,13 +40,15 @@ fn main() {
         println!("21. Transportation");
         println!("22. Entertainment");
         println!("23. SEBI Investor Tools");
-        println!("24. Network & CCTV Tools");
+        println!("24. Network & CCTV Tools (Internal)");
         println!("25. Finance & Investment (New)");
         println!("26. Energy");
         println!("27. Geo");
         println!("28. Water");
         println!("29. Space");
         println!("30. Utilities (New)");
+        println!("31. Specialized Industries (Root)");
+        println!("32. Utility & Lifestyle (Root)");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -54,34 +60,36 @@ fn main() {
         match choice {
             "1" => health::run_menu(),
             "2" => finance::run_menu(),
-            "3" => calculators::math::run(),
+            "3" => math::run_menu(),
             "4" => finance::advertising::run(),
             "5" => finance::ecommerce::run(),
-            "6" => calculators::auto::run_menu(),
+            "6" => auto::run_menu(),
             "7" => finance::investment_ind::run_menu(),
             "8" => finance::retirement_ind::run_menu(),
             "9" => finance::tax_salary::run_menu(),
             "10" => health::health_expanded::run_menu(),
-            "11" => calculators::advanced_math::run_menu(),
-            "12" => calculators::statistics::run_menu(),
-            "13" => calculators::geometry::run_menu(),
-            "14" => calculators::date_time::run_menu(),
-            "15" => calculators::building::run_menu(),
-            "16" => calculators::science::run_menu(),
-            "17" => calculators::electronics::run_menu(),
-            "18" => calculators::internet::run_menu(),
-            "19" => calculators::utility::run_menu(),
-            "20" => calculators::weather::run_menu(),
-            "21" => calculators::transport::run_menu(),
-            "22" => calculators::entertainment::run_menu(),
+            "11" => math::advanced_math::run_menu(),
+            "12" => math::statistics::run_menu(),
+            "13" => math::geometry::run_menu(),
+            "14" => specialized::date_time::run_menu(),
+            "15" => specialized::building::run_menu(),
+            "16" => specialized::science::run_menu(),
+            "17" => specialized::electronics::run_menu(),
+            "18" => utility_lifestyle::internet::run_menu(),
+            "19" => utility_lifestyle::utility::run_menu(),
+            "20" => utility_lifestyle::weather::run_menu(),
+            "21" => utility_lifestyle::transport::run_menu(),
+            "22" => utility_lifestyle::entertainment::run_menu(),
             "23" => finance::sebi::run_menu(),
-            "24" => calculators::network_cctv::run_menu(),
+            "24" => specialized::network_cctv::run_menu(),
             "25" => finance_investment::run_menu(),
             "26" => energy::run_menu(),
             "27" => geo::run_menu(),
             "28" => water::run_menu(),
             "29" => space::run_menu(),
             "30" => utilities::run_menu(),
+            "31" => specialized::run_menu(),
+            "32" => utility_lifestyle::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }
@@ -109,15 +117,15 @@ fn health_menu() {
         let choice = choice.trim();
 
         match choice {
-            "1" => calculators::bmi::run(),
-            "2" => calculators::calorie::run(),
-            "3" => calculators::body_fat::run(),
-            "4" => calculators::bmr::run(),
-            "5" => calculators::ideal_weight::run(),
-            "6" => calculators::pace::run(),
-            "7" => calculators::pregnancy::run(),
-            "8" => calculators::conception::run(),
-            "9" => calculators::due_date::run(),
+            "1" => health::bmi::run(),
+            "2" => health::calorie::run(),
+            "3" => health::body_fat::run(),
+            "4" => health::bmr::run(),
+            "5" => health::ideal_weight::run(),
+            "6" => health::pace::run(),
+            "7" => health::pregnancy::run(),
+            "8" => health::conception::run(),
+            "9" => health::due_date::run(),
             "0" => break,
             _ => println!("Invalid choice."),
         }

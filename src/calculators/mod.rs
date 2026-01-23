@@ -1,16 +1,1 @@
 pub mod utils;
-pub mod math;
-pub mod auto;
-pub mod advanced_math;
-pub mod statistics;
-pub mod geometry;
-pub mod date_time;
-pub mod building;
-pub mod science;
-pub mod electronics;
-pub mod internet;
-pub mod utility;
-pub mod weather;
-pub mod transport;
-pub mod entertainment;
-pub mod network_cctv;
