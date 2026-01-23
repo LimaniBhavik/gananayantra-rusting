@@ -21,6 +21,7 @@ A professional-grade, modular multi-purpose calculator suite implemented in Rust
 - **Business**: VAT, Depreciation, Commissions, Amortization.
 
 ### 3. Investment & Retirement
+- **Finance & Investment**: ROI Calculator.
 - **Investment**: ROI, IRR, NPV, CD Calculator, Bond Yield, Average Return.
 - **Retirement**: 401k, Pension, Social Security, Roth/Traditional IRA, RMD, Annuities.
 
