@@ -14,14 +14,14 @@ fn main() {
     loop {
         println!("\n=== Gananayantra-Rusting Calculator ===");
         println!("1. Fitness & Health");
-        println!("2. Financial (Loan)");
+        println!("2. Finance & Investment");
         println!("3. Math");
         println!("4. Advertising (CPM)");
         println!("5. E-Commerce");
         println!("6. Auto Industry");
-        println!("7. Investment Industry");
-        println!("8. Retirement Industry");
-        println!("9. Tax and Salary Industry");
+        println!("7. Investment Industry (Internal)");
+        println!("8. Retirement Industry (Internal)");
+        println!("9. Tax and Salary Industry (Internal)");
         println!("10. Fitness & Health (Expanded)");
         println!("11. Advanced Math");
         println!("12. Statistics");
@@ -52,16 +52,16 @@ fn main() {
         let choice = choice.trim();
 
         match choice {
-            "1" => health_menu(),
-            "2" => calculators::financial::run_menu(),
+            "1" => health::run_menu(),
+            "2" => finance::run_menu(),
             "3" => calculators::math::run(),
-            "4" => calculators::advertising::run(),
-            "5" => calculators::ecommerce::run(),
+            "4" => finance::advertising::run(),
+            "5" => finance::ecommerce::run(),
             "6" => calculators::auto::run_menu(),
-            "7" => calculators::investment_ind::run_menu(),
-            "8" => calculators::retirement_ind::run_menu(),
-            "9" => calculators::tax_salary::run_menu(),
-            "10" => calculators::health_expanded::run_menu(),
+            "7" => finance::investment_ind::run_menu(),
+            "8" => finance::retirement_ind::run_menu(),
+            "9" => finance::tax_salary::run_menu(),
+            "10" => health::health_expanded::run_menu(),
             "11" => calculators::advanced_math::run_menu(),
             "12" => calculators::statistics::run_menu(),
             "13" => calculators::geometry::run_menu(),
@@ -74,7 +74,7 @@ fn main() {
             "20" => calculators::weather::run_menu(),
             "21" => calculators::transport::run_menu(),
             "22" => calculators::entertainment::run_menu(),
-            "23" => calculators::sebi::run_menu(),
+            "23" => finance::sebi::run_menu(),
             "24" => calculators::network_cctv::run_menu(),
             "25" => finance_investment::run_menu(),
             "26" => energy::run_menu(),
