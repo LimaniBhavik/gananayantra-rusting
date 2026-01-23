@@ -1,20 +1,27 @@
-# Gananayantra-Rusting (ગણનયંત્ર) v1.0.2
+# Gananayantra-Rusting (ગણનયંત્ર) v1.0.3
 
 A professional-grade, modular multi-purpose calculator suite implemented in Rust.
 
-## 🌟 Version 1.0.2 Milestone
-- **Full Indian Tax Suite**: Comprehensive compliance for FY 24-25 (Sec 80C, 80D, HRA, etc.).
-- **New Modular Architecture**: Restructured into industry-specific root modules.
-- **180+ Calculators**: Covering Health, Finance, Math, and specialized industries.
-- **Pure Logic Functions**: All calculators refactored for reusability and testing.
+## 🌟 Latest Updates (v1.0.3)
+- **New Energy Module**: Power Consumption calculator ($kWh = kW \times h$).
+- **Expanded Finance Module**: Added ROI, TVM (Future Value), and Compound Interest.
+- **New Utilities Module**: Percentage Calculator ($X\%$ of $Y$).
+- **Full Indian Tax Suite**: Comprehensive compliance for FY 24-25.
 
 ## 🧱 Project Structure
 The engine is divided into logical industry modules:
+- **Finance**: ROI, TVM, Compound Interest, Loans, Tax, E-Commerce.
 - **Health**: BMI, BMR, TDEE, Pregnancy.
-- **Finance**: Loans, Investment, Retirement, Tax, E-Commerce.
 - **Math**: Basic, Advanced, Statistics, Geometry.
-- **Energy & Geo**: Power, Distance, Earth Curvature (Upcoming).
+- **Energy**: Power Consumption, Solar (Upcoming).
+- **Utilities**: Percentage calculations.
 - **Specialized**: Electronics, Building, Network & CCTV.
+
+## 🚀 Scalability Pattern
+Every calculator follows a strict 3-tier structure:
+1. **Pure Logic**: Isolated function in `<industry>/<calculator>.rs`.
+2. **CLI Wrapper**: Standardized input/output handling.
+3. **Unit Tests**: Integrated `#[test]` coverage for every calculation.
 
 ## 🚀 Features
 
