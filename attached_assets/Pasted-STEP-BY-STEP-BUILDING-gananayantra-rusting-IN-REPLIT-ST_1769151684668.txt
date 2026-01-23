@@ -1,0 +1,232 @@
+STEP-BY-STEP: BUILDING gananayantra-rusting IN REPLIT
+✅ STEP 1: CREATE THE PROJECT
+
+Open Replit
+
+Click Create Repl
+
+Choose Rust
+
+Project name:
+
+gananayantra-rusting
+
+
+Click Create Repl
+
+You should now see:
+
+Cargo.toml
+src/main.rs
+
+✅ STEP 2: RUN DEFAULT PROJECT (IMPORTANT)
+
+Click Run
+
+Confirm it runs without errors
+
+This confirms your Rust environment works.
+
+✅ STEP 3: CREATE INDUSTRY FOLDERS
+
+Inside the src/ folder, create these folders one by one:
+
+finance
+health
+utilities
+energy
+geo
+water
+space
+
+
+Your structure should look like:
+
+src/
+├── main.rs
+├── finance/
+├── health/
+├── utilities/
+├── energy/
+├── geo/
+├── water/
+└── space/
+
+✅ STEP 4: ADD mod.rs IN EACH FOLDER
+
+Inside every folder, create a file named:
+
+mod.rs
+
+
+Example:
+
+src/finance/mod.rs
+src/health/mod.rs
+...
+
+
+For now, keep them empty.
+
+✅ STEP 5: CONNECT MODULES TO main.rs
+
+Open src/main.rs and replace content with:
+
+mod finance;
+mod health;
+mod utilities;
+mod energy;
+mod geo;
+mod water;
+mod space;
+
+fn main() {
+    println!("Welcome to gananayantra-rusting!");
+}
+
+
+▶ Click Run
+
+If it prints the message → ✅ success
+
+✅ STEP 6: CREATE YOUR FIRST CALCULATOR (ROI)
+6.1 Create file
+src/finance/roi.rs
+
+6.2 Paste this code
+pub fn calculate_roi(initial: f64, final_value: f64) -> Result<f64, String> {
+    if initial <= 0.0 {
+        return Err("Initial investment must be greater than zero".to_string());
+    }
+
+    Ok(((final_value - initial) / initial) * 100.0)
+}
+
+✅ STEP 7: REGISTER THE CALCULATOR MODULE
+
+Open:
+
+src/finance/mod.rs
+
+
+Add:
+
+pub mod roi;
+
+✅ STEP 8: CALL THE CALCULATOR FROM MAIN
+
+Edit src/main.rs:
+
+mod finance;
+mod health;
+mod utilities;
+mod energy;
+mod geo;
+mod water;
+mod space;
+
+fn main() {
+    let roi = finance::roi::calculate_roi(1000.0, 1200.0);
+    println!("ROI Result: {:?}", roi);
+}
+
+
+▶ Click Run
+
+Expected output:
+
+ROI Result: Ok(20.0)
+
+
+✅ You just built your first calculator
+
+✅ STEP 9: ADD A SECOND CALCULATOR (BMI)
+9.1 Create file
+src/health/bmi.rs
+
+9.2 Add code
+pub fn calculate_bmi(weight_kg: f64, height_m: f64) -> Result<f64, String> {
+    if weight_kg <= 0.0 || height_m <= 0.0 {
+        return Err("Weight and height must be positive values".to_string());
+    }
+
+    Ok(weight_kg / (height_m * height_m))
+}
+
+✅ STEP 10: REGISTER BMI MODULE
+
+Edit:
+
+src/health/mod.rs
+
+
+Add:
+
+pub mod bmi;
+
+✅ STEP 11: TEST BMI FROM MAIN
+
+Edit main.rs:
+
+fn main() {
+    let roi = finance::roi::calculate_roi(1000.0, 1200.0);
+    println!("ROI Result: {:?}", roi);
+
+    let bmi = health::bmi::calculate_bmi(70.0, 1.75);
+    println!("BMI Result: {:?}", bmi);
+}
+
+
+▶ Run → Should print BMI
+
+✅ STEP 12: REPEAT THIS PATTERN FOREVER
+
+For every new calculator, repeat:
+
+Create <calculator>.rs
+
+Write one function
+
+Validate inputs
+
+Add to <industry>/mod.rs
+
+Call from main.rs
+
+Run & verify
+
+✅ STEP 13: BASIC TESTING (OPTIONAL BUT GOOD)
+
+Inside any calculator file:
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_roi() {
+        let result = calculate_roi(1000.0, 1200.0).unwrap();
+        assert_eq!(result, 20.0);
+    }
+}
+
+
+Run:
+
+cargo test
+
+✅ STEP 14: WHEN READY — ADD CLI INPUT
+
+Only after many calculators work.
+
+🎯 YOU ARE NOW SET
+
+You now have:
+
+Clean structure
+
+Unlimited scalability
+
+Industry separation
+
+Production-ready base
