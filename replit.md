@@ -1,62 +1,43 @@
-# Gananayantra-Rusting
+# Gananayantra-Rusting (ગણનયંત્ર)
 
 ## Overview
+Gananayantra-Rusting is a high-performance, modular calculator engine built in Rust. It serves as a comprehensive suite for diverse industries, providing accurate and verifiable calculations through a clean CLI interface and a reusable library architecture.
 
-Gananayantra-Rusting (ગણનયંત્ર - Calculator in Gujarati) is a Rust-based calculator application inspired by calculator.net. The project aims to provide calculator functionality similar to the popular online calculator service, implemented in the Rust programming language.
+## Architecture (v1.0.2)
+The project follows a **Modular Industry-Based Structure**. Each major industry has its own root module containing specific calculators as sub-modules.
+
+### Directory Structure
+```
+src/
+├── main.rs                 # CLI Entry Point & Global Menu
+├── calculators/            # Shared Utilities & Legacy Base
+├── health/                 # BMI, BMR, Pregnancy, etc.
+├── finance/                # Loan, Tax, Retirement, SEBI, Ads, E-Com
+├── math/                   # Basic, Advanced, Stats, Geometry
+├── auto/                   # Automotive Industry Tools
+├── specialized/            # Science, Electronics, Building, CCTV
+├── utility_lifestyle/      # Internet, Weather, Transport, Utility
+├── energy/                 # [NEW] Power, Solar, Consumption
+├── geo/                    # [NEW] Distance, Earth Curvature
+├── water/                  # [NEW] Pressure, Flow Rate
+└── space/                  # [NEW] Orbital, Satellite, Escape Velocity
+```
+
+## Naming & Quality Standards
+1. **蛇形命名 (snake_case)**: All functions and variables must use snake_case.
+2. **Pure Logic**: Logic functions must be pure, return `Result<T, String>`, and handle no I/O.
+3. **CLI Separation**: Input/Output handling must live in `mod.rs` or `main.rs`, never in the logic function.
+4. **Validation**: All inputs must be validated for physical/mathematical limits.
+5. **Testing**: Every calculator must have `#[test]` coverage for valid, boundary, and error cases.
+
+## Roadmap
+- [x] Phase 1: Core Financial & Health Engines (v1.0.0)
+- [x] Phase 2: Professional Tax & Compliance (v1.0.2)
+- [ ] Phase 3: Energy & Geo-Spatial Modules (Upcoming)
+- [ ] Phase 4: Space & Astronomy Modules
+- [ ] Phase 5: Crate API Stabilization for Library Use
 
 ## User Preferences
-
-Preferred communication style: Simple, everyday language.
-
-## System Architecture
-
-### Language and Build System
-- **Language**: Rust (rustc 1.88.0)
-- **Build System**: Cargo (standard Rust package manager and build tool)
-- **Project Type**: Binary application (`bin-gananayantra-rusting`)
-
-### Core Architecture
-The project follows a standard Rust binary application structure:
-- Single binary target compiled from source
-- Uses Cargo's default project layout
-- Debug and test configurations available
-
-### Dependencies
-Based on the build fingerprints, the project uses:
-- **chrono**: Date and time library with features including `clock`, `std`, `alloc`, and timezone support (`iana-time-zone`)
-- **num-traits**: Numeric traits for generic mathematics operations
-- **autocfg**: Build-time configuration detection
-
-### Design Decisions
-
-1. **Rust for Implementation**
-   - Problem: Need for a performant, safe calculator application
-   - Solution: Rust provides memory safety without garbage collection and excellent performance
-   - Pros: Type safety, zero-cost abstractions, reliable error handling
-   - Cons: Steeper learning curve compared to scripting languages
-
-2. **Chrono for Time Handling**
-   - Problem: Calculator may need date/time calculations or timestamps
-   - Solution: Using the chrono crate with full timezone support via iana-time-zone
-   - Pros: Comprehensive time handling, well-maintained library
-   - Cons: Adds to binary size
-
-## External Dependencies
-
-### Crate Dependencies
-| Crate | Purpose |
-|-------|---------|
-| chrono | Date and time handling with timezone support |
-| num-traits | Generic numeric type traits for mathematical operations |
-| iana-time-zone | IANA timezone database support (fallback feature enabled) |
-| autocfg | Compile-time feature detection |
-
-### External Services
-- None currently integrated
-
-### Database
-- None currently integrated
-
-### Build Requirements
-- Rust toolchain (1.88.0 or compatible)
-- Cargo package manager
+- **Replit-First**: All development and testing happens directly in the Replit environment.
+- **Minimal Dependencies**: Use standard library features whenever possible.
+- **Clean CLI**: Maintain a structured, numbered menu system.
