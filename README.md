@@ -1,6 +1,11 @@
-# Gananayantra-Rusting (ગણનયંત્ર)
+# Gananayantra-Rusting (ગણનયંત્ર) v1.0.0
 
-A comprehensive multi-purpose calculator suite implemented in Rust, covering Health, Finance, Auto, Investment, Retirement, and Taxes.
+A professional-grade, modular multi-purpose calculator suite implemented in Rust.
+
+## 🌟 Version 1.0 Milestone
+- **Full Indian Tax Suite**: Comprehensive compliance for FY 24-25.
+- **Modular Architecture**: Clean separation of logic for easy integration.
+- **180+ Calculators**: Covering Health, Finance, Math, and specialized industries.
 
 ## 🚀 Features
 
