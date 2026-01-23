@@ -1,5 +1,10 @@
 mod calculators;
 mod finance_investment;
+mod energy;
+mod geo;
+mod water;
+mod space;
+mod utilities;
 
 use std::io::{self, Write};
 
@@ -31,6 +36,11 @@ fn main() {
         println!("23. SEBI Investor Tools");
         println!("24. Network & CCTV Tools");
         println!("25. Finance & Investment (New)");
+        println!("26. Energy");
+        println!("27. Geo");
+        println!("28. Water");
+        println!("29. Space");
+        println!("30. Utilities (New)");
         println!("0. Exit");
         print!("Select a category: ");
         io::stdout().flush().unwrap();
@@ -65,6 +75,11 @@ fn main() {
             "23" => calculators::sebi::run_menu(),
             "24" => calculators::network_cctv::run_menu(),
             "25" => finance_investment::run_menu(),
+            "26" => energy::run_menu(),
+            "27" => geo::run_menu(),
+            "28" => water::run_menu(),
+            "29" => space::run_menu(),
+            "30" => utilities::run_menu(),
             "0" => break,
             _ => println!("Invalid choice."),
         }
