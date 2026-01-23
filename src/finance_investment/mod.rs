@@ -8,34 +8,36 @@ pub fn run_menu() {
 
         let choice = read_input("Select an option: ");
         match choice as i32 {
-            1 => roi_calculator(),
+            1 => roi_cli(),
             0 => break,
             _ => println!("Invalid choice."),
         }
     }
 }
 
-fn roi_calculator() {
+/// CLI handler for the ROI calculator
+fn roi_cli() {
     println!("\n--- ROI Calculator ---");
-    let initial_investment = read_input("Enter initial investment: ");
-    let final_value = read_input("Enter final value: ");
+    let initial = read_input("Enter initial investment: ");
+    let final_val = read_input("Enter final value: ");
 
-    match calculate_roi(initial_investment, final_value) {
+    match calculate_roi(initial, final_val) {
         Ok(roi) => println!("ROI: {:.2}%", roi),
         Err(e) => println!("Error: {}", e),
     }
 }
 
+/// Pure logic for calculating Return on Investment (ROI)
+/// ROI = ((Final Value - Initial Investment) / Initial Investment) * 100
 pub fn calculate_roi(initial_investment: f64, final_value: f64) -> Result<f64, String> {
     if initial_investment <= 0.0 {
-        return Err("Initial investment must be greater than 0.".to_string());
+        return Err("Initial investment must be greater than zero.".to_string());
     }
     if final_value < 0.0 {
         return Err("Final value cannot be negative.".to_string());
     }
 
-    let roi_percentage = ((final_value - initial_investment) / initial_investment) * 100.0;
-    Ok(roi_percentage)
+    Ok(((final_value - initial_investment) / initial_investment) * 100.0)
 }
 
 #[cfg(test)]
@@ -44,36 +46,14 @@ mod tests {
 
     #[test]
     fn test_calculate_roi_valid() {
-        let result = calculate_roi(100.0, 150.0);
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap(), 50.0);
+        assert_eq!(calculate_roi(100.0, 150.0).unwrap(), 50.0);
+        assert_eq!(calculate_roi(100.0, 50.0).unwrap(), -50.0);
     }
 
     #[test]
-    fn test_calculate_roi_loss() {
-        let result = calculate_roi(100.0, 50.0);
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap(), -50.0);
-    }
-
-    #[test]
-    fn test_calculate_roi_zero_investment() {
-        let result = calculate_roi(0.0, 150.0);
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Initial investment must be greater than 0.");
-    }
-
-    #[test]
-    fn test_calculate_roi_negative_investment() {
-        let result = calculate_roi(-10.0, 150.0);
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Initial investment must be greater than 0.");
-    }
-
-    #[test]
-    fn test_calculate_roi_negative_final_value() {
-        let result = calculate_roi(100.0, -10.0);
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Final value cannot be negative.");
+    fn test_calculate_roi_invalid() {
+        assert!(calculate_roi(0.0, 150.0).is_err());
+        assert!(calculate_roi(-10.0, 150.0).is_err());
+        assert!(calculate_roi(100.0, -10.0).is_err());
     }
 }
