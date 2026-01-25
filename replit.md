@@ -41,3 +41,4 @@ src/
 - **Replit-First**: All development and testing happens directly in the Replit environment.
 - **Minimal Dependencies**: Use standard library features whenever possible.
 - **Clean CLI**: Maintain a structured, numbered menu system.
+- **Attached Assets Policy**: DO NOT add `attached_assets` or similar instruction files to the codebase. These are for processing only and must be deleted after use.
