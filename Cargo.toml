@@ -1,12 +1,12 @@
 [package]
 name = "gananayantra-rusting"
-version = "1.0.3"
+version = "1.1.0"
 edition = "2021"
-description = "A comprehensive, modular multi-purpose calculator suite including Health, Financial, Math, Energy, and Utilities tools."
+description = "A comprehensive, modular multi-purpose calculator suite including Health, Financial, Math, Energy, Geo, Water, and Space tools."
 license = "MIT"
 repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
 readme = "README.md"
-keywords = ["calculator", "health", "finance", "math", "ecommerce"]
+keywords = ["calculator", "health", "finance", "math", "ecommerce", "energy", "space", "geo"]
 categories = ["science", "command-line-utilities"]
 
 [dependencies]

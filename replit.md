@@ -3,7 +3,7 @@
 ## Overview
 Gananayantra-Rusting is a high-performance, modular calculator engine built in Rust. It serves as a comprehensive suite for diverse industries, providing accurate and verifiable calculations through a clean CLI interface and a reusable library architecture.
 
-## Architecture (v1.0.2)
+## Architecture (v1.1.0)
 The project follows a **Modular Industry-Based Structure**. Each major industry has its own root module containing specific calculators as sub-modules.
 
 ### Directory Structure
@@ -17,10 +17,10 @@ src/
 ├── auto/                   # Automotive Industry Tools
 ├── specialized/            # Science, Electronics, Building, CCTV
 ├── utility_lifestyle/      # Internet, Weather, Transport, Utility
-├── energy/                 # [NEW] Power, Solar, Consumption
-├── geo/                    # [NEW] Distance, Earth Curvature
-├── water/                  # [NEW] Pressure, Flow Rate
-└── space/                  # [NEW] Orbital, Satellite, Escape Velocity
+├── energy/                 # Power Consumption, Electricity Cost
+├── geo/                    # Earth Distance, Horizon Distance
+├── water/                  # Pressure, Flow Rate
+└── space/                  # Orbital, Satellite, Escape Velocity, Orbital Period
 ```
 
 ## Naming & Quality Standards
@@ -33,8 +33,8 @@ src/
 ## Roadmap
 - [x] Phase 1: Core Financial & Health Engines (v1.0.0)
 - [x] Phase 2: Professional Tax & Compliance (v1.0.2)
-- [ ] Phase 3: Energy & Geo-Spatial Modules (Upcoming)
-- [ ] Phase 4: Space & Astronomy Modules
+- [x] Phase 3: Energy & Geo-Spatial Modules (v1.1.0)
+- [x] Phase 4: Space & Astronomy Modules (v1.1.0)
 - [ ] Phase 5: Crate API Stabilization for Library Use
 
 ## User Preferences

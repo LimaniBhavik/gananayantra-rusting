@@ -1,10 +1,13 @@
-# Gananayantra-Rusting (ગણનયંત્ર) v1.0.3
+# Gananayantra-Rusting (ગણનયંત્ર) v1.1.0
 
 A professional-grade, modular multi-purpose calculator suite implemented in Rust.
 
-## 🌟 Latest Updates (v1.0.3)
-- **New Energy Module**: Power Consumption calculator ($kWh = kW \times h$).
-- **Expanded Finance Module**: Added ROI, TVM (Future Value), and Compound Interest.
+## 🌟 Latest Updates (v1.1.0)
+- **New Energy Module**: Power Consumption and Electricity Cost calculators.
+- **New Geo Module**: Earth Distance (Haversine) and Horizon Distance (Earth Curvature).
+- **New Water Module**: Pressure at Depth and River Flow Rate.
+- **New Space Module**: Orbital Velocity, Escape Velocity, and Satellite Orbital Period.
+- **Expanded Finance Module**: ROI, TVM (Future Value), and Compound Interest.
 - **New Utilities Module**: Percentage Calculator ($X\%$ of $Y$).
 - **Full Indian Tax Suite**: Comprehensive compliance for FY 24-25.
 
@@ -13,7 +16,10 @@ The engine is divided into logical industry modules:
 - **Finance**: ROI, TVM, Compound Interest, Loans, Tax, E-Commerce.
 - **Health**: BMI, BMR, TDEE, Pregnancy.
 - **Math**: Basic, Advanced, Statistics, Geometry.
-- **Energy**: Power Consumption, Solar (Upcoming).
+- **Energy**: Power Consumption, Electricity Cost.
+- **Geo**: Earth Distance, Horizon Distance.
+- **Water**: Pressure at Depth, River Flow Rate.
+- **Space**: Orbital Velocity, Escape Velocity, Orbital Period.
 - **Utilities**: Percentage calculations.
 - **Specialized**: Electronics, Building, Network & CCTV.
 
@@ -35,44 +41,27 @@ Every calculator follows a strict 3-tier structure:
 - **Real Estate**: Refinance, Rental Property, House Affordability, Rent vs Buy, VA/FHA Loans, HELOC.
 - **Debt**: Credit Card Payoff, Debt Consolidation, Student Loans.
 - **Business**: VAT, Depreciation, Commissions, Amortization.
+- **Investment**: ROI, TVM (Future Value), Compound Interest.
 
-### 3. Investment & Retirement
-- **Finance & Investment**: ROI Calculator.
-- **Investment**: ROI, IRR, NPV, CD Calculator, Bond Yield, Average Return.
-- **Retirement**: 401k, Pension, Social Security, Roth/Traditional IRA, RMD, Annuities.
+### 3. Energy & Utilities
+- **Energy**: Power Consumption (kWh), Electricity Cost.
+- **Utilities**: Percentage Calculator.
 
-### 4. Tax & Salary
-- **Taxes**: Income Tax (Simplified), Marriage Tax Penalty/Bonus, Estate Tax.
-- **Advanced Tax (India)**: 
-  - **Old vs New Regime**: Side-by-side comparison for FY 24-25.
-  - **Deductions**: HRA Exemption, Section 80G (Donations), 80C (Max 1.5L), 80D (Health), 80DD (Dependent), 80TTA (Interest), 80U (Disabled), Transport/Education Allowances.
-  - **Exemptions & Benefits**: Gratuity (Gov/Private), Leave Encashment, Interest on NSC.
-  - **Business & Professional**: Presumptive Taxation (44AD/44AE/44ADA), AMT (Alternate Minimum Tax), Partners Remuneration (Sec 40b), Deferred Tax, Depreciation Calculator (Block of Assets), Agent Commission (Ad-hoc).
-  - **Income Sources**: Income from House Property (NAV/Standard Deduction), Relief u/s 89 (Arrears), Loss Set-off & Carry Forward.
-  - **Perquisites**: Rent Free Accommodation, Motor Car Facility, Concessional Loans.
-- **Salary**: Take-Home Pay, Salary Unit Converter (Hourly/Weekly/Annual).
+### 4. Geo, Water & Space
+- **Geo**: Earth Distance (Haversine), Horizon Distance (Earth Curvature).
+- **Water**: Pressure at Depth, River Flow Rate.
+- **Space**: Orbital Velocity, Escape Velocity, Satellite Orbital Period.
 
-### 5. Advanced Math & Statistics
-- **Math**: Percentage, Random Numbers, Exponents/Roots, Logarithms, Quadratic Formula, GCD/LCM, Binary/Hex.
-- **Statistics**: Mean/Median/Mode, Standard Deviation, Z-Score, Probability, Permutations/Combinations, Confidence Intervals.
-- **Geometry**: Area, Volume, Surface Area, Slope, Distance, Pythagorean Theorem.
+### 5. Tax & Salary (India Compliance)
+- **Old vs New Regime**: Side-by-side comparison for FY 24-25.
+- **Deductions**: HRA, Section 80C, 80D, 80G, 80TTA, 80U, etc.
+- **Business**: Presumptive Taxation (44AD/ADA/AE), AMT, Partners Remuneration.
+- **Salary**: Take-Home Pay, Salary Unit Converter.
 
-### 6. Specialized Industries
-- **Date & Time**: Age, Duration, Day of Week.
-- **Building**: Square Footage, Concrete, BTU, Tile.
-- **Science**: Density, Speed, Roman Numerals, GDP.
-- **Electronics**: Ohm's Law, Resistors, Voltage Drop.
-
-### 7. Lifestyle & Utility
-- **Internet**: Password Generator, Bandwidth.
-- **Utility**: GPA, Tip, Shoe Size, Sleep.
-- **Weather**: Wind Chill, Heat Index.
-- **Transport**: Fuel Cost, MPG, Horsepower.
-- **Entertainment**: Dice Roller, Love Calculator.
-
-### 8. Professional Network & CCTV
-- **CCTV**: Lens Focal Length, Viewing Angle, Identification Settings.
-- **Network**: RAID Capacity, IPv4 Subnetting, mW to dBm, Wireless Link Signal.
+### 6. Advanced Math & Statistics
+- **Math**: Random Numbers, Exponents, Logarithms, GCD/LCM, Binary/Hex.
+- **Statistics**: Mean/Median/Mode, Standard Deviation, Probability.
+- **Geometry**: Area, Volume, Surface Area, Pythagorean Theorem.
 
 ## 💻 Usage
 
@@ -82,29 +71,14 @@ Ensure you have Rust installed, then run:
 cargo run
 ```
 
-### Example: Calculating BMI
-1. Select `1. Fitness & Health`
-2. Select `1. BMI Calculator`
-3. Enter Weight (kg): `70`
-4. Enter Height (cm): `175`
-5. Result: `BMI: 22.86 (Normal weight)`
-
-### Example: Auto Loan
-1. Select `6. Auto Industry`
-2. Select `1. Auto Loan Calculator`
-3. Enter Price, Down Payment, and Rate.
-4. Get your monthly payment and total interest.
-
-## 📦 Installation
-
+### Installation
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-gananayantra-rusting = "0.3.0"
+gananayantra-rusting = "1.1.0"
 ```
 
 ## 🛠️ Development
-
 Built with ❤️ using Rust.
 - **License**: MIT
 - **Repository**: [LimaniBhavik/gananayantra-rusting](https://github.com/LimaniBhavik/gananayantra-rusting)
