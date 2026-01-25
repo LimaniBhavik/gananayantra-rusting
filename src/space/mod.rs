@@ -1,11 +1,18 @@
+pub mod orbital_velocity;
+
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {
     loop {
-        println!("\n--- Space Calculators ---");
+        println!("\n--- Space ---");
+        println!("1. Orbital Velocity Calculator");
         println!("0. Back");
 
-        let _choice = read_input("Select an option: ");
-        break;
+        let choice = read_input("Select an option: ");
+        match choice as i32 {
+            1 => orbital_velocity::run(),
+            0 => break,
+            _ => println!("Invalid choice."),
+        }
     }
 }
