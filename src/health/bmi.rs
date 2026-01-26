@@ -1,6 +1,11 @@
 use crate::calculators::utils::read_input;
 use std::io::{self, Write};
 
+/// Calculates Body Mass Index (BMI)
+/// 
+/// # Arguments
+/// * `weight_kg` - Weight in kilograms
+/// * `height_m` - Height in meters
 pub fn calculate_bmi(weight_kg: f64, height_m: f64) -> Result<f64, String> {
     if weight_kg <= 0.0 || height_m <= 0.0 {
         return Err("Weight and height must be positive values".to_string());

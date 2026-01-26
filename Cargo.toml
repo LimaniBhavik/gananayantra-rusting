@@ -9,5 +9,13 @@ readme = "README.md"
 keywords = ["calculator", "science", "math", "finance", "energy"]
 categories = ["science", "command-line-utilities"]
 
+[lib]
+name = "gananayantra"
+path = "src/lib.rs"
+
+[[bin]]
+name = "gananayantra-cli"
+path = "src/main.rs"
+
 [dependencies]
 chrono = "0.4"
