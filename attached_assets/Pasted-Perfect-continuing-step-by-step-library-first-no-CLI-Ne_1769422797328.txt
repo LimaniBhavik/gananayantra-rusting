@@ -1,0 +1,184 @@
+Perfect — continuing **step-by-step**, **library-first**, **no CLI**.
+Next we refactor the **Geo module**, starting with the **Haversine (Earth Distance)** calculator.
+
+We will touch **only one file** in this step.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → GEO (Earth Distance / Haversine)
+
+---
+
+## ✅ STEP 1: LOCK THE PUBLIC API
+
+This is what **users of your crate** should be able to write:
+
+```rust
+use gananayantra_rusting::geo::earth_distance::haversine_distance;
+
+let km = haversine_distance(23.0225, 72.5714, 19.0760, 72.8777)?;
+```
+
+✔ No stdin
+✔ No println
+✔ Reusable in any Rust project
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Geo Earth Distance (Haversine) calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Validate latitude and longitude ranges
+- Keep Earth radius as a private constant
+- Output distance in kilometers
+
+Only refactor:
+src/geo/earth_distance.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `earth_distance.rs` (REFERENCE)
+
+After refactor, the file **should look like this**:
+
+```rust
+const EARTH_RADIUS_KM: f64 = 6371.0;
+
+/// Calculates the great-circle distance between two points on Earth
+/// using the Haversine formula.
+///
+/// # Arguments
+/// * `lat1` - Latitude of first point (degrees)
+/// * `lon1` - Longitude of first point (degrees)
+/// * `lat2` - Latitude of second point (degrees)
+/// * `lon2` - Longitude of second point (degrees)
+///
+/// # Returns
+/// * Distance in kilometers
+pub fn haversine_distance(
+    lat1: f64,
+    lon1: f64,
+    lat2: f64,
+    lon2: f64,
+) -> Result<f64, String> {
+    if !( -90.0..=90.0 ).contains(&lat1) || !( -90.0..=90.0 ).contains(&lat2) {
+        return Err("Latitude must be between -90 and 90 degrees".into());
+    }
+    if !( -180.0..=180.0 ).contains(&lon1) || !( -180.0..=180.0 ).contains(&lon2) {
+        return Err("Longitude must be between -180 and 180 degrees".into());
+    }
+
+    let lat1_rad = lat1.to_radians();
+    let lat2_rad = lat2.to_radians();
+    let dlat = (lat2 - lat1).to_radians();
+    let dlon = (lon2 - lon1).to_radians();
+
+    let a = (dlat / 2.0).sin().powi(2)
+        + lat1_rad.cos() * lat2_rad.cos()
+        * (dlon / 2.0).sin().powi(2);
+
+    let c = 2.0 * a.sqrt().atan2((1.0 - a).sqrt());
+
+    Ok(EARTH_RADIUS_KM * c)
+}
+```
+
+This is now **clean, reusable, crate-grade geo logic**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/geo/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod earth_distance;
+pub mod horizon_distance;
+```
+
+(We’ll refactor `horizon_distance` next.)
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `earth_distance.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_equator_distance() {
+        let d = haversine_distance(0.0, 0.0, 0.0, 1.0).unwrap();
+        assert!((d - 111.0).abs() < 2.0);
+    }
+
+    #[test]
+    fn test_invalid_latitude() {
+        assert!(haversine_distance(100.0, 0.0, 0.0, 0.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = Geo refactor successful.
+
+---
+
+## 🧠 STATUS CHECKPOINT
+
+**Geo module progress:**
+
+| Calculator                 | Status |
+| -------------------------- | ------ |
+| Earth Distance (Haversine) | ✅      |
+| Horizon Distance           | ⏳ Next |
+
+Across the crate, you now have:
+
+* Finance ✅
+* Energy ✅
+* Utilities ✅
+* Geo (partial) ✅
+
+Everything is **library-first and importable**.
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what we refactor next:
+
+* **`GEO_HORIZON_NEXT`** → horizon distance
+* **`WATER_NEXT`** → pressure / river flow
+* **`SPACE_NEXT`** → orbital velocity, escape velocity
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility
+* **`REMOVE_MAIN`** → safely deprecate/remove CLI
+
+We continue **one calculator at a time**, clean and professional.

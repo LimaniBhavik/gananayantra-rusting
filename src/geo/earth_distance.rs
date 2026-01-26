@@ -1,26 +1,37 @@
 const EARTH_RADIUS_KM: f64 = 6371.0;
 
+/// Calculates the great-circle distance between two points on Earth
+/// using the Haversine formula.
+///
+/// # Arguments
+/// * `lat1` - Latitude of first point (degrees)
+/// * `lon1` - Longitude of first point (degrees)
+/// * `lat2` - Latitude of second point (degrees)
+/// * `lon2` - Longitude of second point (degrees)
+///
+/// # Returns
+/// * Distance in kilometers
 pub fn haversine_distance(
     lat1: f64,
     lon1: f64,
     lat2: f64,
     lon2: f64,
 ) -> Result<f64, String> {
-    if lat1 < -90.0 || lat1 > 90.0 || lat2 < -90.0 || lat2 > 90.0 {
-        return Err("Latitude must be between -90 and 90 degrees".to_string());
+    if !( -90.0..=90.0 ).contains(&lat1) || !( -90.0..=90.0 ).contains(&lat2) {
+        return Err("Latitude must be between -90 and 90 degrees".into());
     }
-    if lon1 < -180.0 || lon1 > 180.0 || lon2 < -180.0 || lon2 > 180.0 {
-        return Err("Longitude must be between -180 and 180 degrees".to_string());
+    if !( -180.0..=180.0 ).contains(&lon1) || !( -180.0..=180.0 ).contains(&lon2) {
+        return Err("Longitude must be between -180 and 180 degrees".into());
     }
 
     let lat1_rad = lat1.to_radians();
     let lat2_rad = lat2.to_radians();
-    let delta_lat = (lat2 - lat1).to_radians();
-    let delta_lon = (lon2 - lon1).to_radians();
+    let dlat = (lat2 - lat1).to_radians();
+    let dlon = (lon2 - lon1).to_radians();
 
-    let a = (delta_lat / 2.0).sin().powi(2)
+    let a = (dlat / 2.0).sin().powi(2)
         + lat1_rad.cos() * lat2_rad.cos()
-        * (delta_lon / 2.0).sin().powi(2);
+        * (dlon / 2.0).sin().powi(2);
 
     let c = 2.0 * a.sqrt().atan2((1.0 - a).sqrt());
 
@@ -47,8 +58,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_haversine_distance() {
-        let distance = haversine_distance(0.0, 0.0, 0.0, 1.0).unwrap();
-        assert!((distance - 111.0).abs() < 2.0);
+    fn test_equator_distance() {
+        let d = haversine_distance(0.0, 0.0, 0.0, 1.0).unwrap();
+        assert!((d - 111.0).abs() < 2.0);
+    }
+
+    #[test]
+    fn test_invalid_latitude() {
+        assert!(haversine_distance(100.0, 0.0, 0.0, 0.0).is_err());
     }
 }
