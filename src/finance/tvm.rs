@@ -1,3 +1,9 @@
+/// Calculates the future value of an investment.
+///
+/// # Arguments
+/// * `present_value` - Initial amount
+/// * `annual_rate` - Annual interest rate (decimal, e.g., 0.08 for 8%)
+/// * `years` - Number of years
 pub fn future_value(
     present_value: f64,
     annual_rate: f64,
@@ -14,7 +20,7 @@ pub fn future_value(
     Ok(fv)
 }
 
-pub fn run() {
+pub(crate) fn run() {
     println!("\n--- TVM (Future Value) Calculator ---");
     use crate::calculators::utils::read_input;
     

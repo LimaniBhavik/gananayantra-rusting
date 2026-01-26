@@ -1,13 +1,13 @@
 pub mod roi;
 pub mod tvm;
 pub mod compound_interest;
-pub mod financial;
-pub mod investment_ind;
-pub mod retirement_ind;
-pub mod tax_salary;
-pub mod sebi;
-pub mod advertising;
-pub mod ecommerce;
+pub(crate) mod financial;
+pub(crate) mod investment_ind;
+pub(crate) mod retirement_ind;
+pub(crate) mod tax_salary;
+pub(crate) mod sebi;
+pub(crate) mod advertising;
+pub(crate) mod ecommerce;
 
 use crate::calculators::utils::read_input;
 
