@@ -20,7 +20,7 @@ pub fn future_value(
     Ok(fv)
 }
 
-pub(crate) fn run() {
+pub fn run() {
     println!("\n--- TVM (Future Value) Calculator ---");
     use crate::calculators::utils::read_input;
     

@@ -1,0 +1,202 @@
+Perfect — we’ll continue **step-by-step**, **library-first**, **no CLI**, exactly as a professional Rust crate should evolve.
+
+We already agreed on the pattern.
+Now we **apply it to the NEXT calculator: ROI**.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → ROI CALCULATOR
+
+We will **only touch ROI** in this step.
+Nothing else. No big bang refactor.
+
+---
+
+## ✅ STEP A: CONFIRM TARGET API (VERY IMPORTANT)
+
+This is the **public API we want users to consume**:
+
+```rust
+use gananayantra_rusting::finance::roi::roi;
+
+let r = roi(1000.0, 1200.0)?;
+```
+
+No input handling.
+No printing.
+Pure function.
+
+---
+
+## ✅ STEP B: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Use **this exact prompt** in Replit AI:
+
+```
+Refactor the ROI calculator to be library-first.
+
+Rules:
+- This is part of a Rust library crate named `gananayantra-rusting`
+- No stdin, no println, no CLI assumptions
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Keep logic simple and reusable
+
+Only refactor:
+src/finance/roi.rs
+Do NOT touch other calculators.
+```
+
+---
+
+## ✅ STEP C: EXPECTED FINAL `roi.rs` (REFERENCE)
+
+After refactor, `src/finance/roi.rs` **should look like this**:
+
+```rust
+/// Calculates Return on Investment (ROI).
+///
+/// # Arguments
+/// * `initial_investment` - The initial amount invested
+/// * `final_value` - The final value after investment
+///
+/// # Returns
+/// * ROI percentage as f64
+pub fn roi(initial_investment: f64, final_value: f64) -> Result<f64, String> {
+    if initial_investment <= 0.0 {
+        return Err("Initial investment must be greater than zero".into());
+    }
+
+    Ok(((final_value - initial_investment) / initial_investment) * 100.0)
+}
+```
+
+This is now **crate-quality code**.
+
+---
+
+## ✅ STEP D: CHECK MODULE VISIBILITY
+
+Open:
+
+```
+src/finance/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod tvm;
+pub mod roi;
+pub mod compound_interest;
+```
+
+Nothing more. Nothing less.
+
+---
+
+## ✅ STEP E: VERIFY `lib.rs` EXPORTS FINANCE
+
+Open:
+
+```
+src/lib.rs
+```
+
+Ensure:
+
+```rust
+pub mod finance;
+```
+
+This is what enables:
+
+```rust
+use gananayantra_rusting::finance::roi::roi;
+```
+
+---
+
+## ✅ STEP F: ADD LIBRARY UNIT TEST (MANDATORY)
+
+At the bottom of `roi.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_roi() {
+        let r = roi(1000.0, 1200.0).unwrap();
+        assert_eq!(r, 20.0);
+    }
+
+    #[test]
+    fn test_invalid_initial() {
+        assert!(roi(0.0, 1200.0).is_err());
+    }
+}
+```
+
+Run in Replit:
+
+```bash
+cargo test
+```
+
+✅ Tests passing = refactor successful.
+
+---
+
+## ✅ STEP G: (OPTIONAL BUT PRO) ADD USAGE EXAMPLE
+
+Create:
+
+```
+examples/finance_roi.rs
+```
+
+```rust
+use gananayantra_rusting::finance::roi::roi;
+
+fn main() {
+    let result = roi(5000.0, 6500.0).unwrap();
+    println!("ROI: {:.2}%", result);
+}
+```
+
+Run:
+
+```bash
+cargo run --example finance_roi
+```
+
+---
+
+## 🧠 WHAT WE JUST ACHIEVED
+
+ROI is now:
+
+✔ Library-first
+✔ Importable
+✔ Testable
+✔ CLI-agnostic
+✔ Ready for crates.io users
+
+This is **exactly** how professional Rust crates are built.
+
+---
+
+## 🔁 WHAT HAPPENS NEXT (YOUR CHOICE)
+
+Reply with **ONE word**:
+
+* **`TVM_NEXT`** → refactor TVM fully (library polish)
+* **`COMPOUND`** → refactor compound interest
+* **`ENERGY`** → start converting energy calculators
+* **`STRUCTURE`** → finalize ideal crate structure before continuing
+* **`REMOVE_CLI`** → plan safe removal of `main.rs`
+
+We’ll continue **one calculator at a time**, clean and controlled.

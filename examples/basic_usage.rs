@@ -1,4 +1,4 @@
-use gananayantra::finance::tvm::future_value;
+use gananayantra_rusting::finance::tvm::future_value;
 
 fn main() {
     println!("--- Gananayantra Library Usage Example ---");
