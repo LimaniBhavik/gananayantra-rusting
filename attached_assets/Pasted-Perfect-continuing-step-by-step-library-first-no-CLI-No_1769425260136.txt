@@ -1,0 +1,168 @@
+Perfect — continuing **step-by-step**, **library-first**, **no CLI**.
+Now we refactor the **Space module**, starting with **Orbital Velocity**.
+
+We’ll convert **one calculator at a time**, exactly like before.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → SPACE (Orbital Velocity)
+
+---
+
+## ✅ STEP 1: LOCK THE PUBLIC API
+
+This is what **crate users** should be able to write:
+
+```rust
+use gananayantra_rusting::space::orbital_velocity::orbital_velocity;
+
+let v = orbital_velocity(400_000.0)?;
+```
+
+✔ No stdin
+✔ No println
+✔ Physics-correct
+✔ Reusable in any Rust project
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Space Orbital Velocity calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Keep physical constants private
+- Input: altitude above Earth surface in meters
+- Output: orbital velocity in meters per second (m/s)
+
+Only refactor:
+src/space/orbital_velocity.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `orbital_velocity.rs` (REFERENCE)
+
+After refactor, the file **should look like this**:
+
+```rust
+const G: f64 = 6.67430e-11;        // m^3 kg^-1 s^-2
+const EARTH_MASS: f64 = 5.972e24; // kg
+const EARTH_RADIUS: f64 = 6_371_000.0; // meters
+
+/// Calculates orbital velocity for a circular orbit around Earth.
+///
+/// # Arguments
+/// * `altitude_m` - Altitude above Earth's surface in meters
+///
+/// # Returns
+/// * Orbital velocity in meters per second (m/s)
+pub fn orbital_velocity(altitude_m: f64) -> Result<f64, String> {
+    if altitude_m < 0.0 {
+        return Err("Altitude cannot be negative".into());
+    }
+
+    let orbital_radius = EARTH_RADIUS + altitude_m;
+    let velocity = (G * EARTH_MASS / orbital_radius).sqrt();
+
+    Ok(velocity)
+}
+```
+
+This is now **pure orbital mechanics library code**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/space/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod orbital_velocity;
+pub mod escape_velocity;
+pub mod orbital_period;
+```
+
+(We’ll refactor the other two next.)
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `orbital_velocity.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_orbital_velocity_leo() {
+        let v = orbital_velocity(400_000.0).unwrap();
+        assert!((v - 7670.0).abs() < 150.0);
+    }
+
+    #[test]
+    fn test_invalid_altitude() {
+        assert!(orbital_velocity(-1.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = Space refactor step 1 complete.
+
+---
+
+## 🧠 STATUS CHECKPOINT
+
+**Space module progress:**
+
+| Calculator       | Status |
+| ---------------- | ------ |
+| Orbital Velocity | ✅      |
+| Escape Velocity  | ⏳ Next |
+| Orbital Period   | ⏳ Next |
+
+Across the crate now:
+
+* Finance ✅
+* Energy ✅
+* Utilities ✅
+* Geo ✅
+* Water ✅
+* Space (partial) ✅
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what we refactor next:
+
+* **`SPACE_ESCAPE_NEXT`** → escape velocity
+* **`SPACE_PERIOD_NEXT`** → orbital period
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility rules
+* **`REMOVE_MAIN`** → safely deprecate/remove CLI
+
+We continue **one calculator at a time**, clean and professional.
