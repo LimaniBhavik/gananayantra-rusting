@@ -6,7 +6,7 @@ description = "A comprehensive, modular multi-purpose calculator suite including
 license = "MIT"
 repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
 readme = "README.md"
-keywords = ["calculator", "health", "finance", "math", "ecommerce", "energy", "space", "geo"]
+keywords = ["calculator", "science", "math", "finance", "energy"]
 categories = ["science", "command-line-utilities"]
 
 [dependencies]
