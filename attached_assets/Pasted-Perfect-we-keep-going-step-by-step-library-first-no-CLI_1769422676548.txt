@@ -1,0 +1,158 @@
+Perfect — we keep going **step-by-step**, **library-first**, **no CLI**.
+Next up: **Utilities → Percentage calculator** refactor.
+
+This one is important because utilities are **widely reused** across projects.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → UTILITIES (Percentage)
+
+We will refactor **only the percentage calculator**.
+
+---
+
+## ✅ STEP 1: LOCK THE PUBLIC API (VERY IMPORTANT)
+
+This is what **users of your crate** should be able to write:
+
+```rust
+use gananayantra_rusting::utilities::percentage::percentage_of;
+
+let result = percentage_of(200.0, 15.0)?;
+```
+
+✔ Simple
+✔ Reusable
+✔ No forced workflow
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Percentage calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Validate inputs clearly
+- Keep the function generic and reusable
+
+Only refactor:
+src/utilities/percentage.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `percentage.rs` (REFERENCE)
+
+After refactor, your file **should look like this**:
+
+```rust
+/// Calculates a percentage of a given value.
+///
+/// # Arguments
+/// * `value` - Base value
+/// * `percent` - Percentage to apply (e.g. 15 for 15%)
+///
+/// # Returns
+/// * Calculated percentage value
+pub fn percentage_of(value: f64, percent: f64) -> Result<f64, String> {
+    if value < 0.0 {
+        return Err("Value cannot be negative".into());
+    }
+
+    Ok((percent / 100.0) * value)
+}
+```
+
+This is now **crate-quality utility code**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/utilities/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod percentage;
+```
+
+(We’ll add more utilities later.)
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `percentage.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_percentage_of() {
+        let result = percentage_of(200.0, 15.0).unwrap();
+        assert_eq!(result, 30.0);
+    }
+
+    #[test]
+    fn test_invalid_value() {
+        assert!(percentage_of(-100.0, 10.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = refactor complete.
+
+---
+
+## 🧠 STATUS CHECKPOINT
+
+**Utilities module (library-ready):**
+
+| Calculator | Status |
+| ---------- | ------ |
+| Percentage | ✅      |
+
+Across the crate, you now have:
+
+* Finance ✅
+* Energy ✅
+* Utilities ✅
+
+All **library-grade**, importable, and testable.
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what we refactor next:
+
+* **`GEO_NEXT`** → Geo calculators (Haversine, horizon)
+* **`WATER_NEXT`** → Water calculators
+* **`SPACE_NEXT`** → Space calculators
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility rules
+* **`REMOVE_MAIN`** → safely remove/deprecate CLI
+
+We continue **one calculator/module at a time**, professional and controlled.
