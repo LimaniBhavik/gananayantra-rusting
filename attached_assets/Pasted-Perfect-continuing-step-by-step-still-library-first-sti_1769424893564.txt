@@ -1,0 +1,160 @@
+Perfect — continuing **step-by-step**, still **library-first**, still **no CLI**.
+Next we finish the **Geo module** by refactoring **Horizon Distance (Earth Curvature)**.
+
+We will touch **only this calculator**.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → GEO (Horizon Distance)
+
+---
+
+## ✅ STEP 1: LOCK THE PUBLIC API
+
+This is what **users of your crate** should write:
+
+```rust
+use gananayantra_rusting::geo::horizon_distance::horizon_distance;
+
+let km = horizon_distance(10.0)?;
+```
+
+✔ No stdin
+✔ No println
+✔ Works in any Rust project
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Geo Horizon Distance calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Keep Earth radius as a private constant
+- Input height in meters, output distance in kilometers
+
+Only refactor:
+src/geo/horizon_distance.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `horizon_distance.rs` (REFERENCE)
+
+After refactor, the file **should look like this**:
+
+```rust
+const EARTH_RADIUS_M: f64 = 6_371_000.0;
+
+/// Calculates the distance to the horizon accounting for Earth’s curvature.
+///
+/// # Arguments
+/// * `height_m` - Observer height above Earth surface in meters
+///
+/// # Returns
+/// * Distance to the horizon in kilometers
+pub fn horizon_distance(height_m: f64) -> Result<f64, String> {
+    if height_m < 0.0 {
+        return Err("Height cannot be negative".into());
+    }
+
+    let distance_m =
+        (2.0 * EARTH_RADIUS_M * height_m + height_m.powi(2)).sqrt();
+
+    Ok(distance_m / 1000.0)
+}
+```
+
+This is now **pure, reusable geo logic**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/geo/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod earth_distance;
+pub mod horizon_distance;
+```
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `horizon_distance.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_horizon_distance_10m() {
+        let d = horizon_distance(10.0).unwrap();
+        assert!((d - 11.3).abs() < 0.5);
+    }
+
+    #[test]
+    fn test_invalid_height() {
+        assert!(horizon_distance(-5.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = refactor complete.
+
+---
+
+## 🧠 STATUS CHECKPOINT
+
+**Geo module (library-ready):**
+
+| Calculator                 | Status |
+| -------------------------- | ------ |
+| Earth Distance (Haversine) | ✅      |
+| Horizon Distance           | ✅      |
+
+Across the crate now:
+
+* Finance ✅
+* Energy ✅
+* Utilities ✅
+* Geo ✅
+
+All **importable**, **documented**, **testable**.
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what we refactor next:
+
+* **`WATER_NEXT`** → pressure & river flow
+* **`SPACE_NEXT`** → orbital, escape, period
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility rules
+* **`REMOVE_MAIN`** → safely deprecate/remove CLI
+
+We keep going **one calculator/module at a time**, professional-grade.
