@@ -1,0 +1,188 @@
+Perfect — we continue **step-by-step, library-first**.
+Next up: **TVM (Time Value of Money)** refactor, done the **right Rust-crate way**.
+
+This follows **exactly the same pattern** we just locked with ROI.
+No CLI. No stdin. Clean public API.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → TVM CALCULATOR
+
+We will **only touch TVM** in this step.
+
+---
+
+## ✅ STEP 1: DEFINE THE TARGET PUBLIC API
+
+This is what **other developers** should be able to write:
+
+```rust
+use gananayantra_rusting::finance::tvm::future_value;
+
+let fv = future_value(10_000.0, 0.08, 5)?;
+```
+
+✔ Simple
+✔ Predictable
+✔ No assumptions about UI or CLI
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Use **this exact prompt** in Replit AI:
+
+```
+Refactor the TVM calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Function must return Result<f64, String>
+- Add proper Rust doc comments (///)
+- Keep math precise and readable
+
+Only refactor:
+src/finance/tvm.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `tvm.rs` (REFERENCE)
+
+After refactor, `src/finance/tvm.rs` **should look like this**:
+
+```rust
+/// Calculates the future value of an investment using compound interest.
+///
+/// # Arguments
+/// * `present_value` - Initial amount invested
+/// * `annual_rate` - Annual interest rate (decimal, e.g. 0.08 for 8%)
+/// * `years` - Number of years
+///
+/// # Returns
+/// * Future value of the investment
+pub fn future_value(
+    present_value: f64,
+    annual_rate: f64,
+    years: u32,
+) -> Result<f64, String> {
+    if present_value <= 0.0 {
+        return Err("Present value must be greater than zero".into());
+    }
+    if annual_rate < 0.0 {
+        return Err("Annual rate cannot be negative".into());
+    }
+
+    Ok(present_value * (1.0 + annual_rate).powi(years as i32))
+}
+```
+
+This is now **crate-grade, reusable API code**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE VISIBILITY
+
+Open:
+
+```
+src/finance/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod roi;
+pub mod tvm;
+pub mod compound_interest;
+```
+
+Nothing else needed.
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS (MANDATORY)
+
+Add this **at the bottom** of `tvm.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_future_value() {
+        let fv = future_value(10_000.0, 0.08, 5).unwrap();
+        assert!((fv - 14693.28).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_invalid_present_value() {
+        assert!(future_value(0.0, 0.08, 5).is_err());
+    }
+}
+```
+
+Run in Replit:
+
+```bash
+cargo test
+```
+
+✅ Passing tests = success.
+
+---
+
+## ✅ STEP 6: (OPTIONAL BUT PRO) ADD AN EXAMPLE
+
+Create:
+
+```
+examples/finance_tvm.rs
+```
+
+```rust
+use gananayantra_rusting::finance::tvm::future_value;
+
+fn main() {
+    let fv = future_value(10_000.0, 0.08, 5).unwrap();
+    println!("Future Value: {:.2}", fv);
+}
+```
+
+Run:
+
+```bash
+cargo run --example finance_tvm
+```
+
+---
+
+## 🧠 WHAT WE HAVE NOW
+
+Finance module status:
+
+| Calculator        | Status          |
+| ----------------- | --------------- |
+| ROI               | ✅ Library-ready |
+| TVM               | ✅ Library-ready |
+| Compound Interest | ⏳ Next          |
+
+You are **systematically converting gananayantra-rusting into a real Rust crate**.
+
+No shortcuts. No breakage. No “autonomous mode” nonsense.
+
+---
+
+## 🔜 NEXT STEP (CHOOSE ONE — REPLY WITH ONE WORD)
+
+* **`COMPOUND_NEXT`** → refactor Compound Interest
+* **`ENERGY_NEXT`** → start Energy module refactor
+* **`STRUCTURE_LOCK`** → finalize crate structure & visibility rules
+* **`REMOVE_MAIN`** → safely remove CLI (`main.rs`) plan
+
+We continue **one calculator at a time**, professional-grade.
