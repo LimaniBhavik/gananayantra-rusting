@@ -1,0 +1,178 @@
+Perfect — continuing **step-by-step**, **library-first**, no CLI.
+Next up: **Energy → Electricity Cost** refactor.
+
+We’ll touch **only this calculator**.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → ENERGY (Electricity Cost)
+
+## ✅ STEP 1: LOCK THE PUBLIC API
+
+This is what crate users should write:
+
+```rust
+use gananayantra_rusting::energy::electricity_cost::electricity_cost;
+
+let cost = electricity_cost(12.0, 6.0)?;
+```
+
+✔ No stdin
+✔ No println
+✔ Reusable anywhere
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Electricity Cost calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Validate inputs clearly
+- Keep units explicit (kWh, cost per kWh)
+
+Only refactor:
+src/energy/electricity_cost.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `electricity_cost.rs` (REFERENCE)
+
+After refactor, the file **should look like this**:
+
+```rust
+/// Calculates the electricity cost based on energy consumption.
+///
+/// # Arguments
+/// * `energy_kwh` - Energy consumed in kilowatt-hours (kWh)
+/// * `cost_per_kwh` - Cost per kilowatt-hour
+///
+/// # Returns
+/// * Total electricity cost
+pub fn electricity_cost(
+    energy_kwh: f64,
+    cost_per_kwh: f64,
+) -> Result<f64, String> {
+    if energy_kwh < 0.0 {
+        return Err("Energy consumption cannot be negative".into());
+    }
+    if cost_per_kwh < 0.0 {
+        return Err("Cost per kWh cannot be negative".into());
+    }
+
+    Ok(energy_kwh * cost_per_kwh)
+}
+```
+
+This is **crate-quality API code**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/energy/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod power_consumption;
+pub mod electricity_cost;
+```
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `electricity_cost.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_electricity_cost() {
+        let cost = electricity_cost(12.0, 6.0).unwrap();
+        assert_eq!(cost, 72.0);
+    }
+
+    #[test]
+    fn test_invalid_energy() {
+        assert!(electricity_cost(-1.0, 6.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing tests = success.
+
+---
+
+## ✅ STEP 6: (OPTIONAL, PRO) ADD AN EXAMPLE
+
+Create:
+
+```
+examples/energy_electricity_cost.rs
+```
+
+```rust
+use gananayantra_rusting::energy::electricity_cost::electricity_cost;
+
+fn main() {
+    let cost = electricity_cost(12.0, 6.0).unwrap();
+    println!("Electricity Cost: {}", cost);
+}
+```
+
+Run:
+
+```bash
+cargo run --example energy_electricity_cost
+```
+
+---
+
+## 🧠 STATUS CHECKPOINT
+
+**Energy module (library-ready):**
+
+| Calculator        | Status |
+| ----------------- | ------ |
+| Power Consumption | ✅      |
+| Electricity Cost  | ✅      |
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what to refactor next:
+
+* **`UTILS_NEXT`** → Utilities (Percentage)
+* **`GEO_NEXT`** → Geo calculators
+* **`WATER_NEXT`** → Water calculators
+* **`SPACE_NEXT`** → Space calculators
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility
+* **`REMOVE_MAIN`** → safely deprecate/remove CLI
+
+We’ll keep going **one calculator at a time**, clean and professional.
