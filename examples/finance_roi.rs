@@ -1,4 +1,4 @@
-use gananayantra_rusting::finance::roi::roi;
+use gananayantra::finance::roi::roi;
 
 fn main() {
     println!("--- ROI Library Example ---");
