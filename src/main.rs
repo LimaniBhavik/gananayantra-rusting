@@ -1,16 +1,15 @@
-mod calculators;
-mod finance_investment;
-mod energy;
-mod geo;
-mod water;
-mod space;
-mod utilities;
-mod health;
-mod finance;
-mod math;
-mod auto;
-mod specialized;
-mod utility_lifestyle;
+use gananayantra::health;
+use gananayantra::finance;
+use gananayantra::math;
+use gananayantra::auto;
+use gananayantra::finance_investment;
+use gananayantra::energy;
+use gananayantra::geo;
+use gananayantra::water;
+use gananayantra::space;
+use gananayantra::utilities;
+use gananayantra::specialized;
+use gananayantra::utility_lifestyle;
 
 use std::io::{self, Write};
 
