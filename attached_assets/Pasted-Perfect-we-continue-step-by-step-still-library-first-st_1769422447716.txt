@@ -1,0 +1,161 @@
+Perfect — we continue **step-by-step**, still **library-first**, still **safe**.
+Now we start refactoring the **Energy module**.
+
+We’ll convert **ONE energy calculator first** and lock the pattern.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → ENERGY (Power Consumption)
+
+This is the **simplest Energy calculator**, so it’s the right starting point.
+
+---
+
+## ✅ STEP 1: TARGET PUBLIC API (LOCK IT)
+
+This is what **crate users** should write:
+
+```rust
+use gananayantra_rusting::energy::power::energy_consumption;
+
+let kwh = energy_consumption(1.5, 8.0)?;
+```
+
+✔ Clean
+✔ No CLI
+✔ Usable in any Rust project
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Energy Power Consumption calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Keep units explicit (kW, hours, kWh)
+- Validate inputs clearly
+
+Only refactor:
+src/energy/power_consumption.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL FILE (REFERENCE)
+
+After refactor, `src/energy/power_consumption.rs` **should look like this**:
+
+```rust
+/// Calculates energy consumption in kilowatt-hours (kWh).
+///
+/// # Arguments
+/// * `power_kw` - Power rating in kilowatts (kW)
+/// * `hours` - Usage duration in hours
+///
+/// # Returns
+/// * Energy consumed in kWh
+pub fn energy_consumption(
+    power_kw: f64,
+    hours: f64,
+) -> Result<f64, String> {
+    if power_kw < 0.0 {
+        return Err("Power cannot be negative".into());
+    }
+    if hours < 0.0 {
+        return Err("Hours cannot be negative".into());
+    }
+
+    Ok(power_kw * hours)
+}
+```
+
+This is **pure library code**.
+
+---
+
+## ✅ STEP 4: FIX MODULE EXPORT
+
+Open:
+
+```
+src/energy/mod.rs
+```
+
+Update it to:
+
+```rust
+pub mod power_consumption;
+pub mod electricity_cost;
+```
+
+(We’ll refactor `electricity_cost` next.)
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TEST
+
+At the bottom of `power_consumption.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_energy_consumption() {
+        let kwh = energy_consumption(1.5, 8.0).unwrap();
+        assert_eq!(kwh, 12.0);
+    }
+
+    #[test]
+    fn test_invalid_input() {
+        assert!(energy_consumption(-1.0, 5.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = Energy refactor success.
+
+---
+
+## 🧠 STATUS UPDATE
+
+Energy module progress:
+
+| Calculator        | Status          |
+| ----------------- | --------------- |
+| Power Consumption | ✅ Library-ready |
+| Electricity Cost  | ⏳ Next          |
+
+You are now **systematically converting the entire project into a real Rust crate**.
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+Choose what to refactor next:
+
+* **`ENERGY_COST_NEXT`** → electricity cost calculator
+* **`UTILS_NEXT`** → utilities (percentage)
+* **`GEO_NEXT`** → geo calculators
+* **`WATER_NEXT`** → water calculators
+* **`STRUCTURE_LOCK`** → finalize crate layout & visibility
+* **`REMOVE_MAIN`** → plan safe CLI removal
+
+We keep going **one calculator at a time**, professional-grade.
