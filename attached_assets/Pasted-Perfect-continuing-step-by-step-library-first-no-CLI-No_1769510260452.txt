@@ -1,0 +1,169 @@
+Perfect — continuing **step-by-step**, **library-first**, **no CLI**.
+Now we finish the **Space module** by refactoring **Orbital Period**.
+
+Only **one calculator**, clean and controlled.
+
+---
+
+# 🔁 NEXT STEP: LIBRARY REFACTOR → SPACE (Orbital Period)
+
+---
+
+## ✅ STEP 1: LOCK THE PUBLIC API
+
+This is what **crate users** should be able to write:
+
+```rust
+use gananayantra_rusting::space::orbital_period::orbital_period;
+
+let minutes = orbital_period(400_000.0)?;
+```
+
+✔ No stdin
+✔ No println
+✔ Physics-correct
+✔ Reusable in any Rust project
+
+---
+
+## ✅ STEP 2: PROMPT TO GIVE REPLIT (COPY–PASTE)
+
+Paste **exactly this** into Replit AI:
+
+```
+Refactor the Space Orbital Period calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- No stdin, no println, no CLI logic
+- One public function only
+- Return Result<f64, String>
+- Add Rust doc comments (///)
+- Keep physical constants private
+- Input: altitude above Earth surface in meters
+- Output: orbital period in minutes
+
+Only refactor:
+src/space/orbital_period.rs
+
+Do NOT touch other modules.
+```
+
+---
+
+## ✅ STEP 3: EXPECTED FINAL `orbital_period.rs` (REFERENCE)
+
+After refactor, the file **should look like this**:
+
+```rust
+const G: f64 = 6.67430e-11;        // m^3 kg^-1 s^-2
+const EARTH_MASS: f64 = 5.972e24; // kg
+const EARTH_RADIUS: f64 = 6_371_000.0; // meters
+const PI: f64 = std::f64::consts::PI;
+
+/// Calculates the orbital period of a satellite in a circular Earth orbit.
+///
+/// # Arguments
+/// * `altitude_m` - Altitude above Earth's surface in meters
+///
+/// # Returns
+/// * Orbital period in minutes
+pub fn orbital_period(altitude_m: f64) -> Result<f64, String> {
+    if altitude_m < 0.0 {
+        return Err("Altitude cannot be negative".into());
+    }
+
+    let r = EARTH_RADIUS + altitude_m;
+    let period_seconds = 2.0 * PI * (r.powi(3) / (G * EARTH_MASS)).sqrt();
+
+    Ok(period_seconds / 60.0)
+}
+```
+
+This is now **pure orbital mechanics library code**.
+
+---
+
+## ✅ STEP 4: VERIFY MODULE EXPORT
+
+Open:
+
+```
+src/space/mod.rs
+```
+
+Ensure it contains:
+
+```rust
+pub mod orbital_velocity;
+pub mod escape_velocity;
+pub mod orbital_period;
+```
+
+---
+
+## ✅ STEP 5: ADD LIBRARY UNIT TESTS
+
+Add this **to the bottom** of `orbital_period.rs`:
+
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_orbital_period_leo() {
+        let t = orbital_period(400_000.0).unwrap();
+        assert!((t - 92.0).abs() < 3.0);
+    }
+
+    #[test]
+    fn test_invalid_altitude() {
+        assert!(orbital_period(-1.0).is_err());
+    }
+}
+```
+
+Run:
+
+```bash
+cargo test
+```
+
+✅ Passing = Space module fully refactored.
+
+---
+
+## 🧠 STATUS CHECKPOINT (BIG ONE)
+
+**Space module (library-ready):**
+
+| Calculator       | Status |
+| ---------------- | ------ |
+| Orbital Velocity | ✅      |
+| Escape Velocity  | ✅      |
+| Orbital Period   | ✅      |
+
+### Entire crate status:
+
+* Finance ✅
+* Energy ✅
+* Utilities ✅
+* Geo ✅
+* Water ✅
+* Space ✅
+
+🎉 **All calculators are now library-grade**.
+
+---
+
+## 🚀 NEXT MAJOR STEP (VERY IMPORTANT)
+
+Reply with **ONE word** to proceed:
+
+* **`STRUCTURE_LOCK`** → finalize crate layout, visibility (`pub` vs `pub(crate)`), API stability
+* **`REMOVE_MAIN`** → safely remove/deprecate `main.rs` and CLI
+* **`DOCS`** → add crate-level docs & rustdoc examples
+* **`CRATES_IO`** → prepare for crates.io release
+
+This is the final stretch — you’ve done the hard part.
