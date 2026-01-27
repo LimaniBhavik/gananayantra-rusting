@@ -30,7 +30,6 @@ pub mod water;
 
 // Internal modules (not exposed to library users yet)
 mod auto;
-mod health;
 mod specialized;
 mod utility_lifestyle;
 mod calculators;
