@@ -1,0 +1,235 @@
+Perfect. We now move to the **most important architectural step** — this is what officially turns **gananayantra-rusting** into a **professional Rust library crate**.
+
+We’ll do this **slowly, safely, step-by-step**.
+
+---
+
+# 🔒 NEXT STEP: **STRUCTURE_LOCK**
+
+> Finalize crate layout, visibility rules, and public API boundaries
+
+This step ensures:
+
+* Users only see what they should
+* Internals stay private
+* API becomes stable and professional
+* Future growth doesn’t cause breaking changes
+
+---
+
+## 🎯 GOAL OF STRUCTURE_LOCK
+
+After this step:
+
+```rust
+use gananayantra_rusting::finance::tvm::future_value;
+use gananayantra_rusting::energy::power_consumption::energy_consumption;
+```
+
+✔ Works
+✔ Clean
+✔ No accidental exposure
+✔ No CLI assumptions
+
+---
+
+# ✅ STEP 1: DEFINE PUBLIC VS PRIVATE RULES (VERY IMPORTANT)
+
+### 🟢 PUBLIC (`pub`)
+
+Use **only** for:
+
+* Industry modules (`finance`, `energy`, `geo`, etc.)
+* Calculator modules (`tvm`, `roi`, etc.)
+* Public calculator functions
+
+### 🔴 PRIVATE (default / `pub(crate)`)
+
+Use for:
+
+* Constants
+* Helper functions
+* Internal math utilities
+* Future shared helpers
+
+> **Rule:**
+> If a user doesn’t need to call it → it should NOT be public.
+
+---
+
+# ✅ STEP 2: LOCK `lib.rs` (CRATE ENTRY POINT)
+
+### 🔹 Prompt to Replit (COPY–PASTE)
+
+```
+Finalize src/lib.rs for a professional Rust library.
+
+Rules:
+- Expose only top-level industry modules
+- No re-exports yet
+- No CLI references
+- Keep it minimal and stable
+
+Show final lib.rs.
+```
+
+### ✅ Expected `lib.rs`
+
+```rust
+//! gananayantra-rusting
+//!
+//! A multi-industry calculation engine covering finance, energy,
+//! geospatial, water, space, and utility domains.
+
+pub mod finance;
+pub mod utilities;
+pub mod energy;
+pub mod geo;
+pub mod water;
+pub mod space;
+```
+
+This file should **rarely change**.
+
+---
+
+# ✅ STEP 3: LOCK MODULE VISIBILITY (ONE PATTERN)
+
+We now apply the **same rule everywhere**.
+
+### Example: `src/finance/mod.rs`
+
+```rust
+pub mod roi;
+pub mod tvm;
+pub mod compound_interest;
+```
+
+### Inside calculators
+
+* Functions: `pub fn`
+* Constants: **NOT pub**
+
+✔ Already matches what we did — this step just **confirms consistency**
+
+---
+
+# ✅ STEP 4: REMOVE ALL `main.rs` DEPENDENCY (WITHOUT DELETING YET)
+
+We do **NOT delete** `main.rs` yet.
+
+We make sure:
+
+* `cargo build` works **without** running main
+* Library compiles independently
+
+### 🔹 Prompt to Replit
+
+```
+Verify that gananayantra-rusting builds as a library crate.
+
+Steps:
+- Ensure no library module depends on main.rs
+- Ensure no stdin/println logic exists in library code
+- Confirm `cargo build` and `cargo test` pass
+
+Report findings.
+```
+
+---
+
+# ✅ STEP 5: MARK CLI AS OPTIONAL (TRANSITION PHASE)
+
+Add this comment at the **top of `main.rs`**:
+
+```rust
+// NOTE:
+// This binary is deprecated.
+// gananayantra-rusting is now a library-first crate.
+// This CLI will be removed or moved to a separate crate.
+```
+
+This is a **professional deprecation signal**.
+
+---
+
+# ✅ STEP 6: ADD `examples/` AS PRIMARY USER ENTRY
+
+Rust best practice:
+
+> **Examples replace CLI**
+
+Ensure you have:
+
+```
+examples/
+├── finance_tvm.rs
+├── finance_roi.rs
+├── energy_power.rs
+├── geo_distance.rs
+├── space_orbit.rs
+```
+
+### 🔹 Prompt to Replit
+
+```
+Audit the examples/ directory.
+
+Ensure:
+- Examples use only the public API
+- No example accesses internal modules
+- Examples compile via `cargo run --example <name>`
+```
+
+---
+
+# ✅ STEP 7: API STABILITY CHECK (CRITICAL)
+
+Ask yourself (and Replit):
+
+* Are function names intuitive?
+* Are units clear?
+* Are errors meaningful?
+* Would changing internals break users? (Answer should be NO)
+
+### 🔹 Prompt to Replit
+
+```
+Review the public API of gananayantra-rusting.
+
+Check:
+- Function naming clarity
+- Argument order consistency
+- Unit documentation
+- Error message quality
+
+Suggest improvements WITHOUT breaking API.
+```
+
+---
+
+# 🧠 WHAT STRUCTURE_LOCK ACHIEVES
+
+After this step:
+
+✔ Clean public API
+✔ Internal freedom to refactor
+✔ Safe for crates.io
+✔ Safe for enterprise use
+✔ Easy to document
+✔ Easy to version
+
+This is **exactly** how serious Rust crates are structured.
+
+---
+
+# 🚀 NEXT STEP (CHOOSE ONE WORD)
+
+Reply with **one word**:
+
+* **`REMOVE_MAIN`** → fully remove CLI & convert to pure library
+* **`DOCS`** → add crate-level docs & rustdoc examples
+* **`CRATES_IO`** → prepare for crates.io release (metadata, versioning)
+* **`API_POLISH`** → optional re-exports for ultra-clean imports
+
+You’ve officially crossed from “project” → **real Rust library**.

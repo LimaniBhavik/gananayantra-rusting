@@ -1,13 +1,20 @@
-pub mod auto;
-pub mod calculators;
+//! gananayantra-rusting
+//!
+//! A multi-industry calculation engine covering finance, energy,
+//! geospatial, water, space, and utility domains.
+
 pub mod energy;
 pub mod finance;
-pub mod finance_investment;
 pub mod geo;
-pub mod health;
-pub mod math;
 pub mod space;
-pub mod specialized;
 pub mod utilities;
-pub mod utility_lifestyle;
 pub mod water;
+
+// Internal modules (not exposed to library users yet)
+mod auto;
+mod health;
+mod specialized;
+mod utility_lifestyle;
+mod calculators;
+mod math;
+mod finance_investment;
