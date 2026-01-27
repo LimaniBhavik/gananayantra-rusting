@@ -1,38 +1,40 @@
-use crate::calculators::utils::read_input;
+/// Calculates Daily Calorie Requirements based on BMR and Activity Multiplier.
+///
+/// # Arguments
+/// * `bmr` - Basal Metabolic Rate in kcal/day
+/// * `activity_multiplier` - Activity level multiplier (e.g., 1.2 for Sedentary, 1.9 for Extra Active)
+///
+/// # Returns
+/// * Daily maintenance calories as f64
+pub fn daily_calorie_requirement(
+    bmr: f64,
+    activity_multiplier: f64,
+) -> Result<f64, String> {
+    if bmr <= 0.0 {
+        return Err("BMR must be a positive value".into());
+    }
+    if !(1.0..=2.5).contains(&activity_multiplier) {
+        return Err("Activity multiplier must be between 1.0 and 2.5".into());
+    }
 
-pub fn run() {
-    println!("\n--- Calorie Calculator ---");
-    println!("First, we need your BMR.");
-    let gender = crate::calculators::utils::read_string("Enter gender (m/f): ");
-    let weight = read_input("Enter weight (kg): ");
-    let height = read_input("Enter height (cm): ");
-    let age = read_input("Enter age: ");
+    Ok(bmr * activity_multiplier)
+}
 
-    let bmr = if gender.to_lowercase() == "m" {
-        10.0 * weight + 6.25 * height - 5.0 * age + 5.0
-    } else {
-        10.0 * weight + 6.25 * height - 5.0 * age - 161.0
-    };
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    println!("\nActivity Level:");
-    println!("1. Sedentary (little or no exercise)");
-    println!("2. Lightly active (1-3 days/week)");
-    println!("3. Moderately active (3-5 days/week)");
-    println!("4. Very active (6-7 days/week)");
-    println!("5. Extra active (very hard exercise/physical job)");
-    
-    let activity = read_input("Select activity level (1-5): ");
-    let factor = match activity as i32 {
-        1 => 1.2,
-        2 => 1.375,
-        3 => 1.55,
-        4 => 1.725,
-        5 => 1.9,
-        _ => 1.2,
-    };
+    #[test]
+    fn test_calorie_requirement() {
+        // Example: BMR 1673.75, Moderate Active 1.55
+        let result = daily_calorie_requirement(1673.75, 1.55).unwrap();
+        assert!((result - 2594.31).abs() < 0.01);
+    }
 
-    let tdee = bmr * factor;
-    println!("\nYour Daily Maintenance Calories: {:.0} kcal", tdee);
-    println!("To lose weight (0.5kg/week): {:.0} kcal", tdee - 500.0);
-    println!("To gain weight (0.5kg/week): {:.0} kcal", tdee + 500.0);
+    #[test]
+    fn test_invalid_input() {
+        assert!(daily_calorie_requirement(0.0, 1.55).is_err());
+        assert!(daily_calorie_requirement(1600.0, 0.5).is_err());
+        assert!(daily_calorie_requirement(1600.0, 3.0).is_err());
+    }
 }
