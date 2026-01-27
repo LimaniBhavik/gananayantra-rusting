@@ -1,3 +1,6 @@
+//! Space and orbital mechanics calculators including
+//! orbital velocity, escape velocity, and orbital period.
+
 pub mod orbital_velocity;
 pub mod escape_velocity;
 pub mod orbital_period;

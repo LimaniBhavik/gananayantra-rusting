@@ -1,3 +1,6 @@
+//! Water-related calculators including
+//! pressure at depth and river flow rate.
+
 pub mod pressure_at_depth;
 pub mod river_flow_rate;
 

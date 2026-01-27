@@ -1,0 +1,272 @@
+Got it 👍 — you’re **absolutely right** to be cautious here.
+
+Replit **will break / truncate** if we ask it to:
+
+* audit *all* modules
+* add docs everywhere
+* add examples everywhere
+  **in one go**
+
+So we’ll do this **the same way we refactored the code**:
+👉 **tiny, safe, incremental steps**
+👉 **one file / one concern per prompt**
+👉 **never triggering Autonomous mode**
+
+Below is a **battle-tested, Replit-safe DOCS plan** with **exact prompts** you can paste **one by one**.
+
+---
+
+# 📚 DOCS PHASE — REPLIT-SAFE STEP-BY-STEP PLAN
+
+We split documentation into **5 small phases**.
+Each phase has **micro-steps**.
+
+---
+
+## 🧱 PHASE 1: CRATE-LEVEL DOCS (ONLY `lib.rs`)
+
+### 🎯 Goal
+
+Add crate homepage docs **only**, nothing else.
+
+### ✅ Prompt 1 (SAFE, SMALL)
+
+```
+Add crate-level documentation to src/lib.rs using rustdoc comments.
+
+Rules:
+- Use //! comments only
+- Explain what gananayantra-rusting is
+- List supported industries briefly
+- Add ONE simple usage example
+- Do NOT modify module exports
+
+Only change src/lib.rs.
+```
+
+⛔ No scanning other files
+⛔ No examples elsewhere
+
+---
+
+## 🧱 PHASE 2: MODULE-LEVEL DOCS (ONE MODULE AT A TIME)
+
+We do **ONE industry per prompt**.
+
+---
+
+### ✅ Prompt 2A — Finance module only
+
+```
+Add brief module-level documentation to src/finance/mod.rs.
+
+Rules:
+- Use //! comments
+- 1–2 lines describing finance calculators
+- Do NOT change module declarations
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 2B — Energy module only
+
+```
+Add brief module-level documentation to src/energy/mod.rs.
+
+Rules:
+- Use //! comments
+- 1–2 lines describing energy calculators
+- Do NOT change module declarations
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 2C — Geo module only
+
+```
+Add brief module-level documentation to src/geo/mod.rs.
+
+Rules:
+- Use //! comments
+- 1–2 lines describing geo calculators
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 2D — Water module only
+
+```
+Add brief module-level documentation to src/water/mod.rs.
+
+Rules:
+- Use //! comments
+- 1–2 lines describing water calculators
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 2E — Space module only
+
+```
+Add brief module-level documentation to src/space/mod.rs.
+
+Rules:
+- Use //! comments
+- 1–2 lines describing space/orbital calculators
+- Do NOT touch other files
+```
+
+👉 Each of these prompts is **tiny** and safe.
+
+---
+
+## 🧱 PHASE 3: FUNCTION-LEVEL DOCS (ONE FILE AT A TIME)
+
+We **already have docs**, now we just **polish + standardize**.
+
+### Rule
+
+👉 **One calculator per prompt**
+
+---
+
+### ✅ Prompt 3A — TVM only
+
+```
+Review and improve rustdoc comments for src/finance/tvm.rs.
+
+Rules:
+- Do NOT change function signature
+- Improve clarity of existing docs
+- Add units where relevant
+- Do NOT add examples yet
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 3B — ROI only
+
+```
+Review and improve rustdoc comments for src/finance/roi.rs.
+
+Rules:
+- Do NOT change function signature
+- Improve wording and clarity
+- Do NOT add examples yet
+- Do NOT touch other files
+```
+
+Repeat this pattern for:
+
+* compound_interest.rs
+* energy calculators
+* geo calculators
+* water calculators
+* space calculators
+
+👉 Yes it’s repetitive — **that’s what keeps Replit stable**.
+
+---
+
+## 🧱 PHASE 4: RUSTDOC EXAMPLES (VERY IMPORTANT — VERY SMALL)
+
+This is where Replit usually breaks — so we go **ultra-small**.
+
+### Rule
+
+👉 **One example, one file, one prompt**
+
+---
+
+### ✅ Prompt 4A — TVM example only
+
+```
+Add ONE rustdoc example to the public function in src/finance/tvm.rs.
+
+Rules:
+- Example must compile
+- Use only the public API
+- Keep example under 6 lines
+- Do NOT add examples to other functions
+- Do NOT touch other files
+```
+
+---
+
+### ✅ Prompt 4B — ROI example only
+
+```
+Add ONE rustdoc example to the public function in src/finance/roi.rs.
+
+Rules:
+- Example must compile
+- Keep it minimal
+- Do NOT touch other files
+```
+
+You can stop after **3–5 examples**.
+You **do NOT need examples everywhere** (even Rust stdlib doesn’t).
+
+---
+
+## 🧱 PHASE 5: DOC VALIDATION (NO CODE CHANGES)
+
+### ✅ Prompt 5 (SAFE)
+
+```
+Verify that documentation builds successfully.
+
+Steps:
+- Run cargo doc --no-deps
+- Report any warnings or errors
+- Do NOT change any code
+```
+
+---
+
+# 🚦 WHY THIS WON’T BREAK REPLIT
+
+* Each prompt:
+
+  * touches **1 file**
+  * has **clear boundaries**
+  * avoids repo-wide scans
+* No autonomous mode
+* No “audit everything” language
+* No bulk changes
+
+This is **exactly** how to work with Replit safely.
+
+---
+
+# 🧠 IMPORTANT REALITY CHECK (YOU’RE DOING IT RIGHT)
+
+> “This documentation task is too big for one step”
+
+You are **100% correct**.
+
+Professional Rust crates:
+
+* document **incrementally**
+* ship docs in phases
+* refine over versions
+
+You’re not cutting corners — you’re doing it **correctly**.
+
+---
+
+## 🔜 WHAT SHOULD WE DO NEXT?
+
+Reply with **one word** and I’ll give you the **next exact micro-steps**:
+
+* **`API_POLISH`** → re-exports for cleaner imports
+* **`CRATES_IO`** → README, metadata, tags, publish checklist
+* **`VERSIONING`** → semantic versioning strategy
+* **`STOP`** → pause & summarize current state
+
+You’re in full control now 👌

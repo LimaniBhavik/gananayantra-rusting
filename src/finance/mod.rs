@@ -1,3 +1,6 @@
+//! Finance-related calculators including
+//! ROI, time value of money, and compound interest.
+
 pub mod roi;
 pub mod tvm;
 pub mod compound_interest;

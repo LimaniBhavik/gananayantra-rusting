@@ -1,3 +1,6 @@
+//! Geospatial calculators including
+//! Earth distance and horizon distance.
+
 pub mod earth_distance;
 pub mod horizon_distance;
 

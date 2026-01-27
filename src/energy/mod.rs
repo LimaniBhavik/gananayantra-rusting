@@ -1,3 +1,6 @@
+//! Energy-related calculators including
+//! power consumption and electricity cost.
+
 pub mod power_consumption;
 pub mod electricity_cost;
 
