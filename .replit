@@ -33,15 +33,15 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Health Calculator CLI"
+args = "Library Tests & Examples"
 
 [[workflows.workflow]]
-name = "Health Calculator CLI"
+name = "Library Tests & Examples"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cargo run"
+args = "cargo test --lib --examples"
 
 [workflows.workflow.metadata]
 outputType = "console"
