@@ -37,8 +37,12 @@ src/
 - [x] Phase 4: Space & Astronomy Modules (v1.1.0)
 - [ ] Phase 5: Crate API Stabilization for Library Use
 
+## Release History
+- **v1.1.0**: Initial public stable release on crates.io. Refactored to library-first architecture with core industry modules (Finance, Energy, Geo, Space, Water).
+- **v0.1.0**: Initial preparation release (deprecated in favor of v1.1.0).
+
 ## User Preferences
 - **Replit-First**: All development and testing happens directly in the Replit environment.
 - **Minimal Dependencies**: Use standard library features whenever possible.
 - **Clean CLI**: Maintain a structured, numbered menu system.
-- **Attached Assets Policy**: DO NOT add `attached_assets` or similar instruction files to the codebase. These are for processing only and must be deleted after use.
+- **Attached Assets Policy**: STRICT POLICY: Never add `attached_assets` or similar temporary instruction files to the project repository or GitHub. These files are for session processing only and must be deleted immediately after use.
