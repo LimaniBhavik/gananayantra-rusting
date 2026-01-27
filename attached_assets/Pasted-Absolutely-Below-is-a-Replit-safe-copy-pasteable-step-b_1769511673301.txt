@@ -1,0 +1,285 @@
+Absolutely 👍
+Below is a **Replit-safe, copy-pasteable, step-by-step guide** that covers **both GitHub and crates.io**, without hitting limits or breaking anything.
+
+I’ll assume:
+
+* You are working **inside Replit**
+* The repo already exists on GitHub
+  👉 [https://github.com/LimaniBhavik/gananayantra-rusting](https://github.com/LimaniBhavik/gananayantra-rusting)
+* Current crate version target is **v1.1.0**
+* You want **clean commits + push + publish**
+
+---
+
+# 🧭 OVERVIEW (DO THIS IN ORDER)
+
+We will do **exactly 6 phases**:
+
+1. Verify local state in Replit
+2. Update version to `1.1.0` (if not already)
+3. Commit code in Git
+4. Push to GitHub
+5. Publish to crates.io
+6. Verify everything
+
+Each phase = **small, safe steps**
+
+---
+
+# 🧱 PHASE 1: VERIFY LOCAL STATE (NO CHANGES)
+
+### ✅ Step 1.1 — Check git status
+
+In Replit terminal:
+
+```bash
+git status
+```
+
+You should see either:
+
+* clean working tree
+  or
+* modified files you expect
+
+⚠️ If you see **unintended files**, stop and review before continuing.
+
+---
+
+### ✅ Step 1.2 — Confirm current version
+
+Open `Cargo.toml` and confirm:
+
+```toml
+[package]
+name = "gananayantra-rusting"
+version = "1.1.0"
+```
+
+If it already says `1.1.0`, good — **do not change it**.
+
+If not, update it now (this is the only place).
+
+---
+
+### ✅ Step 1.3 — Run full checks
+
+```bash
+cargo build
+cargo test
+cargo doc --no-deps
+```
+
+✔ All must pass
+❌ If anything fails → fix first, **do not publish**
+
+---
+
+# 🧱 PHASE 2: PREPARE GIT COMMIT (REPLIT-SAFE)
+
+### ✅ Step 2.1 — Configure git identity (once per Replit)
+
+```bash
+git config --global user.name "Bhavik Limani"
+git config --global user.email "your-email@example.com"
+```
+
+(Use the same email as your GitHub account.)
+
+---
+
+### ✅ Step 2.2 — Stage files
+
+```bash
+git add .
+```
+
+---
+
+### ✅ Step 2.3 — Create a clean commit
+
+```bash
+git commit -m "release: gananayantra-rusting v1.1.0"
+```
+
+📌 **Best practice**:
+Use `release:` prefix for version commits.
+
+---
+
+# 🧱 PHASE 3: PUSH TO GITHUB (IMPORTANT)
+
+### ✅ Step 3.1 — Confirm remote
+
+```bash
+git remote -v
+```
+
+You should see:
+
+```
+origin https://github.com/LimaniBhavik/gananayantra-rusting.git
+```
+
+If not, add it:
+
+```bash
+git remote add origin https://github.com/LimaniBhavik/gananayantra-rusting.git
+```
+
+---
+
+### ✅ Step 3.2 — Push main branch
+
+```bash
+git push origin main
+```
+
+(or `master` if that’s your default)
+
+✔ Code is now live on GitHub
+
+---
+
+### ✅ Step 3.3 — Tag the release (VERY IMPORTANT)
+
+```bash
+git tag v1.1.0
+git push origin v1.1.0
+```
+
+This ensures:
+
+* GitHub releases work
+* crates.io users can trace versions
+* future diffs are clean
+
+---
+
+# 🧱 PHASE 4: DRY-RUN CRATES.IO PUBLISH
+
+### ✅ Step 4.1 — Dry run (never skip)
+
+```bash
+cargo publish --dry-run
+```
+
+This checks:
+
+* README
+* license
+* metadata
+* version correctness
+* file inclusion
+
+❌ If it fails → fix **only the first error**, rerun
+
+---
+
+# 🧱 PHASE 5: PUBLISH TO CRATES.IO (FINAL STEP)
+
+### ✅ Step 5.1 — Login (if not already)
+
+```bash
+cargo login
+```
+
+Paste your **crates.io API token**
+(from [https://crates.io/me](https://crates.io/me))
+
+---
+
+### ✅ Step 5.2 — Publish
+
+```bash
+cargo publish
+```
+
+⏱ Takes ~30–90 seconds
+
+Once successful:
+
+* Version **1.1.0 is immutable**
+* Crate updates propagate to docs.rs automatically
+
+---
+
+# 🧱 PHASE 6: VERIFY EVERYTHING (5 MINUTES)
+
+### ✅ Step 6.1 — Verify crates.io
+
+Open:
+
+```
+https://crates.io/crates/gananayantra-rusting
+```
+
+Check:
+
+* Version = `1.1.0`
+* README renders
+* Links work
+
+---
+
+### ✅ Step 6.2 — Verify docs.rs
+
+Open:
+
+```
+https://docs.rs/gananayantra-rusting/1.1.0
+```
+
+Check:
+
+* Module tree visible
+* Examples render
+* No broken imports
+
+---
+
+### ✅ Step 6.3 — Optional GitHub Release
+
+On GitHub → Releases → Draft new release:
+
+* Tag: `v1.1.0`
+* Title: `gananayantra-rusting v1.1.0`
+* Description: short changelog
+
+---
+
+# 🧠 COMMON REPLIT PITFALLS (AVOID THESE)
+
+❌ Publishing before pushing to GitHub
+❌ Forgetting git tag
+❌ Changing version after publish
+❌ Publishing with failing tests
+❌ Multiple commits for one release
+
+You avoided all of these 👍
+
+---
+
+# ✅ FINAL CHECKLIST (MENTAL)
+
+* [x] Version correct (`1.1.0`)
+* [x] Git commit done
+* [x] Git tag pushed
+* [x] GitHub updated
+* [x] crates.io published
+* [x] docs.rs updated
+
+If all checked → **you’re done** ✅
+
+---
+
+## 🔜 WHAT DO YOU WANT NEXT?
+
+Reply with **one word**:
+
+* **`ROADMAP`** → plan v1.2.0 cleanly
+* **`CLI_CRATE`** → create `gananayantra-cli` repo
+* **`BENCHMARKS`** → numeric accuracy & performance
+* **`STOP`** → pause & summary
+
+You’re operating like a **real Rust crate maintainer** now.
