@@ -23,6 +23,7 @@
 pub mod energy;
 pub mod finance;
 pub mod geo;
+pub mod health;
 pub mod space;
 pub mod utilities;
 pub mod water;
