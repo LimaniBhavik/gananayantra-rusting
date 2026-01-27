@@ -1,6 +1,6 @@
 [package]
 name = "gananayantra-rusting"
-version = "0.1.0"
+version = "1.1.0"
 edition = "2021"
 description = "A multi-industry calculation engine for finance, energy, geo, water, space, and utilities"
 license = "MIT"
