@@ -1,0 +1,166 @@
+Perfect. Final stretch now — this is the **last strategic step before publishing**.
+
+# 🧭 VERSIONING — STEP-BY-STEP (REPLIT-SAFE)
+
+We’ll define a **clear semantic versioning strategy** so:
+
+* users trust the crate
+* you don’t lock yourself in
+* future growth is painless
+
+No code changes yet. This is **decision + light config only**.
+
+---
+
+## 🎯 GOAL OF THIS STEP
+
+By the end, you will know:
+
+* what `0.1.0` really means
+* when to bump **minor vs patch vs major**
+* how to safely add new calculators
+* how to avoid breaking users
+
+---
+
+# ✅ STEP 1: UNDERSTAND YOUR CURRENT STATE (IMPORTANT)
+
+Your crate is currently:
+
+```toml
+version = "0.1.0"
+```
+
+This communicates to the Rust ecosystem:
+
+> ⚠️ **API is usable but not yet guaranteed stable**
+
+That is **exactly correct** for where you are.
+
+---
+
+# ✅ STEP 2: ADOPT OFFICIAL SEMVER RULES (RUST STYLE)
+
+Rust follows **Semantic Versioning**, with one important nuance for `0.x`.
+
+### 🔢 Version format
+
+```
+MAJOR.MINOR.PATCH
+```
+
+---
+
+## 🟡 While version is `0.x.y`
+
+During `0.x`:
+
+| Change type               | Version bump  |
+| ------------------------- | ------------- |
+| Bug fix                   | PATCH (0.1.1) |
+| Add new calculator        | MINOR (0.2.0) |
+| Change function signature | MINOR (0.2.0) |
+| Remove or rename API      | MINOR (0.2.0) |
+
+👉 Breaking changes are **allowed** in `0.x`
+👉 But you should still be disciplined
+
+---
+
+## 🟢 After `1.0.0`
+
+Once you release `1.0.0`:
+
+| Change type                  | Version bump  |
+| ---------------------------- | ------------- |
+| Bug fix                      | PATCH (1.0.1) |
+| Backward-compatible addition | MINOR (1.1.0) |
+| Breaking change              | MAJOR (2.0.0) |
+
+---
+
+# ✅ STEP 3: DEFINE YOUR VERSIONING POLICY (WRITE THIS DOWN)
+
+This is the **policy I strongly recommend** for `gananayantra-rusting`:
+
+### 📌 Policy
+
+* Stay in **0.x** while:
+
+  * adding new industries
+  * refining API ergonomics
+  * improving docs
+* Treat **MINOR bumps seriously**
+* Do **not** remove public functions without a version bump
+* No silent breaking changes
+
+You can even add this later to README:
+
+```md
+## Versioning
+This crate follows semantic versioning.
+Until 1.0.0, breaking changes may occur in minor releases.
+```
+
+---
+
+# ✅ STEP 4: REPLIT-SAFE CHECK (NO CODE CHANGE)
+
+### Prompt to Replit
+
+```
+Review the current public API of gananayantra-rusting.
+
+Goal:
+- Confirm that version 0.1.0 accurately represents the API maturity
+- Identify any obvious API instability risks
+- Do NOT change any code or version numbers
+
+Report findings only.
+```
+
+This is **safe** and won’t trigger large diffs.
+
+---
+
+# ✅ STEP 5: DECIDE NEXT VERSION (MENTAL DECISION)
+
+You now have two good options:
+
+### Option A (Recommended)
+
+👉 **Publish as `0.1.0`**
+
+* Honest
+* Conservative
+* Standard practice
+
+### Option B
+
+👉 `0.2.0` if you plan immediate changes after publish
+
+📌 **Recommendation:** Publish **0.1.0**
+
+---
+
+# 🧠 WHAT THIS STEP ACHIEVES
+
+After VERSIONING:
+
+✔ You won’t paint yourself into a corner
+✔ Users understand expectations
+✔ You can add calculators freely
+✔ You’re aligned with Rust ecosystem norms
+
+This is what separates **hobby crates** from **maintained crates**.
+
+---
+
+# 🚀 NEXT STEP (FINAL DECISION)
+
+Reply with **one word**:
+
+* **`PUBLISH`** → final publish checklist + exact command
+* **`STOP`** → full summary of architecture & next roadmap
+
+You’re now **ready to ship** 🚢
