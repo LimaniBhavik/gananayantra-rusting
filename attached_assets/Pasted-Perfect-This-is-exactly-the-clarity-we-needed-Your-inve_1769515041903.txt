@@ -1,0 +1,150 @@
+Perfect. This is **exactly** the clarity we needed 👍
+Your inventory is solid, and it confirms what we suspected.
+
+Now we proceed **by the book**, **one file**, **one prompt**, **zero risk**.
+
+---
+
+# 🔁 NEXT STEP: REFACTOR `bmr.rs` (Basal Metabolic Rate)
+
+Why **BMR next**:
+
+* Core health metric
+* Simple formula
+* No dependencies on pregnancy/menus
+* Ideal to establish the **health refactor pattern**
+
+We will **only touch `bmr.rs`** in this step.
+
+---
+
+## 🧱 STEP 1: LOCK THE PUBLIC API (IMPORTANT)
+
+This is the **final API** other developers will use:
+
+```rust
+use gananayantra_rusting::health::bmr::calculate_bmr;
+
+let bmr = calculate_bmr(weight_kg, height_cm, age_years, is_male)?;
+```
+
+### API decisions (intentional)
+
+* `weight_kg: f64`
+* `height_cm: f64`
+* `age_years: u32`
+* `is_male: bool`
+* Return: `Result<f64, String>`
+
+We are using the **Mifflin–St Jeor equation** (industry standard).
+
+---
+
+## 🧱 STEP 2: REPLIT PROMPT (COPY–PASTE EXACTLY)
+
+⚠️ Do **not** change wording — this format is proven safe.
+
+```
+Refactor the BMR (Basal Metabolic Rate) calculator to be library-first.
+
+Rules:
+- This is a Rust library crate: gananayantra-rusting
+- Remove all stdin/stdout/println logic
+- Remove any CLI or interactive code
+- One public function only
+- Return Result<f64, String>
+- Use the Mifflin–St Jeor formula
+- Validate all inputs
+- Add Rust doc comments (///)
+- Add unit tests
+- Keep constants private
+
+Final API:
+pub fn calculate_bmr(
+    weight_kg: f64,
+    height_cm: f64,
+    age_years: u32,
+    is_male: bool,
+) -> Result<f64, String>
+
+Only refactor:
+src/health/bmr.rs
+
+Do NOT touch other files.
+```
+
+---
+
+## 🧱 STEP 3: MANUAL VERIFICATION CHECKLIST
+
+After Replit responds, **verify**:
+
+* [ ] No `println!`
+* [ ] No `std::io`
+* [ ] Exactly one `pub fn calculate_bmr`
+* [ ] Input validation exists
+* [ ] Formula is correct
+* [ ] Unit tests included
+* [ ] Rustdoc comments present
+
+If **any box fails**, re-prompt **only `bmr.rs`**.
+
+---
+
+## 🧱 STEP 4: EXPORT BMR (SEPARATE PROMPT)
+
+Once `bmr.rs` is clean, run this **separately**:
+
+```
+Expose the refactored BMR calculator via module exports.
+
+Rules:
+- Add pub mod bmr;
+- Add pub use bmr::calculate_bmr;
+- Do NOT remove existing exports
+
+Only edit:
+src/health/mod.rs
+```
+
+---
+
+## 🧱 STEP 5: TEST
+
+```bash
+cargo test health
+```
+
+(or full `cargo test` if unsure)
+
+---
+
+## 🧠 STATUS AFTER THIS STEP
+
+Your health module will be:
+
+| Calculator      | Status         |
+| --------------- | -------------- |
+| BMI             | ✅              |
+| BMR             | ✅ (after this) |
+| Body Fat        | ❌              |
+| Calorie Needs   | ❌              |
+| Pregnancy       | ❌              |
+| Pace            | ❌              |
+| Health Expanded | ❌              |
+
+We are progressing **correctly and safely**.
+
+---
+
+## 🔜 NEXT (YOU CHOOSE)
+
+After BMR is done, reply with **one word**:
+
+* **`BODY_FAT`** → next refactor (U.S. Navy method)
+* **`CALORIE`** → calorie requirement
+* **`PREGNANCY`** → due date & conception
+* **`PACE`** → running pace
+* **`HEALTH_EXPANDED`** → split BAC, BSA, LBM properly
+
+We continue **one file at a time**, no shortcuts.
