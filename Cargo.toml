@@ -1,13 +1,14 @@
 [package]
 name = "gananayantra-rusting"
-version = "1.1.0"
+version = "0.1.0"
 edition = "2021"
-description = "A comprehensive, modular multi-purpose calculator suite including Health, Financial, Math, Energy, Geo, Water, and Space tools."
+description = "A multi-industry calculation engine for finance, energy, geo, water, space, and utilities"
 license = "MIT"
 repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
+homepage = "https://github.com/LimaniBhavik/gananayantra-rusting"
 readme = "README.md"
-keywords = ["calculator", "science", "math", "finance", "energy"]
-categories = ["science", "command-line-utilities"]
+keywords = ["calculator", "finance", "science", "engineering", "math"]
+categories = ["science", "finance", "mathematics"]
 
 [lib]
 name = "gananayantra"
