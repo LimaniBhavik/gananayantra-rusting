@@ -33,15 +33,15 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Library Tests & Examples"
+args = "Library Docs & Tests"
 
 [[workflows.workflow]]
-name = "Library Tests & Examples"
+name = "Library Docs & Tests"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cargo test --lib --examples"
+args = "cargo doc --no-deps && cargo test --lib --examples"
 
 [workflows.workflow.metadata]
 outputType = "console"
