@@ -11,3 +11,4 @@ pub mod health_expanded;
 
 pub use bmi::bmi;
 pub use bmr::calculate_bmr;
+pub use body_fat::body_fat_percentage;
