@@ -4,6 +4,9 @@
 pub mod power_consumption;
 pub mod electricity_cost;
 
+pub use power_consumption::energy_consumption;
+pub use electricity_cost::electricity_cost;
+
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {

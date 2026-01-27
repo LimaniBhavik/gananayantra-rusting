@@ -4,6 +4,9 @@
 pub mod pressure_at_depth;
 pub mod river_flow_rate;
 
+pub use pressure_at_depth::pressure_at_depth;
+pub use river_flow_rate::river_flow_rate;
+
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {

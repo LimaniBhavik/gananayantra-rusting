@@ -1,10 +1,14 @@
+//! General-purpose utility calculators.
+
 pub mod percentage;
+
+pub use percentage::percentage_of;
 
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {
     loop {
-        println!("\n--- Utilities (New) ---");
+        println!("\n--- Utilities ---");
         println!("1. Percentage Calculator");
         println!("0. Back");
 

@@ -1,0 +1,271 @@
+Great — we continue in **Replit-safe micro steps** 👍
+Next is **API_POLISH**, done **incrementally** so nothing breaks limits.
+
+This phase is **optional but very valuable**: it makes imports cleaner **without breaking existing users**.
+
+---
+
+# ✨ API_POLISH (REPLIT-SAFE, STEP-BY-STEP)
+
+## 🎯 Goal (What we are improving)
+
+Today, users write:
+
+```rust
+use gananayantra_rusting::finance::tvm::future_value;
+```
+
+After polish, they can **optionally** write:
+
+```rust
+use gananayantra_rusting::finance::future_value;
+```
+
+✅ Old paths still work
+✅ New paths are cleaner
+✅ No breaking change
+
+---
+
+## ⚠️ CRITICAL RULE (READ THIS)
+
+* **We do NOT move files**
+* **We do NOT rename functions**
+* We only **re-export** using `pub use`
+* One module at a time
+
+---
+
+# 🧱 PHASE 1: POLISH FINANCE MODULE (ONLY)
+
+### ✅ STEP 1A: Decide what to re-export (mentally)
+
+From `finance`:
+
+* `roi::roi`
+* `tvm::future_value`
+* `compound_interest::compound_interest`
+
+We’ll re-export **only the main functions**, not everything.
+
+---
+
+### ✅ STEP 1B: PROMPT TO REPLIT (SAFE, SMALL)
+
+```
+Add clean re-exports to src/finance/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export only primary calculator functions
+- Do NOT remove existing module declarations
+- Do NOT touch other files
+
+Target re-exports:
+- roi::roi
+- tvm::future_value
+- compound_interest::compound_interest
+```
+
+---
+
+### ✅ EXPECTED RESULT (`finance/mod.rs`)
+
+```rust
+//! Finance-related calculators including ROI,
+//! time value of money, and compound interest.
+
+pub mod roi;
+pub mod tvm;
+pub mod compound_interest;
+
+pub use roi::roi;
+pub use tvm::future_value;
+pub use compound_interest::compound_interest;
+```
+
+---
+
+### ✅ STEP 1C: VERIFY (IMPORTANT)
+
+Run mentally / optionally test:
+
+```rust
+use gananayantra_rusting::finance::future_value;
+use gananayantra_rusting::finance::roi;
+```
+
+✔ Both should resolve
+✔ Old paths still work
+
+---
+
+# 🧱 PHASE 2: POLISH ENERGY MODULE (ONLY)
+
+### ✅ STEP 2A: PROMPT TO REPLIT
+
+```
+Add clean re-exports to src/energy/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export only primary calculator functions
+- Do NOT remove existing module declarations
+- Do NOT touch other files
+
+Target re-exports:
+- power_consumption::energy_consumption
+- electricity_cost::electricity_cost
+```
+
+---
+
+### ✅ EXPECTED RESULT (`energy/mod.rs`)
+
+```rust
+//! Energy-related calculators for power usage and cost estimation.
+
+pub mod power_consumption;
+pub mod electricity_cost;
+
+pub use power_consumption::energy_consumption;
+pub use electricity_cost::electricity_cost;
+```
+
+---
+
+# 🧱 PHASE 3: POLISH UTILITIES MODULE (ONLY)
+
+### ✅ STEP 3A: PROMPT TO REPLIT
+
+```
+Add clean re-exports to src/utilities/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export primary utility functions
+- Do NOT touch other files
+
+Target re-export:
+- percentage::percentage_of
+```
+
+---
+
+### ✅ EXPECTED RESULT
+
+```rust
+//! General-purpose utility calculators.
+
+pub mod percentage;
+
+pub use percentage::percentage_of;
+```
+
+---
+
+# 🧱 PHASE 4: POLISH GEO MODULE (ONLY)
+
+### ✅ STEP 4A: PROMPT TO REPLIT
+
+```
+Add clean re-exports to src/geo/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export primary geo calculator functions
+- Do NOT touch other files
+
+Target re-exports:
+- earth_distance::haversine_distance
+- horizon_distance::horizon_distance
+```
+
+---
+
+---
+
+# 🧱 PHASE 5: POLISH WATER MODULE (ONLY)
+
+### ✅ STEP 5A: PROMPT TO REPLIT
+
+```
+Add clean re-exports to src/water/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export primary water calculator functions
+- Do NOT touch other files
+
+Target re-exports:
+- pressure_at_depth::pressure_at_depth
+- river_flow_rate::river_flow_rate
+```
+
+---
+
+# 🧱 PHASE 6: POLISH SPACE MODULE (ONLY)
+
+### ✅ STEP 6A: PROMPT TO REPLIT
+
+```
+Add clean re-exports to src/space/mod.rs.
+
+Rules:
+- Use `pub use`
+- Re-export primary space/orbital calculator functions
+- Do NOT touch other files
+
+Target re-exports:
+- orbital_velocity::orbital_velocity
+- escape_velocity::escape_velocity
+- orbital_period::orbital_period
+```
+
+---
+
+# ✅ FINAL RESULT (BIG WIN)
+
+Now users can choose:
+
+### Verbose (still valid)
+
+```rust
+use gananayantra_rusting::space::orbital_velocity::orbital_velocity;
+```
+
+### Clean (preferred)
+
+```rust
+use gananayantra_rusting::space::orbital_velocity;
+```
+
+or even:
+
+```rust
+use gananayantra_rusting::space::*;
+```
+
+✔ No breaking changes
+✔ Professional ergonomics
+✔ Matches Rust ecosystem best practices
+
+---
+
+# 🧠 WHY THIS WAS DONE LAST
+
+* Re-exports lock your API surface
+* Doing it earlier risks churn
+* Now your structure is stable
+
+You did this **at the correct time**.
+
+---
+
+## 🔜 NEXT STEP (REPLY WITH ONE WORD)
+
+* **`CRATES_IO`** → prepare for crates.io release (README, metadata, tags)
+* **`VERSIONING`** → semantic versioning & release flow
+* **`STOP`** → pause & summarize final architecture
+
+You’re now operating at **real Rust library maintainer level** 🚀

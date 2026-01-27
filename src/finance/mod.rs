@@ -12,6 +12,10 @@ pub mod sebi;
 pub mod advertising;
 pub mod ecommerce;
 
+pub use roi::roi;
+pub use tvm::future_value;
+pub use compound_interest::compound_interest;
+
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {

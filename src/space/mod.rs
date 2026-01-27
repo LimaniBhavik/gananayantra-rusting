@@ -5,6 +5,10 @@ pub mod orbital_velocity;
 pub mod escape_velocity;
 pub mod orbital_period;
 
+pub use orbital_velocity::orbital_velocity;
+pub use escape_velocity::escape_velocity;
+pub use orbital_period::orbital_period;
+
 use crate::calculators::utils::read_input;
 
 pub fn run_menu() {
