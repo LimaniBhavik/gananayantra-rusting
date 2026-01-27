@@ -1,7 +1,24 @@
-//! gananayantra-rusting
+//! # gananayantra-rusting
 //!
-//! A multi-industry calculation engine covering finance, energy,
-//! geospatial, water, space, and utility domains.
+//! **gananayantra-rusting** is a multi-industry calculation engine written in Rust.
+//! It provides reusable, library-first calculators across domains such as:
+//!
+//! - Finance (ROI, TVM, compound interest)
+//! - Energy (power consumption, electricity cost)
+//! - Geo (Earth distance, horizon distance)
+//! - Water (pressure at depth, river flow rate)
+//! - Space (orbital velocity, escape velocity, orbital period)
+//! - Utilities (percentage calculations)
+//!
+//! ## Example
+//! ```rust
+//! use gananayantra_rusting::finance::tvm::future_value;
+//!
+//! let fv = future_value(10_000.0, 0.08, 5).unwrap();
+//! assert!(fv > 14_000.0);
+//! ```
+//!
+//! This crate is **library-first** and does not impose any CLI or I/O model.
 
 pub mod energy;
 pub mod finance;
