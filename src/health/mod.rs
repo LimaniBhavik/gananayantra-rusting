@@ -10,3 +10,4 @@ pub mod due_date;
 pub mod health_expanded;
 
 pub use bmi::bmi;
+pub use bmr::calculate_bmr;
