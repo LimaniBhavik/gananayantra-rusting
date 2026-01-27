@@ -38,6 +38,7 @@ src/
 - [ ] Phase 5: Crate API Stabilization for Library Use
 
 ## Release History
+- **v1.1.1**: Patch release fixing crates.io publishing indexing.
 - **v1.1.0**: Initial public stable release on crates.io. Refactored to library-first architecture with core industry modules (Finance, Energy, Geo, Space, Water).
 - **v0.1.0**: Initial preparation release (deprecated in favor of v1.1.0).
 

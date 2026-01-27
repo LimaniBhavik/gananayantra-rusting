@@ -12,7 +12,7 @@
 //!
 //! ## Example
 //! ```rust
-//! use gananayantra_rusting::finance::tvm::future_value;
+//! use gananayantra::finance::tvm::future_value;
 //!
 //! let fv = future_value(10_000.0, 0.08, 5).unwrap();
 //! assert!(fv > 14_000.0);
