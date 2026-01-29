@@ -1,16 +1,27 @@
-//! # gananayantra-rusting
+//! # gananayantra
 //!
-//! **gananayantra-rusting** is a multi-industry calculation engine written in Rust.
-//! It provides reusable, library-first calculators across domains such as:
+//! **gananayantra** is a professional-grade, multi-industry calculation engine written in Rust.
+//! It provides reusable, library-first calculators across diverse domains including:
 //!
-//! - Finance (ROI, TVM, compound interest)
-//! - Energy (power consumption, electricity cost)
-//! - Geo (Earth distance, horizon distance)
-//! - Water (pressure at depth, river flow rate)
-//! - Space (orbital velocity, escape velocity, orbital period)
-//! - Utilities (percentage calculations)
+//! - **Finance**: ROI, time value of money, compound interest
+//! - **Health**: BMI, BMR, body fat percentage, calorie requirements
+//! - **Energy**: Power consumption, electricity cost
+//! - **Geo**: Earth distance (Haversine), horizon distance
+//! - **Water**: Pressure at depth, river flow rate
+//! - **Space**: Orbital velocity, escape velocity, orbital period
+//! - **Utilities**: Percentage calculations
 //!
-//! ## Example
+//! ## Design Principles
+//!
+//! This crate is **library-first** and does not impose any CLI or I/O model.
+//! All public functions:
+//! - Accept typed parameters
+//! - Return `Result<f64, String>` for safe error handling
+//! - Perform input validation
+//! - Are pure functions with no side effects
+//!
+//! ## Quick Start
+//!
 //! ```rust
 //! use gananayantra::finance::tvm::future_value;
 //!
@@ -18,7 +29,21 @@
 //! assert!(fv > 14_000.0);
 //! ```
 //!
-//! This crate is **library-first** and does not impose any CLI or I/O model.
+//! ## More Examples
+//!
+//! ```rust
+//! use gananayantra::health::bmi;
+//!
+//! let result = bmi(70.0, 1.75).unwrap();
+//! assert!((result - 22.86).abs() < 0.01);
+//! ```
+//!
+//! ```rust
+//! use gananayantra::space::orbital_velocity;
+//!
+//! let velocity = orbital_velocity(400_000.0).unwrap();
+//! assert!(velocity > 7000.0); // ~7.67 km/s for LEO
+//! ```
 
 pub mod energy;
 pub mod finance;

@@ -1,3 +1,6 @@
+//! Health and fitness calculators including
+//! BMI, BMR, body fat percentage, and calorie requirements.
+
 pub mod bmi;
 pub mod calorie;
 pub mod body_fat;
