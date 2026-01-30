@@ -31,6 +31,7 @@
 //! assert!(fv > 14_000.0);
 //! ```
 
+pub mod climate;
 pub mod energy;
 pub mod finance;
 pub mod finance_investment;
