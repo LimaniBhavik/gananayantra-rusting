@@ -20,18 +20,6 @@ pub fn energy_consumption(
     Ok(power_kw * hours)
 }
 
-pub fn run() {
-    println!("\n--- Power Consumption Calculator ---");
-    use crate::calculators::utils::read_input;
-    let power_kw = read_input("Enter power in kilowatts (kW): ");
-    let hours = read_input("Enter time in hours: ");
-
-    match energy_consumption(power_kw, hours) {
-        Ok(kwh) => println!("Total Energy Consumed: {:.2} kWh", kwh),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
