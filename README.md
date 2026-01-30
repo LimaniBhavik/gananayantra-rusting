@@ -63,15 +63,6 @@ Run an example:
 cargo run --example physics
 ```
 
-## Publishing
-
-To publish a new version to crates.io:
-
-1.  Update version in `Cargo.toml`.
-2.  Run tests: `cargo test`.
-3.  Login: `cargo login <your-token>`
-4.  Publish: `cargo publish`
-
 ## License
 
 MIT
