@@ -1,618 +1,417 @@
-use crate::calculators::utils::read_input;
-
-pub fn run_menu() {
-    loop {
-        println!("\n--- Financial Calculators ---");
-        println!("1. Business Loan Calculator");
-        println!("2. Mortgage Calculator");
-        println!("3. Auto Loan Calculator");
-        println!("4. Interest Calculator (Simple)");
-        println!("5. Compound Interest Calculator");
-        println!("6. Retirement Calculator");
-        println!("7. Investment Calculator");
-        println!("8. Inflation Calculator");
-        println!("9. Income Tax Calculator (Simple Est.)");
-        println!("10. Salary Calculator");
-        println!("11. Sales Tax Calculator");
-        println!("12. Amortization Calculator");
-        println!("13. Mortgage Payoff Calculator");
-        println!("14. House Affordability Calculator");
-        println!("15. Rent Calculator");
-        println!("16. Debt-to-Income (DTI) Ratio Calculator");
-        println!("17. Real Estate Investment Calculator");
-        println!("18. Refinance Calculator");
-        println!("19. Rental Property Calculator");
-        println!("20. APR Calculator");
-        println!("21. FHA Loan Calculator");
-        println!("22. VA Mortgage Calculator");
-        println!("23. Home Equity Loan Calculator");
-        println!("24. HELOC Calculator");
-        println!("25. Down Payment Calculator");
-        println!("26. Rent vs. Buy Calculator");
-        println!("27. Credit Card Payoff Calculator");
-        println!("28. Debt Consolidation Calculator");
-        println!("29. Student Loan Calculator");
-        println!("30. VAT Calculator");
-        println!("31. Depreciation Calculator (Straight-Line)");
-        println!("32. Personal/Boat/Other Loan Calculator");
-        println!("33. Lease Calculator (General)");
-        println!("34. Commission Calculator");
-        println!("0. Back");
-        let choice = read_input("Select an option: ");
-
-        match choice as i32 {
-            1 => business_loan(),
-            2 => mortgage(),
-            3 => auto_loan(),
-            4 => simple_interest(),
-            5 => compound_interest(),
-            6 => retirement(),
-            7 => investment(),
-            8 => inflation(),
-            9 => income_tax(),
-            10 => salary(),
-            11 => sales_tax(),
-            12 => amortization(),
-            13 => mortgage_payoff(),
-            14 => house_affordability(),
-            15 => rent_calc(),
-            16 => dti_ratio(),
-            17 => real_estate_investment(),
-            18 => refinance(),
-            19 => rental_property(),
-            20 => apr_calc(),
-            21 => fha_loan(),
-            22 => va_mortgage(),
-            23 => home_equity(),
-            24 => heloc_calc(),
-            25 => down_payment_calc(),
-            26 => rent_vs_buy(),
-            27 => credit_card_payoff(),
-            28 => debt_consolidation(),
-            29 => student_loan(),
-            30 => vat_calculator(),
-            31 => depreciation_calc(),
-            32 => general_loan_calc(),
-            33 => general_lease_calc(),
-            34 => commission_calc(),
-            0 => break,
-            _ => println!("Invalid choice."),
-        }
-    }
+/// Generic result for loan calculations
+#[derive(Debug, PartialEq)]
+pub struct LoanResult {
+    pub monthly_payment: f64,
+    pub total_payment: f64,
+    pub total_interest: f64,
 }
 
-fn business_loan() {
-    println!("\n--- Business Loan Calculator ---");
-    let loan_amount = read_input("Enter loan amount: ");
-    let annual_interest_rate = read_input("Enter annual interest rate (%): ");
-    let loan_term_years = read_input("Enter loan term (years): ");
-
-    let monthly_rate = (annual_interest_rate / 100.0) / 12.0;
-    let num_payments = loan_term_years * 12.0;
-
-    if monthly_rate > 0.0 {
-        let monthly_payment = loan_amount * (monthly_rate * (1.0 + monthly_rate).powf(num_payments)) / ((1.0 + monthly_rate).powf(num_payments) - 1.0);
-        println!("Monthly Payment: {:.2}", monthly_payment);
-        println!("Total Payment: {:.2}", monthly_payment * num_payments);
-        println!("Total Interest: {:.2}", (monthly_payment * num_payments) - loan_amount);
+/// Helper to calculate PMT (payment)
+/// r: monthly rate (decimal)
+/// n: number of months
+/// p: principal
+fn calculate_pmt(r: f64, n: f64, p: f64) -> f64 {
+    if r == 0.0 {
+        p / n
     } else {
-        let monthly_payment = loan_amount / num_payments;
-        println!("Monthly Payment: {:.2}", monthly_payment);
-        println!("Total Payment: {:.2}", loan_amount);
+        p * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0)
     }
 }
 
-fn mortgage() {
-    println!("\n--- Mortgage Calculator ---");
-    let home_price = read_input("Home Price: ");
-    let down_payment = read_input("Down Payment: ");
-    let loan_term = read_input("Loan Term (years): ");
-    let interest_rate = read_input("Interest Rate (%): ");
+pub fn business_loan(amount: f64, annual_rate: f64, years: f64) -> Result<LoanResult, String> {
+    if amount < 0.0 || annual_rate < 0.0 || years <= 0.0 {
+        return Err("Invalid input values".into());
+    }
+    let monthly_rate = (annual_rate / 100.0) / 12.0;
+    let num_payments = years * 12.0;
+    let payment = calculate_pmt(monthly_rate, num_payments, amount);
+    let total_payment = payment * num_payments;
 
+    Ok(LoanResult {
+        monthly_payment: payment,
+        total_payment,
+        total_interest: total_payment - amount,
+    })
+}
+
+pub fn mortgage(home_price: f64, down_payment: f64, years: f64, annual_rate: f64) -> Result<LoanResult, String> {
+    if home_price < 0.0 || down_payment < 0.0 || years <= 0.0 || annual_rate < 0.0 {
+        return Err("Invalid input values".into());
+    }
     let loan_amount = home_price - down_payment;
-    let monthly_rate = (interest_rate / 100.0) / 12.0;
-    let num_payments = loan_term * 12.0;
+    let monthly_rate = (annual_rate / 100.0) / 12.0;
+    let num_payments = years * 12.0;
+    let payment = calculate_pmt(monthly_rate, num_payments, loan_amount);
+    let total_payment = payment * num_payments;
 
-    if monthly_rate > 0.0 {
-        let monthly_payment = loan_amount * (monthly_rate * (1.0 + monthly_rate).powf(num_payments)) / ((1.0 + monthly_rate).powf(num_payments) - 1.0);
-        println!("Monthly Payment (P&I): {:.2}", monthly_payment);
-        println!("Total Cost: {:.2}", monthly_payment * num_payments + down_payment);
-    } else {
-        println!("Monthly Payment: {:.2}", loan_amount / num_payments);
+    Ok(LoanResult {
+        monthly_payment: payment,
+        total_payment: total_payment + down_payment, // Total cost including down payment
+        total_interest: total_payment - loan_amount,
+    })
+}
+
+pub fn simple_interest(principal: f64, annual_rate: f64, years: f64) -> Result<(f64, f64), String> {
+    if principal < 0.0 || annual_rate < 0.0 || years < 0.0 {
+        return Err("Invalid input values".into());
     }
+    let interest = (principal * annual_rate * years) / 100.0;
+    Ok((interest, principal + interest))
 }
 
-fn auto_loan() {
-    println!("\n--- Auto Loan Calculator ---");
-    let price = read_input("Auto Price: ");
-    let down_payment = read_input("Down Payment: ");
-    let trade_in = read_input("Trade-in Value: ");
-    let term = read_input("Term (months): ");
-    let rate = read_input("Interest Rate (%): ");
-
-    let loan_amount = price - down_payment - trade_in;
-    let monthly_rate = (rate / 100.0) / 12.0;
-
-    if monthly_rate > 0.0 {
-        let payment = loan_amount * (monthly_rate * (1.0 + monthly_rate).powf(term)) / ((1.0 + monthly_rate).powf(term) - 1.0);
-        println!("Monthly Payment: {:.2}", payment);
-        println!("Total Interest: {:.2}", (payment * term) - loan_amount);
-    } else {
-        println!("Monthly Payment: {:.2}", loan_amount / term);
+pub fn retirement_savings(
+    current_savings: f64,
+    monthly_contribution: f64,
+    current_age: f64,
+    retirement_age: f64,
+    annual_return_rate: f64,
+) -> Result<f64, String> {
+    if retirement_age <= current_age {
+        return Err("Retirement age must be greater than current age".into());
     }
-}
-
-fn simple_interest() {
-    let p = read_input("Principal Amount: ");
-    let r = read_input("Interest Rate (% per year): ");
-    let t = read_input("Time (years): ");
-    let interest = (p * r * t) / 100.0;
-    println!("Simple Interest: {:.2}", interest);
-    println!("Total Amount: {:.2}", p + interest);
-}
-
-fn compound_interest() {
-    let p = read_input("Principal Amount: ");
-    let r = read_input("Annual Interest Rate (%): ");
-    let t = read_input("Time (years): ");
-    let n = read_input("Compounds per year (e.g., 12 for monthly): ");
-    
-    let rate = r / 100.0;
-    let amount = p * (1.0 + rate / n).powf(n * t);
-    println!("Future Value: {:.2}", amount);
-    println!("Compound Interest: {:.2}", amount - p);
-}
-
-fn retirement() {
-    let age = read_input("Current Age: ");
-    let retire_age = read_input("Retirement Age: ");
-    let current_savings = read_input("Current Savings: ");
-    let monthly_contribution = read_input("Monthly Contribution: ");
-    let rate = read_input("Expected Return Rate (%): ");
-
-    let years = retire_age - age;
-    let months = years * 12.0;
-    let r = (rate / 100.0) / 12.0;
+    let months = (retirement_age - current_age) * 12.0;
+    let monthly_rate = (annual_return_rate / 100.0) / 12.0;
 
     let mut balance = current_savings;
     for _ in 0..(months as i32) {
-        balance = balance * (1.0 + r) + monthly_contribution;
+        balance = balance * (1.0 + monthly_rate) + monthly_contribution;
     }
-    println!("Estimated Savings at Retirement: {:.2}", balance);
+    Ok(balance)
 }
 
-fn investment() {
-    let principal = read_input("Starting Investment: ");
-    let contribution = read_input("Monthly Contribution: ");
-    let years = read_input("Years to grow: ");
-    let rate = read_input("Annual Return (%): ");
-
-    let r = (rate / 100.0) / 12.0;
+pub fn investment_growth(
+    principal: f64,
+    monthly_contribution: f64,
+    years: f64,
+    annual_return_rate: f64
+) -> Result<f64, String> {
+    if years < 0.0 { return Err("Years cannot be negative".into()); }
+    let monthly_rate = (annual_return_rate / 100.0) / 12.0;
     let months = years * 12.0;
     let mut balance = principal;
     for _ in 0..(months as i32) {
-        balance = balance * (1.0 + r) + contribution;
+        balance = balance * (1.0 + monthly_rate) + monthly_contribution;
     }
-    println!("Future Value: {:.2}", balance);
+    Ok(balance)
 }
 
-fn inflation() {
-    let amount = read_input("Current Amount: ");
-    let rate = read_input("Average Inflation Rate (%): ");
-    let years = read_input("Years in future: ");
-    
-    let future_value = amount * (1.0 + rate / 100.0).powf(years);
-    println!("Future Value (purchasing power equivalent): {:.2}", future_value);
+pub fn inflation_impact(amount: f64, inflation_rate: f64, years: f64) -> Result<f64, String> {
+    if years < 0.0 { return Err("Years cannot be negative".into()); }
+    // Future value required to match current purchasing power, OR future purchasing power of current amount?
+    // The original code was: amount * (1.0 + rate/100)^years. This is "Future Value of Amount" if grown by inflation.
+    // Or "Cost in future".
+    Ok(amount * (1.0 + inflation_rate / 100.0).powf(years))
 }
 
-fn income_tax() {
-    println!("(Note: This is a very simplified model)");
-    let income = read_input("Annual Income: ");
-    let tax_rate = if income < 50000.0 { 10.0 } else if income < 100000.0 { 20.0 } else { 30.0 };
-    let tax = income * (tax_rate / 100.0);
-    println!("Estimated Tax ({:.0}%): {:.2}", tax_rate, tax);
-    println!("Net Income: {:.2}", income - tax);
+pub fn estimate_income_tax(annual_income: f64) -> Result<(f64, f64, f64), String> {
+    if annual_income < 0.0 { return Err("Income cannot be negative".into()); }
+    let tax_rate = if annual_income < 50000.0 { 10.0 } else if annual_income < 100000.0 { 20.0 } else { 30.0 };
+    let tax = annual_income * (tax_rate / 100.0);
+    Ok((tax_rate, tax, annual_income - tax))
 }
 
-fn salary() {
-    let rate = read_input("Enter Salary Amount: ");
-    println!("1. Hourly");
-    println!("2. Monthly");
-    println!("3. Annually");
-    let unit = read_input("Select unit (1-3): ");
+pub struct SalaryBreakdown {
+    pub hourly: f64,
+    pub monthly: f64,
+    pub annual: f64,
+}
 
-    match unit as i32 {
-        1 => {
-            println!("Monthly: {:.2}", rate * 40.0 * 4.33);
-            println!("Annually: {:.2}", rate * 40.0 * 52.0);
+pub fn convert_salary(amount: f64, unit: &str) -> Result<SalaryBreakdown, String> {
+    if amount < 0.0 { return Err("Amount cannot be negative".into()); }
+    match unit.to_lowercase().as_str() {
+        "hourly" => Ok(SalaryBreakdown {
+            hourly: amount,
+            monthly: amount * 40.0 * 4.33,
+            annual: amount * 40.0 * 52.0,
+        }),
+        "monthly" => Ok(SalaryBreakdown {
+            hourly: amount / (40.0 * 4.33),
+            monthly: amount,
+            annual: amount * 12.0,
+        }),
+        "annual" | "annually" => Ok(SalaryBreakdown {
+            hourly: amount / (40.0 * 52.0),
+            monthly: amount / 12.0,
+            annual: amount,
+        }),
+        _ => Err("Invalid unit. Use 'hourly', 'monthly', or 'annual'".into()),
+    }
+}
+
+pub fn sales_tax(net_price: f64, tax_rate: f64) -> Result<(f64, f64), String> {
+    if net_price < 0.0 || tax_rate < 0.0 { return Err("Inputs must be positive".into()); }
+    let tax = net_price * (tax_rate / 100.0);
+    Ok((tax, net_price + tax))
+}
+
+#[derive(Debug, PartialEq)]
+pub struct AmortizationRow {
+    pub month: i32,
+    pub interest: f64,
+    pub principal: f64,
+    pub remaining_balance: f64,
+}
+
+pub fn amortization_schedule(loan_amount: f64, annual_rate: f64, years: f64) -> Result<Vec<AmortizationRow>, String> {
+    if loan_amount < 0.0 || annual_rate < 0.0 || years <= 0.0 {
+        return Err("Invalid inputs".into());
+    }
+    let monthly_rate = (annual_rate / 100.0) / 12.0;
+    let num_payments = (years * 12.0) as i32;
+    let monthly_payment = calculate_pmt(monthly_rate, num_payments as f64, loan_amount);
+
+    let mut schedule = Vec::new();
+    let mut balance = loan_amount;
+
+    for i in 1..=num_payments {
+        let interest = balance * monthly_rate;
+        let principal = monthly_payment - interest;
+        balance -= principal;
+        if balance < 0.0001 { balance = 0.0; } // Float precision fix
+
+        schedule.push(AmortizationRow {
+            month: i,
+            interest,
+            principal,
+            remaining_balance: balance,
+        });
+    }
+    Ok(schedule)
+}
+
+pub fn mortgage_payoff(
+    current_balance: f64,
+    annual_rate: f64,
+    current_payment: f64,
+    extra_payment: f64,
+) -> Result<(i32, i32, i32), String> {
+    if current_balance < 0.0 || annual_rate < 0.0 { return Err("Invalid inputs".into()); }
+
+    let monthly_rate = (annual_rate / 100.0) / 12.0;
+
+    let calc_months = |mut balance: f64, payment: f64| -> i32 {
+        let mut months = 0;
+        if payment <= balance * monthly_rate { return 9999; } // Will never pay off
+        while balance > 0.0 {
+            balance = balance * (1.0 + monthly_rate) - payment;
+            months += 1;
+            if months > 1200 { break; } // Safety limit
         }
-        2 => {
-            println!("Hourly (est): {:.2}", rate / (40.0 * 4.33));
-            println!("Annually: {:.2}", rate * 12.0);
-        }
-        3 => {
-            println!("Hourly (est): {:.2}", rate / (40.0 * 52.0));
-            println!("Monthly: {:.2}", rate / 12.0);
-        }
-        _ => println!("Invalid selection."),
-    }
+        months
+    };
+
+    let months_standard = calc_months(current_balance, current_payment);
+    let months_extra = calc_months(current_balance, current_payment + extra_payment);
+
+    Ok((months_standard, months_extra, months_standard - months_extra))
 }
 
-fn sales_tax() {
-    let amount = read_input("Net Price: ");
-    let rate = read_input("Tax Rate (%): ");
-    let tax = amount * (rate / 100.0);
-    println!("Tax Amount: {:.2}", tax);
-    println!("Total Price: {:.2}", amount + tax);
-}
-
-fn amortization() {
-    println!("\n--- Amortization Calculator ---");
-    let loan_amount = read_input("Loan Amount: ");
-    let interest_rate = read_input("Annual Interest Rate (%): ");
-    let loan_term = read_input("Loan Term (years): ");
-
-    let monthly_rate = (interest_rate / 100.0) / 12.0;
-    let num_payments = (loan_term * 12.0) as i32;
-
-    if monthly_rate > 0.0 {
-        let monthly_payment = loan_amount * (monthly_rate * (1.0 + monthly_rate).powf(num_payments as f64)) / ((1.0 + monthly_rate).powf(num_payments as f64) - 1.0);
-        println!("{:<10} {:<15} {:<15} {:<15}", "Month", "Interest", "Principal", "Remaining");
-        let mut balance = loan_amount;
-        for i in 1..=num_payments {
-            let interest = balance * monthly_rate;
-            let principal = monthly_payment - interest;
-            balance -= principal;
-            if i % 12 == 0 || i == num_payments {
-                println!("{:<10} {:<15.2} {:<15.2} {:<15.2}", i, interest, principal, balance.max(0.0));
-            }
-        }
-    }
-}
-
-fn mortgage_payoff() {
-    println!("\n--- Mortgage Payoff Calculator ---");
-    let balance = read_input("Current Balance: ");
-    let rate = read_input("Interest Rate (%): ");
-    let current_payment = read_input("Current Monthly Payment: ");
-    let extra_payment = read_input("Extra Monthly Payment: ");
-
-    let monthly_rate = (rate / 100.0) / 12.0;
-    let mut balance_standard = balance;
-    let mut balance_extra = balance;
-    let mut months_standard = 0;
-    let mut months_extra = 0;
-
-    while balance_standard > 0.0 && months_standard < 600 {
-        balance_standard = balance_standard * (1.0 + monthly_rate) - current_payment;
-        months_standard += 1;
-    }
-
-    while balance_extra > 0.0 && months_extra < 600 {
-        balance_extra = balance_extra * (1.0 + monthly_rate) - (current_payment + extra_payment);
-        months_extra += 1;
-    }
-
-    println!("Standard payoff: {} months ({:.1} years)", months_standard, months_standard as f64 / 12.0);
-    println!("Extra payoff: {} months ({:.1} years)", months_extra, months_extra as f64 / 12.0);
-    println!("Time saved: {} months", months_standard - months_extra);
-}
-
-fn house_affordability() {
-    println!("\n--- House Affordability Calculator ---");
-    let annual_income = read_input("Annual Gross Income: ");
-    let monthly_debts = read_input("Monthly Debts (loans, etc.): ");
-    let down_payment = read_input("Down Payment: ");
-    
+pub fn house_affordability(annual_income: f64, monthly_debts: f64, down_payment: f64) -> Result<(f64, f64, f64), String> {
+    if annual_income < 0.0 { return Err("Income cannot be negative".into()); }
     let monthly_income = annual_income / 12.0;
-    // Conservative 28% rule
-    let max_monthly_payment = (monthly_income * 0.28).min(monthly_income * 0.36 - monthly_debts);
-    
-    println!("Based on the 28/36 rule:");
-    println!("Max Monthly Mortgage Payment: {:.2}", max_monthly_payment.max(0.0));
-    println!("Estimated Affordable House Price (w/ $0 down): {:.2}", max_monthly_payment * 150.0); // Rough estimate
-    println!("Total Buying Power (inc. down payment): {:.2}", max_monthly_payment * 150.0 + down_payment);
+    let max_monthly_payment = (monthly_income * 0.28).min(monthly_income * 0.36 - monthly_debts).max(0.0);
+    let estimated_price = max_monthly_payment * 150.0; // Rough estimate rule
+    Ok((max_monthly_payment, estimated_price, estimated_price + down_payment))
 }
 
-fn rent_calc() {
-    println!("\n--- Rent Calculator ---");
-    let annual_income = read_input("Annual Gross Income: ");
-    let monthly_rent = annual_income / 12.0 * 0.30;
-    println!("Recommended maximum monthly rent (30% rule): {:.2}", monthly_rent);
+pub fn recommended_rent(annual_income: f64) -> Result<f64, String> {
+    if annual_income < 0.0 { return Err("Income cannot be negative".into()); }
+    Ok((annual_income / 12.0) * 0.30)
 }
 
-fn dti_ratio() {
-    println!("\n--- Debt-to-Income (DTI) Ratio Calculator ---");
-    let monthly_income = read_input("Monthly Gross Income: ");
-    let monthly_debt = read_input("Total Monthly Debt Payments: ");
-    
-    if monthly_income > 0.0 {
-        let dti = (monthly_debt / monthly_income) * 100.0;
-        println!("Your DTI Ratio is: {:.2}%", dti);
-        if dti <= 36.0 {
-            println!("Status: Excellent (Conventional limit is 36%)");
-        } else if dti <= 43.0 {
-            println!("Status: Good (FHA limit is typically 43%)");
-        } else {
-            println!("Status: High (May be difficult to qualify for some loans)");
-        }
-    }
+pub fn dti_ratio(monthly_income: f64, monthly_debt: f64) -> Result<(f64, String), String> {
+    if monthly_income <= 0.0 { return Err("Income must be greater than zero".into()); }
+    let dti = (monthly_debt / monthly_income) * 100.0;
+    let status = if dti <= 36.0 { "Excellent" } else if dti <= 43.0 { "Good" } else { "High" };
+    Ok((dti, status.to_string()))
 }
 
-fn real_estate_investment() {
-    println!("\n--- Real Estate Investment Calculator ---");
-    let price = read_input("Property Purchase Price: ");
-    let monthly_rent = read_input("Expected Monthly Rent: ");
-    let annual_expenses = read_input("Total Annual Expenses (Tax, Ins, Maint): ");
-    
+pub fn real_estate_investment(price: f64, monthly_rent: f64, annual_expenses: f64) -> Result<(f64, f64, f64), String> {
     let annual_revenue = monthly_rent * 12.0;
-    let net_operating_income = annual_revenue - annual_expenses;
-    let cap_rate = (net_operating_income / price) * 100.0;
-    
-    println!("Annual Gross Revenue: {:.2}", annual_revenue);
-    println!("Net Operating Income (NOI): {:.2}", net_operating_income);
-    println!("Capitalization Rate (Cap Rate): {:.2}%", cap_rate);
+    let noi = annual_revenue - annual_expenses;
+    if price <= 0.0 { return Err("Price must be > 0".into()); }
+    let cap_rate = (noi / price) * 100.0;
+    Ok((annual_revenue, noi, cap_rate))
 }
 
-fn refinance() {
-    println!("\n--- Refinance Calculator ---");
-    let current_balance = read_input("Current Loan Balance: ");
-    let current_rate = read_input("Current Interest Rate (%): ");
-    let remaining_term = read_input("Remaining Term (years): ");
-    let new_rate = read_input("New Interest Rate (%): ");
-    let new_term = read_input("New Term (years): ");
-    let costs = read_input("Refinancing Costs (closing, etc.): ");
+pub fn refinance_savings(
+    balance: f64,
+    current_rate: f64,
+    remaining_years: f64,
+    new_rate: f64,
+    new_years: f64,
+    costs: f64,
+) -> Result<(f64, f64, f64, f64), String> {
+    let monthly_rate_old = (current_rate / 100.0) / 12.0;
+    let n_old = remaining_years * 12.0;
+    let p_old = calculate_pmt(monthly_rate_old, n_old, balance);
 
-    let r_old = (current_rate / 100.0) / 12.0;
-    let n_old = remaining_term * 12.0;
-    let p_old = current_balance * (r_old * (1.0 + r_old).powf(n_old)) / ((1.0 + r_old).powf(n_old) - 1.0);
-
-    let r_new = (new_rate / 100.0) / 12.0;
-    let n_new = new_term * 12.0;
-    let p_new = current_balance * (r_new * (1.0 + r_new).powf(n_new)) / ((1.0 + r_new).powf(n_new) - 1.0);
+    let monthly_rate_new = (new_rate / 100.0) / 12.0;
+    let n_new = new_years * 12.0;
+    let p_new = calculate_pmt(monthly_rate_new, n_new, balance);
 
     let monthly_savings = p_old - p_new;
-    println!("Current Monthly Payment: {:.2}", p_old);
-    println!("New Monthly Payment: {:.2}", p_new);
-    println!("Monthly Savings: {:.2}", monthly_savings);
-    if monthly_savings > 0.0 {
-        println!("Break-even Point: {:.1} months", costs / monthly_savings);
-    }
+    let break_even_months = if monthly_savings > 0.0 { costs / monthly_savings } else { 0.0 };
+
+    Ok((p_old, p_new, monthly_savings, break_even_months))
 }
 
-fn rental_property() {
-    println!("\n--- Rental Property Calculator ---");
-    let _price = read_input("Purchase Price: ");
-    let rent = read_input("Monthly Rent: ");
-    let expenses = read_input("Monthly Expenses (Tax, Ins, Maint): ");
-    let down_payment = read_input("Down Payment: ");
-
-    let monthly_cash_flow = rent - expenses;
+pub fn rental_property_return(
+    monthly_rent: f64,
+    monthly_expenses: f64,
+    down_payment: f64
+) -> Result<(f64, f64, f64), String> {
+    let monthly_cash_flow = monthly_rent - monthly_expenses;
     let annual_cash_flow = monthly_cash_flow * 12.0;
+    if down_payment <= 0.0 { return Err("Down payment must be > 0".into()); }
     let coc_return = (annual_cash_flow / down_payment) * 100.0;
-
-    println!("Monthly Cash Flow: {:.2}", monthly_cash_flow);
-    println!("Annual Cash Flow: {:.2}", annual_cash_flow);
-    println!("Cash-on-Cash Return: {:.2}%", coc_return);
+    Ok((monthly_cash_flow, annual_cash_flow, coc_return))
 }
 
-fn apr_calc() {
-    println!("\n--- APR Calculator (Simplified) ---");
-    let loan_amount = read_input("Loan Amount: ");
-    let costs = read_input("Upfront Costs/Fees: ");
-    let rate = read_input("Interest Rate (%): ");
-    let term = read_input("Term (years): ");
-
-    let r = (rate / 100.0) / 12.0;
-    let n = term * 12.0;
-    let payment = loan_amount * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
-    
-    // Iterative approach to find APR (simplified)
+pub fn estimate_apr(loan_amount: f64, costs: f64, nominal_rate: f64, years: f64) -> Result<f64, String> {
+    // Simplified iterative approximation
     let net_loan = loan_amount - costs;
-    let mut apr = rate;
-    for _ in 0..10 {
+    let monthly_rate = (nominal_rate / 100.0) / 12.0;
+    let n = years * 12.0;
+    let target_payment = calculate_pmt(monthly_rate, n, loan_amount);
+
+    let mut apr = nominal_rate;
+    for _ in 0..20 {
         let r_apr = (apr / 100.0) / 12.0;
-        let p_apr = net_loan * (r_apr * (1.0 + r_apr).powf(n)) / ((1.0 + r_apr).powf(n) - 1.0);
-        if p_apr < payment { apr += 0.1; } else { apr -= 0.05; }
+        let p_apr = calculate_pmt(r_apr, n, net_loan);
+        if p_apr < target_payment { apr += 0.05; } else { apr -= 0.025; }
     }
-
-    println!("Nominal Rate: {:.2}%", rate);
-    println!("Estimated APR: {:.2}%", apr);
+    Ok(apr)
 }
 
-fn fha_loan() {
-    println!("\n--- FHA Loan Calculator (Simplified) ---");
-    let price = read_input("Home Price: ");
-    let down_payment = price * 0.035; // Standard 3.5%
-    let loan_amount = price - down_payment;
-    let mip = (loan_amount * 0.0055) / 12.0; // Typical 0.55% MIP
-
-    println!("FHA Minimum Down Payment (3.5%): {:.2}", down_payment);
-    println!("Base Loan Amount: {:.2}", loan_amount);
-    println!("Estimated Monthly MIP: {:.2}", mip);
+pub fn fha_loan_details(home_price: f64) -> Result<(f64, f64, f64), String> {
+    let down_payment = home_price * 0.035;
+    let loan_amount = home_price - down_payment;
+    let monthly_mip = (loan_amount * 0.0055) / 12.0;
+    Ok((down_payment, loan_amount, monthly_mip))
 }
 
-fn va_mortgage() {
-    println!("\n--- VA Mortgage Calculator ---");
-    let price = read_input("Home Price: ");
-    let rate = read_input("Interest Rate (%): ");
-    let term = read_input("Term (years): ");
-    let funding_fee_percent = read_input("VA Funding Fee (%): ");
-
-    let loan_amount = price; // Often 0% down
-    let funding_fee = loan_amount * (funding_fee_percent / 100.0);
-    let total_loan = loan_amount + funding_fee;
-    
-    let r = (rate / 100.0) / 12.0;
-    let n = term * 12.0;
-    let payment = total_loan * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
-
-    println!("Total Loan Amount (inc. Funding Fee): {:.2}", total_loan);
-    println!("Monthly Payment (P&I): {:.2}", payment);
+pub fn va_mortgage_details(price: f64, rate: f64, years: f64, funding_fee_percent: f64) -> Result<(f64, f64), String> {
+    let funding_fee = price * (funding_fee_percent / 100.0);
+    let total_loan = price + funding_fee;
+    let monthly_rate = (rate / 100.0) / 12.0;
+    let payment = calculate_pmt(monthly_rate, years * 12.0, total_loan);
+    Ok((total_loan, payment))
 }
 
-fn home_equity() {
-    println!("\n--- Home Equity Loan Calculator ---");
-    let market_value = read_input("Current Market Value: ");
-    let mortgage_balance = read_input("Current Mortgage Balance: ");
-    let max_ltv = read_input("Max LTV % (typically 80%): ");
-
-    let max_loan = market_value * (max_ltv / 100.0);
-    let available_equity = (max_loan - mortgage_balance).max(0.0);
-
-    println!("Max Loan Amount at {}% LTV: {:.2}", max_ltv, max_loan);
-    println!("Estimated Available Equity for Loan: {:.2}", available_equity);
+pub fn home_equity_available(market_value: f64, mortgage_balance: f64, max_ltv_percent: f64) -> Result<(f64, f64), String> {
+    let max_loan = market_value * (max_ltv_percent / 100.0);
+    let available = (max_loan - mortgage_balance).max(0.0);
+    Ok((max_loan, available))
 }
 
-fn heloc_calc() {
-    println!("\n--- HELOC Calculator (Simplified) ---");
-    let draw_amount = read_input("Amount to Draw: ");
-    let rate = read_input("Interest Rate (%): ");
-    
-    let monthly_interest_only = draw_amount * (rate / 100.0) / 12.0;
-    println!("Estimated Monthly Interest-Only Payment: {:.2}", monthly_interest_only);
+pub fn heloc_interest_only(amount: f64, rate: f64) -> Result<f64, String> {
+    Ok(amount * (rate / 100.0) / 12.0)
 }
 
-fn down_payment_calc() {
-    println!("\n--- Down Payment Calculator ---");
-    let price = read_input("Home Price: ");
-    let target_percent = read_input("Target Down Payment % (e.g., 20): ");
-
-    let amount = price * (target_percent / 100.0);
-    println!("Required Down Payment: {:.2}", amount);
-    println!("Remaining Loan Amount: {:.2}", price - amount);
+pub fn down_payment_required(price: f64, percent: f64) -> Result<(f64, f64), String> {
+    let down = price * (percent / 100.0);
+    Ok((down, price - down))
 }
 
-fn rent_vs_buy() {
-    println!("\n--- Rent vs. Buy Calculator (Simplified) ---");
-    let monthly_rent = read_input("Monthly Rent: ");
-    let home_price = read_input("Home Price: ");
-    let years = read_input("Years to Compare: ");
-    
+pub fn rent_vs_buy(monthly_rent: f64, home_price: f64, years: f64) -> Result<(f64, f64, String), String> {
     let total_rent = monthly_rent * 12.0 * years;
-    // Simplified: Buy cost = price + 1% maintenance/year + 2% closing
-    let total_buy_cost = home_price + (home_price * 0.01 * years) + (home_price * 0.02);
-
-    println!("Total Cost to Rent ({} years): {:.2}", years, total_rent);
-    println!("Estimated Cost to Buy & Maintain: {:.2}", total_buy_cost);
-    if total_rent < total_buy_cost {
-        println!("Outcome: Renting is likely cheaper for this period.");
-    } else {
-        println!("Outcome: Buying may be more beneficial over this period.");
-    }
+    let total_buy_cost = home_price + (home_price * 0.01 * years) + (home_price * 0.02); // Simplified
+    let recommendation = if total_rent < total_buy_cost { "Rent" } else { "Buy" }.to_string();
+    Ok((total_rent, total_buy_cost, recommendation))
 }
 
-fn credit_card_payoff() {
-    println!("\n--- Credit Card Payoff Calculator ---");
-    let balance = read_input("Balance: ");
-    let rate = read_input("Interest Rate (%): ");
-    let monthly_payment = read_input("Monthly Payment: ");
-
+pub fn credit_card_payoff(balance: f64, rate: f64, monthly_payment: f64) -> Result<(f64, f64), String> {
     let r = (rate / 100.0) / 12.0;
     if monthly_payment <= balance * r {
-        println!("Error: Payment must be greater than monthly interest ({:.2}).", balance * r);
-        return;
+        return Err("Payment too low to cover interest".into());
     }
-
     let n = -(1.0 - (balance * r / monthly_payment)).ln() / (1.0 + r).ln();
-    println!("Months to Pay Off: {:.1}", n);
-    println!("Total Interest Paid: {:.2}", (monthly_payment * n) - balance);
+    let total_interest = (monthly_payment * n) - balance;
+    Ok((n, total_interest))
 }
 
-fn debt_consolidation() {
-    println!("\n--- Debt Consolidation Calculator ---");
-    let total_debt = read_input("Total Debt to Consolidate: ");
-    let current_weighted_rate = read_input("Current Weighted Avg Interest Rate (%): ");
-    let new_loan_rate = read_input("New Consolidation Loan Rate (%): ");
-    let term = read_input("Term (months): ");
-
-    let r1 = (current_weighted_rate / 100.0) / 12.0;
-    let r2 = (new_loan_rate / 100.0) / 12.0;
-
-    let p1 = total_debt * (r1 * (1.0 + r1).powf(term)) / ((1.0 + r1).powf(term) - 1.0);
-    let p2 = total_debt * (r2 * (1.0 + r2).powf(term)) / ((1.0 + r2).powf(term) - 1.0);
-
-    println!("Current Monthly Payment: {:.2}", p1);
-    println!("New Monthly Payment: {:.2}", p2);
-    println!("Monthly Savings: {:.2}", p1 - p2);
-    println!("Total Savings over Life of Loan: {:.2}", (p1 - p2) * term);
+pub fn debt_consolidation_savings(
+    total_debt: f64,
+    current_avg_rate: f64,
+    new_rate: f64,
+    months: f64
+) -> Result<(f64, f64, f64), String> {
+    let p1 = calculate_pmt((current_avg_rate / 100.0) / 12.0, months, total_debt);
+    let p2 = calculate_pmt((new_rate / 100.0) / 12.0, months, total_debt);
+    Ok((p1, p2, (p1 - p2) * months))
 }
 
-fn student_loan() {
-    println!("\n--- Student Loan Calculator ---");
-    let loan = read_input("Loan Amount: ");
-    let rate = read_input("Interest Rate (%): ");
-    let term_years = read_input("Term (years): ");
-
-    let r = (rate / 100.0) / 12.0;
-    let n = term_years * 12.0;
-    let payment = loan * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
-
-    println!("Monthly Payment: {:.2}", payment);
-    println!("Total Interest: {:.2}", (payment * n) - loan);
+pub fn student_loan_payment(amount: f64, rate: f64, years: f64) -> Result<(f64, f64), String> {
+    let payment = calculate_pmt((rate / 100.0) / 12.0, years * 12.0, amount);
+    let total_interest = (payment * years * 12.0) - amount;
+    Ok((payment, total_interest))
 }
 
-fn vat_calculator() {
-    println!("\n--- VAT Calculator ---");
-    let amount = read_input("Amount: ");
-    let vat_rate = read_input("VAT Rate (%): ");
-    println!("1. Add VAT to Amount");
-    println!("2. Remove VAT from Amount");
-    let mode = read_input("Choice: ");
-
-    if mode == 1.0 {
-        let vat = amount * (vat_rate / 100.0);
-        println!("VAT Amount: {:.2}", vat);
-        println!("Total with VAT: {:.2}", amount + vat);
+pub fn vat_calculation(amount: f64, rate: f64, add_tax: bool) -> Result<(f64, f64), String> {
+    if add_tax {
+        let tax = amount * (rate / 100.0);
+        Ok((tax, amount + tax))
     } else {
-        let base = amount / (1.0 + vat_rate / 100.0);
-        println!("Base Amount: {:.2}", base);
-        println!("VAT Amount: {:.2}", amount - base);
+        let base = amount / (1.0 + rate / 100.0);
+        Ok((amount - base, base))
     }
 }
 
-fn depreciation_calc() {
-    println!("\n--- Straight-Line Depreciation ---");
-    let cost = read_input("Asset Cost: ");
-    let salvage = read_input("Salvage Value: ");
-    let life = read_input("Useful Life (years): ");
-
-    let annual = (cost - salvage) / life;
-    println!("Annual Depreciation: {:.2}", annual);
-    println!("Monthly Depreciation: {:.2}", annual / 12.0);
+pub fn straight_line_depreciation(cost: f64, salvage: f64, life_years: f64) -> Result<(f64, f64), String> {
+    if life_years <= 0.0 { return Err("Life must be > 0".into()); }
+    let annual = (cost - salvage) / life_years;
+    Ok((annual, annual / 12.0))
 }
 
-fn general_loan_calc() {
-    println!("\n--- General Loan Calculator (Boat/Personal/Other) ---");
-    let amount = read_input("Loan Amount: ");
-    let rate = read_input("Annual Rate (%): ");
-    let term_months = read_input("Term (months): ");
-
-    let r = (rate / 100.0) / 12.0;
-    let n = term_months;
-    let payment = amount * (r * (1.0 + r).powf(n)) / ((1.0 + r).powf(n) - 1.0);
-
-    println!("Monthly Payment: {:.2}", payment);
-    println!("Total Payment: {:.2}", payment * n);
+pub fn general_loan(amount: f64, rate: f64, months: f64) -> Result<(f64, f64), String> {
+    let payment = calculate_pmt((rate / 100.0) / 12.0, months, amount);
+    Ok((payment, payment * months))
 }
 
-fn general_lease_calc() {
-    println!("\n--- General Lease Calculator ---");
-    let value = read_input("Gross Cap Cost: ");
-    let residual = read_input("Residual Value: ");
-    let term = read_input("Term (months): ");
-    let rate = read_input("Money Factor: ");
-
-    let dep = (value - residual) / term;
-    let finance = (value + residual) * rate;
-    println!("Base Monthly Payment: {:.2}", dep + finance);
+pub fn general_lease(value: f64, residual: f64, months: f64, money_factor: f64) -> Result<f64, String> {
+    let dep = (value - residual) / months;
+    let finance = (value + residual) * money_factor;
+    Ok(dep + finance)
 }
 
-fn commission_calc() {
-    println!("\n--- Commission Calculator ---");
-    let sales = read_input("Total Sales Amount: ");
-    let rate = read_input("Commission Rate (%): ");
+pub fn commission(sales: f64, rate: f64) -> Result<f64, String> {
+    Ok(sales * (rate / 100.0))
+}
 
-    let commission = sales * (rate / 100.0);
-    println!("Total Commission: {:.2}", commission);
+pub fn calculate_break_even_point(fixed_costs: f64, price_per_unit: f64, variable_cost_per_unit: f64) -> Result<f64, String> {
+    let contribution_margin = price_per_unit - variable_cost_per_unit;
+    if contribution_margin <= 0.0 {
+        return Err("Contribution margin must be positive to break even".into());
+    }
+    if fixed_costs < 0.0 {
+        return Err("Fixed costs cannot be negative".into());
+    }
+    Ok(fixed_costs / contribution_margin)
+}
+
+pub fn calculate_rule_of_72(annual_rate_percent: f64) -> Result<f64, String> {
+    if annual_rate_percent <= 0.0 {
+        return Err("Rate must be greater than zero".into());
+    }
+    Ok(72.0 / annual_rate_percent)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_business_loan() {
+        let res = business_loan(10000.0, 5.0, 1.0).unwrap();
+        // PMT(0.05/12, 12, 10000) = 856.07
+        assert!((res.monthly_payment - 856.07).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_amortization() {
+        let schedule = amortization_schedule(10000.0, 5.0, 1.0).unwrap();
+        assert_eq!(schedule.len(), 12);
+        assert!(schedule.last().unwrap().remaining_balance < 1.0);
+    }
 }

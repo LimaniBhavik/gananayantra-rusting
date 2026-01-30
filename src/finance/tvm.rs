@@ -22,20 +22,6 @@ pub fn future_value(
     Ok(present_value * (1.0 + annual_rate).powi(years as i32))
 }
 
-pub fn run() {
-    println!("\n--- TVM (Future Value) Calculator ---");
-    use crate::calculators::utils::read_input;
-    
-    let pv = read_input("Enter Present Value: ");
-    let rate = read_input("Enter Annual Interest Rate (e.g., 0.08 for 8%): ");
-    let years = read_input("Enter Number of Years: ") as u32;
-
-    match future_value(pv, rate, years) {
-        Ok(fv) => println!("Future Value Result: {:.2}", fv),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

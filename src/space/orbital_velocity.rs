@@ -22,22 +22,6 @@ pub fn orbital_velocity(
     Ok(velocity)
 }
 
-pub fn run() {
-    println!("\n--- Orbital Velocity Calculator ---");
-    use crate::calculators::utils::read_input;
-
-    let altitude_km = read_input("Enter altitude above Earth in km: ");
-    let altitude_m = altitude_km * 1000.0;
-
-    match orbital_velocity(altitude_m) {
-        Ok(v) => {
-            println!("Orbital Velocity: {:.2} m/s", v);
-            println!("Orbital Velocity: {:.2} km/s", v / 1000.0);
-        },
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

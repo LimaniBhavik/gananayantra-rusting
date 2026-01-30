@@ -21,18 +21,6 @@ pub fn orbital_period(altitude_m: f64) -> Result<f64, String> {
     Ok(period_seconds / 60.0)
 }
 
-pub fn run() {
-    println!("\n--- Satellite Orbital Period Calculator ---");
-    use crate::calculators::utils::read_input;
-
-    let altitude = read_input("Enter satellite altitude above Earth (meters): ");
-
-    match orbital_period(altitude) {
-        Ok(period) => println!("Orbital Period: {:.2} minutes", period),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

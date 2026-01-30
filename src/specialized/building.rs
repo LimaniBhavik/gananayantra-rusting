@@ -1,48 +1,49 @@
-use crate::calculators::utils::read_input;
-
-pub fn run_menu() {
-    loop {
-        println!("\n--- Housing and Building ---");
-        println!("1. Square Footage Calculator");
-        println!("2. Concrete Calculator");
-        println!("3. BTU Calculator (Heating/Cooling)");
-        println!("4. Tile/Flooring Calculator");
-        println!("0. Back");
-        let choice = read_input("Select an option: ");
-
-        match choice as i32 {
-            1 => sq_ft_calc(),
-            2 => concrete_calc(),
-            3 => btu_calc(),
-            4 => tile_calc(),
-            0 => break,
-            _ => println!("Invalid choice."),
-        }
+pub fn calculate_square_footage(length_ft: f64, width_ft: f64) -> Result<f64, String> {
+    if length_ft < 0.0 || width_ft < 0.0 {
+        return Err("Dimensions must be positive".into());
     }
+    Ok(length_ft * width_ft)
 }
 
-fn sq_ft_calc() {
-    let l = read_input("Length (ft): ");
-    let w = read_input("Width (ft): ");
-    println!("Total: {:.2} sq ft", l * w);
+pub fn calculate_concrete_yards(length_ft: f64, width_ft: f64, thickness_in: f64) -> Result<f64, String> {
+    if length_ft < 0.0 || width_ft < 0.0 || thickness_in < 0.0 {
+        return Err("Dimensions must be positive".into());
+    }
+    let cubic_yards = (length_ft * width_ft * (thickness_in / 12.0)) / 27.0;
+    Ok(cubic_yards)
 }
 
-fn concrete_calc() {
-    let l = read_input("Length (ft): ");
-    let w = read_input("Width (ft): ");
-    let d = read_input("Thickness (inches): ");
-    let cubic_yards = (l * w * (d / 12.0)) / 27.0;
-    println!("Required Concrete: {:.2} cubic yards", cubic_yards);
+pub fn calculate_btu_cooling(area_sq_ft: f64) -> Result<f64, String> {
+    if area_sq_ft < 0.0 {
+        return Err("Area must be positive".into());
+    }
+    Ok(area_sq_ft * 20.0)
 }
 
-fn btu_calc() {
-    let area = read_input("Room Area (sq ft): ");
-    println!("Estimated Cooling Needed: {:.0} BTU", area * 20.0);
+pub fn calculate_tiles_needed(area_sq_ft: f64, tile_size_sq_in: f64) -> Result<(f64, f64), String> {
+    if area_sq_ft < 0.0 || tile_size_sq_in <= 0.0 {
+        return Err("Invalid inputs".into());
+    }
+    let count = (area_sq_ft * 144.0) / tile_size_sq_in;
+    Ok((count.ceil(), (count * 1.1).ceil()))
 }
 
-fn tile_calc() {
-    let area = read_input("Area to Tile (sq ft): ");
-    let tile_size = read_input("Tile Size (sq inches, e.g. 144 for 12x12): ");
-    let count = (area * 144.0) / tile_size;
-    println!("Estimated Tiles Needed: {:.0} (plus 10% waste: {:.0})", count, count * 1.1);
+/// Calculates gallons of paint needed for wall area.
+/// Assumes standard coverage of ~350-400 sq ft per gallon.
+pub fn calculate_paint_gallons(area_sq_ft: f64, coats: f64) -> Result<f64, String> {
+    if area_sq_ft < 0.0 || coats < 1.0 {
+        return Err("Invalid input values".into());
+    }
+    let coverage_per_gallon = 350.0;
+    Ok((area_sq_ft * coats) / coverage_per_gallon)
+}
+
+/// Calculates Board Feet for lumber.
+/// Formula: (Thickness(in) * Width(in) * Length(ft)) / 12
+pub fn calculate_board_feet(thickness_in: f64, width_in: f64, length_ft: f64, quantity: u32) -> Result<f64, String> {
+    if thickness_in <= 0.0 || width_in <= 0.0 || length_ft <= 0.0 {
+        return Err("Dimensions must be positive".into());
+    }
+    let bf_per_piece = (thickness_in * width_in * length_ft) / 12.0;
+    Ok(bf_per_piece * quantity as f64)
 }
