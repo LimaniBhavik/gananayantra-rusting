@@ -7,7 +7,11 @@
 ///
 /// # Returns
 /// * Optimal order quantity
-pub fn calculate_eoq(demand_rate: f64, ordering_cost: f64, holding_cost: f64) -> Result<f64, String> {
+pub fn calculate_eoq(
+    demand_rate: f64,
+    ordering_cost: f64,
+    holding_cost: f64,
+) -> Result<f64, String> {
     if demand_rate <= 0.0 || ordering_cost <= 0.0 || holding_cost <= 0.0 {
         return Err("All inputs must be greater than zero".into());
     }

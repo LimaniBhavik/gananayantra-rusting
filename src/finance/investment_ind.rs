@@ -17,25 +17,40 @@ pub fn bond_current_yield(coupon_rate: f64, market_price: f64) -> Result<(f64, f
 }
 
 pub fn arithmetic_mean_return(returns: &[f64]) -> Result<f64, String> {
-    if returns.is_empty() { return Err("List cannot be empty".into()); }
+    if returns.is_empty() {
+        return Err("List cannot be empty".into());
+    }
     let sum: f64 = returns.iter().sum();
     Ok(sum / returns.len() as f64)
 }
 
-pub fn approximate_irr(initial_investment: f64, annual_cash_flow: f64, years: f64) -> Result<f64, String> {
-    if initial_investment <= 0.0 || annual_cash_flow <= 0.0 { return Err("Invalid inputs".into()); }
+pub fn approximate_irr(
+    initial_investment: f64,
+    annual_cash_flow: f64,
+    years: f64,
+) -> Result<f64, String> {
+    if initial_investment <= 0.0 || annual_cash_flow <= 0.0 {
+        return Err("Invalid inputs".into());
+    }
     // Newton-Raphson approximation
     let mut guess: f64 = 0.1;
     for _ in 0..100 {
-        let f = annual_cash_flow * ((1.0 - (1.0 + guess).powf(-years)) / guess) - initial_investment;
-        let df = annual_cash_flow * ((years * (1.0 + guess).powf(-years - 1.0)) / guess - (1.0 - (1.0 + guess).powf(-years)) / (guess * guess));
-        if df == 0.0 { break; }
+        let f =
+            annual_cash_flow * ((1.0 - (1.0 + guess).powf(-years)) / guess) - initial_investment;
+        let df = annual_cash_flow
+            * ((years * (1.0 + guess).powf(-years - 1.0)) / guess
+                - (1.0 - (1.0 + guess).powf(-years)) / (guess * guess));
+        if df == 0.0 {
+            break;
+        }
         guess = guess - f / df;
     }
     Ok(guess * 100.0)
 }
 
 pub fn payback_period(investment: f64, annual_cash_flow: f64) -> Result<f64, String> {
-    if annual_cash_flow == 0.0 { return Err("Cash flow cannot be zero".into()); }
+    if annual_cash_flow == 0.0 {
+        return Err("Cash flow cannot be zero".into());
+    }
     Ok(investment / annual_cash_flow)
 }

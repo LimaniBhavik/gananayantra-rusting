@@ -80,7 +80,11 @@ pub fn combinations(n: u64, r: u64) -> Result<u64, String> {
     Ok(p / fact_r)
 }
 
-pub fn confidence_interval_95(mean: f64, std_dev: f64, sample_size: f64) -> Result<(f64, f64), String> {
+pub fn confidence_interval_95(
+    mean: f64,
+    std_dev: f64,
+    sample_size: f64,
+) -> Result<(f64, f64), String> {
     if sample_size <= 0.0 {
         return Err("Sample size must be positive".into());
     }

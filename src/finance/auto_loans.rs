@@ -16,7 +16,12 @@ pub fn calculate_auto_loan(
     term_months: f64,
     annual_interest_rate: f64,
 ) -> Result<AutoLoanResult, String> {
-    if price < 0.0 || down_payment < 0.0 || trade_in < 0.0 || term_months <= 0.0 || annual_interest_rate < 0.0 {
+    if price < 0.0
+        || down_payment < 0.0
+        || trade_in < 0.0
+        || term_months <= 0.0
+        || annual_interest_rate < 0.0
+    {
         return Err("Inputs must be non-negative, and term must be positive.".into());
     }
 
@@ -92,10 +97,21 @@ pub fn compare_cash_back_vs_low_interest(
     let total2 = p2 * term_months;
 
     Ok(CashBackComparison {
-        cash_back_option: LoanOption { monthly_payment: p1, total_cost: total1 },
-        low_interest_option: LoanOption { monthly_payment: p2, total_cost: total2 },
+        cash_back_option: LoanOption {
+            monthly_payment: p1,
+            total_cost: total1,
+        },
+        low_interest_option: LoanOption {
+            monthly_payment: p2,
+            total_cost: total2,
+        },
         savings_amount: (total1 - total2).abs(),
-        better_option: if total1 < total2 { "Cash Back" } else { "Low Interest" }.to_string(),
+        better_option: if total1 < total2 {
+            "Cash Back"
+        } else {
+            "Low Interest"
+        }
+        .to_string(),
     })
 }
 

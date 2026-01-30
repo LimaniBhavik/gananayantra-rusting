@@ -4,7 +4,12 @@ pub struct PaceResult {
     pub speed_kmh: f64,
 }
 
-pub fn calculate_pace(distance_km: f64, hours: f64, minutes: f64, seconds: f64) -> Result<PaceResult, String> {
+pub fn calculate_pace(
+    distance_km: f64,
+    hours: f64,
+    minutes: f64,
+    seconds: f64,
+) -> Result<PaceResult, String> {
     if distance_km <= 0.0 {
         return Err("Distance must be greater than zero".into());
     }

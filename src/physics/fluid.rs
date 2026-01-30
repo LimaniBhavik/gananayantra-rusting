@@ -7,7 +7,11 @@
 ///
 /// # Returns
 /// * Reynolds Number (dimensionless)
-pub fn calculate_reynolds_number(velocity: f64, characteristic_length: f64, kinematic_viscosity: f64) -> Result<f64, String> {
+pub fn calculate_reynolds_number(
+    velocity: f64,
+    characteristic_length: f64,
+    kinematic_viscosity: f64,
+) -> Result<f64, String> {
     if kinematic_viscosity <= 0.0 {
         return Err("Viscosity must be greater than zero".into());
     }

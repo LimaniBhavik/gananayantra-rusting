@@ -12,8 +12,7 @@ pub fn horizon_distance(height_m: f64) -> Result<f64, String> {
         return Err("Height cannot be negative".into());
     }
 
-    let distance_m =
-        (2.0 * EARTH_RADIUS_M * height_m + height_m.powi(2)).sqrt();
+    let distance_m = (2.0 * EARTH_RADIUS_M * height_m + height_m.powi(2)).sqrt();
 
     Ok(distance_m / 1000.0)
 }

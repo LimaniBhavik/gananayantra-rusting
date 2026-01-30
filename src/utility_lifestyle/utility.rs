@@ -14,7 +14,11 @@ pub fn calculate_gpa(grades: &[(f64, f64)]) -> Result<f64, String> {
     Ok(total_points / total_credits)
 }
 
-pub fn calculate_tip(bill: f64, tip_percent: f64, split_between: f64) -> Result<(f64, f64, f64), String> {
+pub fn calculate_tip(
+    bill: f64,
+    tip_percent: f64,
+    split_between: f64,
+) -> Result<(f64, f64, f64), String> {
     if split_between <= 0.0 {
         return Err("Number of people must be positive".into());
     }
@@ -33,7 +37,9 @@ pub fn calculate_bedtime(wake_hour: i32, cycles: i32) -> Result<String, String> 
     }
     let total_min = cycles * 90;
     let mut bed_h = (wake_hour - (total_min / 60)) % 24;
-    if bed_h < 0 { bed_h += 24; }
+    if bed_h < 0 {
+        bed_h += 24;
+    }
     let bed_m = (60 - (total_min % 60)) % 60;
     Ok(format!("{:02}:{:02}", bed_h, bed_m))
 }

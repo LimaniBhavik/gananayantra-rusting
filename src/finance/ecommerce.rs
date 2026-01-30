@@ -1,4 +1,7 @@
-pub fn calculate_discount(original_price: f64, discount_percent: f64) -> Result<(f64, f64), String> {
+pub fn calculate_discount(
+    original_price: f64,
+    discount_percent: f64,
+) -> Result<(f64, f64), String> {
     if original_price < 0.0 || discount_percent < 0.0 {
         return Err("Values must be non-negative".into());
     }

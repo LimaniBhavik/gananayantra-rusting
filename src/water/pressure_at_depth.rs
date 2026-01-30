@@ -8,10 +8,7 @@ const GRAVITY: f64 = 9.81;
 ///
 /// # Returns
 /// * Pressure in Pascals (Pa)
-pub fn pressure_at_depth(
-    density: f64,
-    depth_m: f64,
-) -> Result<f64, String> {
+pub fn pressure_at_depth(density: f64, depth_m: f64) -> Result<f64, String> {
     if density <= 0.0 {
         return Err("Density must be greater than zero".into());
     }

@@ -6,10 +6,7 @@
 ///
 /// # Returns
 /// * Energy consumed in kWh
-pub fn energy_consumption(
-    power_kw: f64,
-    hours: f64,
-) -> Result<f64, String> {
+pub fn energy_consumption(power_kw: f64, hours: f64) -> Result<f64, String> {
     if power_kw < 0.0 {
         return Err("Power cannot be negative".into());
     }

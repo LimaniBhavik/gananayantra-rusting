@@ -7,11 +7,7 @@
 ///
 /// # Returns
 /// * Future value of the investment
-pub fn future_value(
-    present_value: f64,
-    annual_rate: f64,
-    years: u32,
-) -> Result<f64, String> {
+pub fn future_value(present_value: f64, annual_rate: f64, years: u32) -> Result<f64, String> {
     if present_value <= 0.0 {
         return Err("Present value must be greater than zero".into());
     }

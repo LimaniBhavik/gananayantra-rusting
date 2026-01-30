@@ -6,10 +6,7 @@
 ///
 /// # Returns
 /// * Discharge in cubic meters per second (m³/s)
-pub fn river_flow_rate(
-    cross_section_area_m2: f64,
-    velocity_m_per_s: f64,
-) -> Result<f64, String> {
+pub fn river_flow_rate(cross_section_area_m2: f64, velocity_m_per_s: f64) -> Result<f64, String> {
     if cross_section_area_m2 <= 0.0 {
         return Err("Cross-sectional area must be greater than zero".into());
     }
