@@ -20,19 +20,6 @@ pub fn electricity_cost(
     Ok(energy_kwh * cost_per_kwh)
 }
 
-pub fn run() {
-    println!("\n--- Electricity Cost Calculator ---");
-    use crate::calculators::utils::read_input;
-
-    let energy = read_input("Enter energy consumed in kWh: ");
-    let cost_per_kwh = read_input("Enter cost per kWh (e.g., 6.0): ");
-
-    match electricity_cost(energy, cost_per_kwh) {
-        Ok(total) => println!("Total Electricity Cost: {:.2}", total),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -22,22 +22,6 @@ pub fn pressure_at_depth(
     Ok(density * GRAVITY * depth_m)
 }
 
-pub fn run() {
-    println!("\n--- Water Pressure at Depth Calculator ---");
-    use crate::calculators::utils::read_input;
-
-    let density = read_input("Enter fluid density (kg/m³, e.g., 1000 for freshwater): ");
-    let depth = read_input("Enter depth in meters: ");
-
-    match pressure_at_depth(density, depth) {
-        Ok(pressure) => {
-            println!("Hydrostatic Pressure: {:.2} Pa", pressure);
-            println!("Pressure in kPa: {:.2} kPa", pressure / 1000.0);
-        }
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

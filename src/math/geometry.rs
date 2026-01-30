@@ -1,108 +1,68 @@
-use crate::calculators::utils::read_input;
 use std::f64::consts::PI;
 
-pub fn run_menu() {
-    loop {
-        println!("\n--- Geometry Calculators ---");
-        println!("1. Triangle Calculator (Area/Perimeter)");
-        println!("2. Volume Calculator (Cube/Sphere/Cylinder)");
-        println!("3. Slope Calculator");
-        println!("4. Area Calculator (Circle/Square/Rectangle)");
-        println!("5. Distance Formula (2D)");
-        println!("6. Surface Area Calculator");
-        println!("7. Pythagorean Theorem");
-        println!("0. Back");
-        let choice = read_input("Select an option: ");
-
-        match choice as i32 {
-            1 => triangle_calc(),
-            2 => volume_calc(),
-            3 => slope_calc(),
-            4 => area_calc(),
-            5 => distance_calc(),
-            6 => surface_area_calc(),
-            7 => pythagorean_calc(),
-            0 => break,
-            _ => println!("Invalid choice."),
-        }
+pub fn triangle_area(base: f64, height: f64) -> Result<f64, String> {
+    if base < 0.0 || height < 0.0 {
+        return Err("Dimensions cannot be negative".into());
     }
+    Ok(0.5 * base * height)
 }
 
-fn triangle_calc() {
-    println!("\n--- Triangle Calculator ---");
-    let base = read_input("Base: ");
-    let height = read_input("Height: ");
-    println!("Area: {:.2}", 0.5 * base * height);
-}
-
-fn volume_calc() {
-    println!("\n--- Volume Calculator ---");
-    println!("1. Cube  2. Sphere  3. Cylinder");
-    let choice = read_input("Choice: ");
-    match choice as i32 {
-        1 => {
-            let s = read_input("Side: ");
-            println!("Volume: {:.2}", s.powi(3));
-        }
-        2 => {
-            let r = read_input("Radius: ");
-            println!("Volume: {:.2}", (4.0/3.0) * PI * r.powi(3));
-        }
-        3 => {
-            let r = read_input("Radius: ");
-            let h = read_input("Height: ");
-            println!("Volume: {:.2}", PI * r.powi(2) * h);
-        }
-        _ => println!("Invalid."),
+pub fn cube_volume(side: f64) -> Result<f64, String> {
+    if side < 0.0 {
+        return Err("Side cannot be negative".into());
     }
+    Ok(side.powi(3))
 }
 
-fn slope_calc() {
-    println!("\n--- Slope Calculator ---");
-    let x1 = read_input("x1: ");
-    let y1 = read_input("y1: ");
-    let x2 = read_input("x2: ");
-    let y2 = read_input("y2: ");
-    if x2 - x1 == 0.0 {
-        println!("Slope is undefined (vertical line).");
-    } else {
-        println!("Slope (m): {:.2}", (y2 - y1) / (x2 - x1));
+pub fn sphere_volume(radius: f64) -> Result<f64, String> {
+    if radius < 0.0 {
+        return Err("Radius cannot be negative".into());
     }
+    Ok((4.0 / 3.0) * PI * radius.powi(3))
 }
 
-fn area_calc() {
-    println!("\n--- Area Calculator ---");
-    println!("1. Circle  2. Rectangle");
-    let choice = read_input("Choice: ");
-    if choice == 1.0 {
-        let r = read_input("Radius: ");
-        println!("Area: {:.2}", PI * r.powi(2));
-    } else {
-        let l = read_input("Length: ");
-        let w = read_input("Width: ");
-        println!("Area: {:.2}", l * w);
+pub fn cylinder_volume(radius: f64, height: f64) -> Result<f64, String> {
+    if radius < 0.0 || height < 0.0 {
+        return Err("Dimensions cannot be negative".into());
     }
+    Ok(PI * radius.powi(2) * height)
 }
 
-fn distance_calc() {
-    println!("\n--- Distance Formula ---");
-    let x1 = read_input("x1: ");
-    let y1 = read_input("y1: ");
-    let x2 = read_input("x2: ");
-    let y2 = read_input("y2: ");
-    let d = ((x2 - x1).powi(2) + (y2 - y1).powi(2)).sqrt();
-    println!("Distance: {:.2}", d);
+pub fn slope(x1: f64, y1: f64, x2: f64, y2: f64) -> Result<f64, String> {
+    if (x2 - x1).abs() < f64::EPSILON {
+        return Err("Slope is undefined (vertical line)".into());
+    }
+    Ok((y2 - y1) / (x2 - x1))
 }
 
-fn surface_area_calc() {
-    println!("\n--- Surface Area (Sphere) ---");
-    let r = read_input("Radius: ");
-    println!("Surface Area: {:.2}", 4.0 * PI * r.powi(2));
+pub fn circle_area(radius: f64) -> Result<f64, String> {
+    if radius < 0.0 {
+        return Err("Radius cannot be negative".into());
+    }
+    Ok(PI * radius.powi(2))
 }
 
-fn pythagorean_calc() {
-    println!("\n--- Pythagorean Theorem ---");
-    let a = read_input("Side a: ");
-    let b = read_input("Side b: ");
-    println!("Hypotenuse c: {:.2}", (a.powi(2) + b.powi(2)).sqrt());
+pub fn rectangle_area(length: f64, width: f64) -> Result<f64, String> {
+    if length < 0.0 || width < 0.0 {
+        return Err("Dimensions cannot be negative".into());
+    }
+    Ok(length * width)
+}
+
+pub fn distance_2d(x1: f64, y1: f64, x2: f64, y2: f64) -> Result<f64, String> {
+    Ok(((x2 - x1).powi(2) + (y2 - y1).powi(2)).sqrt())
+}
+
+pub fn sphere_surface_area(radius: f64) -> Result<f64, String> {
+    if radius < 0.0 {
+        return Err("Radius cannot be negative".into());
+    }
+    Ok(4.0 * PI * radius.powi(2))
+}
+
+pub fn pythagorean_hypotenuse(a: f64, b: f64) -> Result<f64, String> {
+    if a < 0.0 || b < 0.0 {
+        return Err("Side lengths cannot be negative".into());
+    }
+    Ok((a.powi(2) + b.powi(2)).sqrt())
 }

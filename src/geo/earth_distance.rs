@@ -38,21 +38,6 @@ pub fn haversine_distance(
     Ok(EARTH_RADIUS_KM * c)
 }
 
-pub fn run() {
-    println!("\n--- Earth Distance (Haversine) Calculator ---");
-    use crate::calculators::utils::read_input;
-
-    let lat1 = read_input("Enter Latitude 1 (degrees): ");
-    let lon1 = read_input("Enter Longitude 1 (degrees): ");
-    let lat2 = read_input("Enter Latitude 2 (degrees): ");
-    let lon2 = read_input("Enter Longitude 2 (degrees): ");
-
-    match haversine_distance(lat1, lon1, lat2, lon2) {
-        Ok(distance) => println!("Distance: {:.2} km", distance),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
