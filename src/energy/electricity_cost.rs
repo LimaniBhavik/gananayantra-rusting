@@ -6,10 +6,7 @@
 ///
 /// # Returns
 /// * Total electricity cost
-pub fn electricity_cost(
-    energy_kwh: f64,
-    cost_per_kwh: f64,
-) -> Result<f64, String> {
+pub fn electricity_cost(energy_kwh: f64, cost_per_kwh: f64) -> Result<f64, String> {
     if energy_kwh < 0.0 {
         return Err("Energy consumption cannot be negative".into());
     }

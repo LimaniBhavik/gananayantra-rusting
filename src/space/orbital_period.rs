@@ -1,4 +1,4 @@
-const G: f64 = 6.67430e-11;        // m^3 kg^-1 s^-2
+const G: f64 = 6.67430e-11; // m^3 kg^-1 s^-2
 const EARTH_MASS: f64 = 5.972e24; // kg
 const EARTH_RADIUS: f64 = 6_371_000.0; // meters
 const PI: f64 = std::f64::consts::PI;

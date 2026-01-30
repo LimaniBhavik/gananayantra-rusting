@@ -1,9 +1,10 @@
-use chrono::{NaiveDate, Datelike};
+use chrono::{Datelike, NaiveDate};
 
 pub fn calculate_age(birth_date: NaiveDate, current_date: NaiveDate) -> i32 {
     let mut years = current_date.year() - birth_date.year();
     if current_date.month() < birth_date.month()
-        || (current_date.month() == birth_date.month() && current_date.day() < birth_date.day()) {
+        || (current_date.month() == birth_date.month() && current_date.day() < birth_date.day())
+    {
         years -= 1;
     }
     years

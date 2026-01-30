@@ -1,9 +1,9 @@
 //! Lifestyle and utility calculators.
 
+pub mod entertainment;
 pub mod internet;
+pub mod transport;
 pub mod utility;
 pub mod weather;
-pub mod transport;
-pub mod entertainment;
 
 pub use utility::calculate_tip;

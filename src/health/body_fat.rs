@@ -40,7 +40,8 @@ pub fn body_fat_percentage(
         if sum_diff <= 0.0 {
             return Err("Invalid waist/hip/neck measurements".into());
         }
-        let bf = 495.0 / (1.29579 - 0.35004 * sum_diff.log10() + 0.22100 * height_cm.log10()) - 450.0;
+        let bf =
+            495.0 / (1.29579 - 0.35004 * sum_diff.log10() + 0.22100 * height_cm.log10()) - 450.0;
         Ok(bf)
     }
 }

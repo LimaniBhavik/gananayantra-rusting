@@ -1,8 +1,14 @@
 pub fn calculate_basic_tax(income: f64) -> Result<f64, String> {
-    if income < 0.0 { return Err("Income cannot be negative".into()); }
-    if income <= 11000.0 { Ok(income * 0.10) }
-    else if income <= 44725.0 { Ok(1100.0 + (income - 11000.0) * 0.12) }
-    else { Ok(5147.0 + (income - 44725.0) * 0.22) } // Simplified
+    if income < 0.0 {
+        return Err("Income cannot be negative".into());
+    }
+    if income <= 11000.0 {
+        Ok(income * 0.10)
+    } else if income <= 44725.0 {
+        Ok(1100.0 + (income - 11000.0) * 0.12)
+    } else {
+        Ok(5147.0 + (income - 44725.0) * 0.22)
+    } // Simplified
 }
 
 pub fn marriage_tax_impact(income1: f64, income2: f64) -> Result<(f64, f64, f64), String> {
@@ -10,10 +16,14 @@ pub fn marriage_tax_impact(income1: f64, income2: f64) -> Result<(f64, f64, f64)
     let single2 = calculate_basic_tax(income2)?;
     // Simplified joint calculation
     let joint_income = income1 + income2;
-    let joint_tax = if joint_income <= 22000.0 { joint_income * 0.10 }
-        else if joint_income <= 89450.0 { 2200.0 + (joint_income - 22000.0) * 0.12 }
-        else { 10294.0 + (joint_income - 89450.0) * 0.22 };
-    
+    let joint_tax = if joint_income <= 22000.0 {
+        joint_income * 0.10
+    } else if joint_income <= 89450.0 {
+        2200.0 + (joint_income - 22000.0) * 0.12
+    } else {
+        10294.0 + (joint_income - 89450.0) * 0.22
+    };
+
     let total_single = single1 + single2;
     Ok((total_single, joint_tax, joint_tax - total_single))
 }
@@ -27,15 +37,29 @@ pub fn estate_tax(estate_value: f64) -> Result<f64, String> {
     }
 }
 
-pub fn paycheck_estimator(gross_pay: f64, tax_rate_percent: f64, deductions: f64) -> Result<f64, String> {
+pub fn paycheck_estimator(
+    gross_pay: f64,
+    tax_rate_percent: f64,
+    deductions: f64,
+) -> Result<f64, String> {
     Ok(gross_pay - (gross_pay * tax_rate_percent / 100.0) - deductions)
 }
 
-pub fn hra_exemption(basic_salary: f64, da: f64, hra_received: f64, rent_paid: f64, is_metro: bool) -> Result<f64, String> {
+pub fn hra_exemption(
+    basic_salary: f64,
+    da: f64,
+    hra_received: f64,
+    rent_paid: f64,
+    is_metro: bool,
+) -> Result<f64, String> {
     let salary = basic_salary + da;
     let opt1 = hra_received;
     let opt2 = rent_paid - (0.10 * salary);
-    let opt3 = if is_metro { 0.50 * salary } else { 0.40 * salary };
+    let opt3 = if is_metro {
+        0.50 * salary
+    } else {
+        0.40 * salary
+    };
     Ok(opt1.min(opt2.max(0.0)).min(opt3))
 }
 
@@ -72,7 +96,9 @@ pub fn partners_remuneration_limit(book_profit: f64) -> Result<f64, String> {
 }
 
 pub fn capital_gains_indexation(cost: f64, cii_buy: f64, cii_sell: f64) -> Result<f64, String> {
-    if cii_buy == 0.0 { return Err("CII buy cannot be zero".into()); }
+    if cii_buy == 0.0 {
+        return Err("CII buy cannot be zero".into());
+    }
     Ok(cost * (cii_sell / cii_buy))
 }
 
@@ -104,7 +130,7 @@ pub fn gratuity_exemption(
     amount: f64,
     last_salary: f64,
     years_service: f64,
-    covered_under_act: bool
+    covered_under_act: bool,
 ) -> Result<f64, String> {
     if is_gov {
         Ok(amount)
@@ -119,15 +145,27 @@ pub fn gratuity_exemption(
     }
 }
 
-pub fn leave_encashment_exemption(is_gov: bool, amount: f64, avg_salary: f64, leave_balance_months: f64) -> Result<f64, String> {
+pub fn leave_encashment_exemption(
+    is_gov: bool,
+    amount: f64,
+    avg_salary: f64,
+    leave_balance_months: f64,
+) -> Result<f64, String> {
     if is_gov {
         Ok(amount)
     } else {
         let limit = 2500000.0;
-        Ok(amount.min(limit).min(avg_salary * 10.0).min(avg_salary * leave_balance_months))
+        Ok(amount
+            .min(limit)
+            .min(avg_salary * 10.0)
+            .min(avg_salary * leave_balance_months))
     }
 }
 
-pub fn deferred_tax(accounting_income: f64, taxable_income: f64, tax_rate: f64) -> Result<f64, String> {
+pub fn deferred_tax(
+    accounting_income: f64,
+    taxable_income: f64,
+    tax_rate: f64,
+) -> Result<f64, String> {
     Ok((accounting_income - taxable_income) * (tax_rate / 100.0))
 }

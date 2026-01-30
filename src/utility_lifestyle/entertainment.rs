@@ -4,7 +4,10 @@ pub fn roll_die(sides: u32) -> Result<u32, String> {
     if sides == 0 {
         return Err("Die must have at least one side".into());
     }
-    let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_micros();
+    let seed = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_micros();
     Ok((seed % sides as u128) as u32 + 1)
 }
 

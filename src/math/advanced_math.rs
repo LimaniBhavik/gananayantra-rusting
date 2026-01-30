@@ -15,7 +15,10 @@ pub fn generate_random_number(min: i32, max: i32) -> Result<i32, String> {
     if min > max {
         return Err("Min cannot be greater than max".into());
     }
-    let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_micros();
+    let seed = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_micros();
     Ok((seed % (max - min + 1) as u128) as i32 + min)
 }
 

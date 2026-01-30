@@ -9,7 +9,10 @@ pub fn generate_password(length: usize) -> Result<String, String> {
         return Err("Length must be greater than zero".into());
     }
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-    let mut seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_micros();
+    let mut seed = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_micros();
     let mut pass = String::with_capacity(length);
     for _ in 0..length {
         // LCG constants (mixed)

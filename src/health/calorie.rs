@@ -6,10 +6,7 @@
 ///
 /// # Returns
 /// * Daily maintenance calories as f64
-pub fn daily_calorie_requirement(
-    bmr: f64,
-    activity_multiplier: f64,
-) -> Result<f64, String> {
+pub fn daily_calorie_requirement(bmr: f64, activity_multiplier: f64) -> Result<f64, String> {
     if bmr <= 0.0 {
         return Err("BMR must be a positive value".into());
     }
