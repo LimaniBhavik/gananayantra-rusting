@@ -10,9 +10,6 @@
 //! - **Water**: Pressure at depth, river flow rate
 //! - **Space**: Orbital velocity, escape velocity, orbital period
 //! - **Math**: Statistics, geometry, advanced math
-//! - **Logistics**: Freight weights, inventory (EOQ)
-//! - **Physics**: Fluid dynamics, kinematics
-//! - **Climate**: Carbon footprint
 //! - **Utilities**: Percentage calculations, lifestyle tools
 //! - **Specialized**: Building, electronics, networking, science
 //!
@@ -40,9 +37,7 @@ pub mod finance;
 pub mod finance_investment;
 pub mod geo;
 pub mod health;
-pub mod logistics;
 pub mod math;
-pub mod physics;
 pub mod space;
 pub mod specialized;
 pub mod utilities;

@@ -379,24 +379,6 @@ pub fn commission(sales: f64, rate: f64) -> Result<f64, String> {
     Ok(sales * (rate / 100.0))
 }
 
-pub fn calculate_break_even_point(fixed_costs: f64, price_per_unit: f64, variable_cost_per_unit: f64) -> Result<f64, String> {
-    let contribution_margin = price_per_unit - variable_cost_per_unit;
-    if contribution_margin <= 0.0 {
-        return Err("Contribution margin must be positive to break even".into());
-    }
-    if fixed_costs < 0.0 {
-        return Err("Fixed costs cannot be negative".into());
-    }
-    Ok(fixed_costs / contribution_margin)
-}
-
-pub fn calculate_rule_of_72(annual_rate_percent: f64) -> Result<f64, String> {
-    if annual_rate_percent <= 0.0 {
-        return Err("Rate must be greater than zero".into());
-    }
-    Ok(72.0 / annual_rate_percent)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
