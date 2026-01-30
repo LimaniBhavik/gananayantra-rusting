@@ -1,5 +1,9 @@
 # gananayantra-rusting
 
+[![Crates.io](https://img.shields.io/crates/v/gananayantra-rusting.svg)](https://crates.io/crates/gananayantra-rusting)
+[![Docs.rs](https://docs.rs/gananayantra-rusting/badge.svg)](https://docs.rs/gananayantra-rusting)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **gananayantra** is a professional-grade, multi-industry calculation engine written in Rust. It provides reusable, pure-function calculators across diverse domains including Finance, Health, Energy, Physics, and more.
 
 ## Key Features
