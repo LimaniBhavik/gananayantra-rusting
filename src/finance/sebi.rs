@@ -56,7 +56,7 @@ pub fn cagr(initial_value: f64, final_value: f64, years: f64) -> Result<f64, Str
     Ok(((final_value / initial_value).powf(1.0 / years) - 1.0) * 100.0)
 }
 
-pub fn inflation_impact(amount: f64, inflation_rate: f64, years: f64) -> Result<f64, String> {
+pub fn future_inflation_cost(amount: f64, inflation_rate: f64, years: f64) -> Result<f64, String> {
     Ok(amount / (1.0 + inflation_rate / 100.0).powf(years))
 }
 
