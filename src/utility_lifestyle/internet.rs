@@ -1,23 +1,22 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
 /// Generates a simple random password.
 ///
-/// **Warning:** This function uses a Linear Congruential Generator (LCG) seeded with the system time.
+/// **Warning:** This function uses a Linear Congruential Generator (LCG) seeded with the provided seed.
 /// It is **not cryptographically secure** and should not be used for sensitive security applications.
-pub fn generate_password(length: usize) -> Result<String, String> {
+///
+/// # Arguments
+/// * `length` - Length of the password
+/// * `seed` - Seed for deterministic generation
+pub fn generate_password(length: usize, seed: u64) -> Result<String, String> {
     if length == 0 {
         return Err("Length must be greater than zero".into());
     }
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-    let mut seed = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_micros();
+    let mut current_seed = seed as u128;
     let mut pass = String::with_capacity(length);
     for _ in 0..length {
         // LCG constants (mixed)
-        seed = (seed.wrapping_mul(1103515245).wrapping_add(12345)) & 0x7fffffff;
-        let idx = (seed % chars.len() as u128) as usize;
+        current_seed = (current_seed.wrapping_mul(1103515245).wrapping_add(12345)) & 0x7fffffff;
+        let idx = (current_seed % chars.len() as u128) as usize;
         pass.push(chars.chars().nth(idx).unwrap());
     }
     Ok(pass)

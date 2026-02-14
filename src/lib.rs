@@ -10,11 +10,10 @@
 //! - **Water**: Pressure at depth, river flow rate
 //! - **Space**: Orbital velocity, escape velocity, orbital period
 //! - **Math**: Statistics, geometry, advanced math
-//! - **Logistics**: Freight weights, inventory (EOQ)
-//! - **Physics**: Fluid dynamics, kinematics
-//! - **Climate**: Carbon footprint
 //! - **Utilities**: Percentage calculations, lifestyle tools
 //! - **Specialized**: Building, electronics, networking, science
+//! - **Semiconductor**: Yields, costs
+//! - **AI**: Training/Inference costs, Carbon footprint
 //!
 //! ## Design Principles
 //!
@@ -34,6 +33,7 @@
 //! assert!(fv > 14_000.0);
 //! ```
 
+pub mod ai;
 pub mod climate;
 pub mod energy;
 pub mod finance;
@@ -43,6 +43,7 @@ pub mod health;
 pub mod logistics;
 pub mod math;
 pub mod physics;
+pub mod semiconductor;
 pub mod space;
 pub mod specialized;
 pub mod utilities;

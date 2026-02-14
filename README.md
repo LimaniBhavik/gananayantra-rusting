@@ -15,15 +15,17 @@
 
 ## Modules
 
-- **Finance**: ROI, TVM, Compound Interest, Loans, Tax, Retirement, Auto Loans
+- **Finance**: ROI, TVM, Compound Interest, Loans, Tax, Retirement, Auto Loans, Quant (Sharpe, VaR)
 - **Health**: BMI, BMR, Body Fat, Pregnancy, Fitness
 - **Energy**: Power Consumption, Electricity Cost
 - **Physics**: Fluid Dynamics (Reynolds), Kinematics (KE/PE)
 - **Logistics**: Freight Volumetric Weight, EOQ
-- **Climate**: Carbon Footprint (Electricity, Fuel)
+- **Climate**: Carbon Footprint, Solar ROI, Battery Storage
+- **Semiconductor**: Die Yield, Wafer Utilization, Defect Density
+- **AI & Compute**: Training Costs, Inference Costs, Carbon Footprint
 - **Geo**: Earth Distance (Haversine), Horizon
 - **Water**: Pressure at Depth, Flow Rate
-- **Space**: Orbital Velocity, Escape Velocity, Period
+- **Space**: Orbital Velocity, Escape Velocity, Period, Rocketry (Delta-V)
 - **Math**: Statistics, Geometry, Advanced Math
 - **Utilities**: Lifestyle tools, Percentage, Password Gen (Basic)
 - **Specialized**: Building, Electronics, Networking, Science
@@ -34,7 +36,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-gananayantra-rusting = "1.2.0"
+gananayantra-rusting = "1.3.0"
 ```
 
 ## Quick Start
@@ -56,21 +58,14 @@ Check the `examples/` directory for usage of every module:
 - `examples/physics.rs`
 - `examples/logistics.rs`
 - `examples/climate.rs`
+- `examples/semiconductor.rs`
+- `examples/ai_compute.rs`
 - ...and many more.
 
 Run an example:
 ```bash
 cargo run --example physics
 ```
-
-## Publishing
-
-To publish a new version to crates.io:
-
-1.  Update version in `Cargo.toml`.
-2.  Run tests: `cargo test`.
-3.  Login: `cargo login <your-token>`
-4.  Publish: `cargo publish`
 
 ## License
 
