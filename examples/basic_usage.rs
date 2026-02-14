@@ -2,7 +2,7 @@ use gananayantra::finance::tvm::future_value;
 
 fn main() {
     println!("--- Gananayantra Library Usage Example ---");
-    
+
     let pv = 10000.0;
     let rate = 0.08;
     let years = 5;

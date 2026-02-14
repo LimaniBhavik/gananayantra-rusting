@@ -1,19 +1,18 @@
 [package]
 name = "gananayantra-rusting"
-version = "1.1.2"
+version = "1.4.0"
 edition = "2021"
-description = "A multi-industry calculation engine for finance, energy, geo, water, space, and utilities"
+description = "A professional-grade, multi-industry calculation library for Rust (Finance, Health, Energy, Geo, Space, Physics, Climate, Logistics, Semiconductor, AI)."
 license = "MIT"
 repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
 homepage = "https://github.com/LimaniBhavik/gananayantra-rusting"
 readme = "README.md"
-keywords = ["calculator", "finance", "science", "engineering", "math"]
+keywords = ["calculator", "finance", "science", "physics", "climate"]
 categories = ["science", "finance", "mathematics"]
 
 [lib]
 name = "gananayantra"
 path = "src/lib.rs"
-
 
 [dependencies]
 chrono = "0.4"

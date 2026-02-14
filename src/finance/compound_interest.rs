@@ -33,23 +33,6 @@ pub fn compound_interest(
     Ok(principal * (1.0 + rate_per_period).powf(total_periods))
 }
 
-pub fn run() {
-    println!("\n--- Compound Interest Calculator ---");
-    use crate::calculators::utils::read_input;
-    let principal = read_input("Enter Principal Amount: ");
-    let rate = read_input("Enter Annual Interest Rate (e.g., 0.07 for 7%): ");
-    let years = read_input("Enter Time in Years: ");
-    let compounds = read_input("Enter Compounding Frequency (times per year, e.g., 4 for quarterly): ") as u32;
-
-    match compound_interest(principal, rate, years, compounds) {
-        Ok(amount) => {
-            println!("Total Amount: {:.2}", amount);
-            println!("Interest Earned: {:.2}", amount - principal);
-        }
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
