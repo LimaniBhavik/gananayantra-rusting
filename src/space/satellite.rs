@@ -8,14 +8,14 @@ use std::f64::consts::PI;
 ///
 /// # Returns
 /// * Coverage Area in km²
-pub fn calculate_coverage_area(altitude_km: f64, beam_angle_deg: f64) -> Result<f64, String> {
-    if altitude_km <= 0.0 || beam_angle_deg <= 0.0 {
+pub fn calculate_coverage_area(altitude_km: f64, _beam_angle_deg: f64) -> Result<f64, String> {
+    if altitude_km <= 0.0 {
         return Err("Inputs must be positive".into());
     }
     let r_earth = 6371.0;
     // Slant range and spherical cap math simplified for beam angle
-    let alpha = (beam_angle_deg / 2.0).to_radians();
-    let slant_range = altitude_km / alpha.cos(); // Simplified flat approx for narrow beam, better logic needed for wide
+    // let alpha = (beam_angle_deg / 2.0).to_radians();
+    // let slant_range = altitude_km / alpha.cos(); // Simplified flat approx for narrow beam, better logic needed for wide
     // Using simple spherical cap area for "visible earth" from altitude
     // Area = 2 * PI * R^2 * (1 - cos(theta)), where sin(theta) = R / (R+h)
     let h = altitude_km;

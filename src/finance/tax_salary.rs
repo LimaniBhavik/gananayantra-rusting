@@ -15,7 +15,7 @@ pub fn marriage_tax_impact(income1: f64, income2: f64) -> Result<(f64, f64, f64)
     let joint_tax = if joint_income <= 22000.0 { joint_income * 0.10 }
         else if joint_income <= 89450.0 { 2200.0 + (joint_income - 22000.0) * 0.12 }
         else { 10294.0 + (joint_income - 89450.0) * 0.22 };
-
+    
     let total_single = single1 + single2;
     Ok((total_single, joint_tax, joint_tax - total_single))
 }
