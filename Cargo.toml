@@ -1,8 +1,8 @@
 [package]
 name = "gananayantra-rusting"
-version = "1.4.0"
+version = "1.5.0"
 edition = "2021"
-description = "A professional-grade, multi-industry calculation library for Rust (Finance, Health, Energy, Geo, Space, Physics, Climate, Logistics, Semiconductor, AI)."
+description = "A professional-grade, multi-industry calculation library for Rust (Finance, Health, Energy, Geo, Space, Physics, Climate, Logistics, Semiconductor, AI, CV, NLP, Edge, Robotics, Economics, Future Tech)."
 license = "MIT"
 repository = "https://github.com/LimaniBhavik/gananayantra-rusting"
 homepage = "https://github.com/LimaniBhavik/gananayantra-rusting"

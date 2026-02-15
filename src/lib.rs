@@ -12,8 +12,15 @@
 //! - **Math**: Statistics, geometry, advanced math
 //! - **Utilities**: Percentage calculations, lifestyle tools
 //! - **Specialized**: Building, electronics, networking, science
-//! - **Semiconductor**: Yields, costs
-//! - **AI**: Training/Inference costs, Carbon footprint
+//! - **Semiconductor**: Yields, costs, lithography
+//! - **AI**: Training/Inference costs, Carbon footprint, Memory, Latency
+//! - **Data Science**: Metrics (F1, IoU), Stats (Drift)
+//! - **Computer Vision**: Processing times, compression, IoU, bounding boxes
+//! - **NLP**: Tokenization metrics, perplexity, reading time
+//! - **Edge AI**: IoT Battery life, edge inference latency, quantization
+//! - **Robotics**: Kinematics, Energy
+//! - **Economics**: AI ROI, CLV
+//! - **Future Tech**: Quantum computing metrics
 //!
 //! ## Design Principles
 //!
@@ -35,14 +42,21 @@
 
 pub mod ai;
 pub mod climate;
+pub mod computer_vision;
+pub mod data_science;
+pub mod economics;
+pub mod edge_ai;
 pub mod energy;
 pub mod finance;
 pub mod finance_investment;
+pub mod future_tech;
 pub mod geo;
 pub mod health;
 pub mod logistics;
 pub mod math;
+pub mod nlp;
 pub mod physics;
+pub mod robotics;
 pub mod semiconductor;
 pub mod space;
 pub mod specialized;

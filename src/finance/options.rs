@@ -1,11 +1,5 @@
 use std::f64::consts::PI;
 
-/// Approximates the Cumulative Distribution Function (CDF) of the standard normal distribution.
-/// Uses the error function approximation.
-fn norm_cdf(x: f64) -> f64 {
-    0.5 * (1.0 + erf_approx(x / std::f64::consts::SQRT_2))
-}
-
 /// Standard Normal Probability Density Function (PDF).
 fn norm_pdf(x: f64) -> f64 {
     (1.0 / (2.0 * PI).sqrt()) * (-0.5 * x * x).exp()
