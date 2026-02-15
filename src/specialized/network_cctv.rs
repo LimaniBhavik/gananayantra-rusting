@@ -1,82 +1,66 @@
-use crate::calculators::utils::read_input;
+use std::f64::consts::PI;
 
-pub fn run_menu() {
-    loop {
-        println!("\n--- Network & CCTV Tools ---");
-        println!("1. Lens Focal Length Calculator");
-        println!("2. Camera Viewing Angle");
-        println!("3. RAID Capacity Calculator");
-        println!("4. IPv4 Subnet Calculator");
-        println!("5. mW to dBm Converter");
-        println!("6. Wireless Link Signal Calculator");
-        println!("0. Back");
-        let choice = read_input("Select an option: ");
+pub fn lens_focal_length(
+    distance_m: f64,
+    object_width_m: f64,
+    sensor_width_mm: f64,
+) -> Result<f64, String> {
+    if object_width_m <= 0.0 {
+        return Err("Object width must be positive".into());
+    }
+    Ok((sensor_width_mm * distance_m) / object_width_m)
+}
 
-        match choice as i32 {
-            1 => lens_calculator(),
-            2 => viewing_angle(),
-            3 => raid_calculator(),
-            4 => ipv4_subnet(),
-            5 => mw_to_dbm(),
-            6 => wireless_signal(),
-            0 => break,
-            _ => println!("Invalid choice."),
+pub fn camera_viewing_angle(focal_length_mm: f64, sensor_width_mm: f64) -> Result<f64, String> {
+    if focal_length_mm <= 0.0 {
+        return Err("Focal length must be positive".into());
+    }
+    let angle = 2.0 * ((sensor_width_mm / (2.0 * focal_length_mm)).atan()) * (180.0 / PI);
+    Ok(angle)
+}
+
+pub fn raid_capacity(disk_size_gb: f64, count: f64, raid_level: i32) -> Result<f64, String> {
+    if count < 1.0 {
+        return Err("Need at least 1 disk".into());
+    }
+    match raid_level {
+        0 => Ok(disk_size_gb * count),                 // RAID 0
+        1 => Ok(disk_size_gb * (count / 2.0).floor()), // RAID 1 (pairs)
+        5 => {
+            if count < 3.0 {
+                Err("RAID 5 needs at least 3 disks".into())
+            } else {
+                Ok(disk_size_gb * (count - 1.0))
+            }
         }
+        _ => Err("Unsupported RAID level".into()),
     }
 }
 
-fn lens_calculator() {
-    println!("\n--- Lens Focal Length ---");
-    let dist = read_input("Distance to object (m): ");
-    let width = read_input("Width of object (m): ");
-    let sensor_width = 4.8; // standard 1/3" sensor width in mm
-    let f = (sensor_width * dist) / width;
-    println!("Required Focal Length: {:.2} mm", f);
-}
-
-fn viewing_angle() {
-    println!("\n--- Viewing Angle ---");
-    let f = read_input("Focal Length (mm): ");
-    let sensor_width = 4.8; 
-    let angle = 2.0 * ( (sensor_width / (2.0 * f)).atan() ) * (180.0 / std::f64::consts::PI);
-    println!("Horizontal Viewing Angle: {:.2}°", angle);
-}
-
-fn raid_calculator() {
-    println!("\n--- RAID Capacity ---");
-    let size = read_input("Single Disk Size (GB): ");
-    let count = read_input("Number of Disks: ");
-    println!("1. RAID 0 (Striping)");
-    println!("2. RAID 1 (Mirroring)");
-    println!("3. RAID 5 (Parity)");
-    let choice = read_input("Choice: ");
-    
-    match choice as i32 {
-        1 => println!("Usable Capacity: {:.2} GB", size * count),
-        2 => println!("Usable Capacity: {:.2} GB", size * (count / 2.0)),
-        3 => println!("Usable Capacity: {:.2} GB", size * (count - 1.0)),
-        _ => println!("Invalid."),
+pub fn ipv4_hosts(cidr: u32) -> Result<u64, String> {
+    if cidr > 32 {
+        return Err("Invalid CIDR".into());
+    }
+    let hosts = 2u64.pow(32 - cidr);
+    if hosts < 2 {
+        Ok(0)
+    } else {
+        Ok(hosts - 2)
     }
 }
 
-fn ipv4_subnet() {
-    println!("\n--- IPv4 Subnet Info ---");
-    let cidr = read_input("CIDR Prefix (e.g., 24): ");
-    let hosts = 2.0_f64.powf(32.0 - cidr) - 2.0;
-    println!("Number of usable hosts: {:.0}", hosts.max(0.0));
+pub fn mw_to_dbm(mw: f64) -> Result<f64, String> {
+    if mw <= 0.0 {
+        return Err("Power must be positive".into());
+    }
+    Ok(10.0 * mw.log10())
 }
 
-fn mw_to_dbm() {
-    let mw = read_input("Power in mW: ");
-    let dbm = 10.0 * mw.log10();
-    println!("Power in dBm: {:.2} dBm", dbm);
-}
-
-fn wireless_signal() {
-    let tx_power = read_input("TX Power (dBm): ");
-    let tx_gain = read_input("TX Antenna Gain (dBi): ");
-    let path_loss = read_input("Free Space Path Loss (dB): ");
-    let rx_gain = read_input("RX Antenna Gain (dBi): ");
-    let signal = tx_power + tx_gain - path_loss + rx_gain;
-    println!("Received Signal Level: {:.2} dBm", signal);
+pub fn wireless_signal_strength(
+    tx_power_dbm: f64,
+    tx_gain_dbi: f64,
+    path_loss_db: f64,
+    rx_gain_dbi: f64,
+) -> f64 {
+    tx_power_dbm + tx_gain_dbi - path_loss_db + rx_gain_dbi
 }

@@ -1,32 +1,3 @@
-use crate::calculators::utils::read_input;
-
-pub fn run_menu() {
-    loop {
-        println!("\n--- Finance & Investment Calculators ---");
-        println!("1. ROI Calculator");
-        println!("0. Back");
-
-        let choice = read_input("Select an option: ");
-        match choice as i32 {
-            1 => roi_cli(),
-            0 => break,
-            _ => println!("Invalid choice."),
-        }
-    }
-}
-
-/// CLI handler for the ROI calculator
-fn roi_cli() {
-    println!("\n--- ROI Calculator ---");
-    let initial = read_input("Enter initial investment: ");
-    let final_val = read_input("Enter final value: ");
-
-    match calculate_roi(initial, final_val) {
-        Ok(roi) => println!("ROI: {:.2}%", roi),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 /// Pure logic for calculating Return on Investment (ROI)
 /// ROI = ((Final Value - Initial Investment) / Initial Investment) * 100
 pub fn calculate_roi(initial_investment: f64, final_value: f64) -> Result<f64, String> {

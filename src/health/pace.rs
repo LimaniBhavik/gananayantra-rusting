@@ -1,19 +1,31 @@
-use crate::calculators::utils::read_input;
+pub struct PaceResult {
+    pub pace_minutes: f64,
+    pub pace_seconds: f64,
+    pub speed_kmh: f64,
+}
 
-pub fn run() {
-    println!("\n--- Pace Calculator ---");
-    let distance = read_input("Enter distance (km): ");
-    println!("Enter time taken:");
-    let hours = read_input("  Hours: ");
-    let minutes = read_input("  Minutes: ");
-    let seconds = read_input("  Seconds: ");
-
-    let total_seconds = hours * 3600.0 + minutes * 60.0 + seconds;
-    if distance > 0.0 {
-        let pace_seconds = total_seconds / distance;
-        let p_min = (pace_seconds / 60.0).floor();
-        let p_sec = (pace_seconds % 60.0).round();
-        println!("Your pace is: {:.0}:{:02.0} per km", p_min, p_sec);
-        println!("Speed: {:.2} km/h", (distance / (total_seconds / 3600.0)));
+pub fn calculate_pace(
+    distance_km: f64,
+    hours: f64,
+    minutes: f64,
+    seconds: f64,
+) -> Result<PaceResult, String> {
+    if distance_km <= 0.0 {
+        return Err("Distance must be greater than zero".into());
     }
+    let total_seconds = hours * 3600.0 + minutes * 60.0 + seconds;
+    if total_seconds <= 0.0 {
+        return Err("Time must be greater than zero".into());
+    }
+
+    let pace_seconds_per_km = total_seconds / distance_km;
+    let p_min = (pace_seconds_per_km / 60.0).floor();
+    let p_sec = (pace_seconds_per_km % 60.0).round();
+    let speed = distance_km / (total_seconds / 3600.0);
+
+    Ok(PaceResult {
+        pace_minutes: p_min,
+        pace_seconds: p_sec,
+        speed_kmh: speed,
+    })
 }

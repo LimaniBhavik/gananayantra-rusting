@@ -6,10 +6,7 @@
 ///
 /// # Returns
 /// * Energy consumed in kWh
-pub fn energy_consumption(
-    power_kw: f64,
-    hours: f64,
-) -> Result<f64, String> {
+pub fn energy_consumption(power_kw: f64, hours: f64) -> Result<f64, String> {
     if power_kw < 0.0 {
         return Err("Power cannot be negative".into());
     }
@@ -18,18 +15,6 @@ pub fn energy_consumption(
     }
 
     Ok(power_kw * hours)
-}
-
-pub fn run() {
-    println!("\n--- Power Consumption Calculator ---");
-    use crate::calculators::utils::read_input;
-    let power_kw = read_input("Enter power in kilowatts (kW): ");
-    let hours = read_input("Enter time in hours: ");
-
-    match energy_consumption(power_kw, hours) {
-        Ok(kwh) => println!("Total Energy Consumed: {:.2} kWh", kwh),
-        Err(e) => println!("Error: {}", e),
-    }
 }
 
 #[cfg(test)]

@@ -1,2 +1,2 @@
-/target
-attached_assets/
+target/
+**/*.rs.bk

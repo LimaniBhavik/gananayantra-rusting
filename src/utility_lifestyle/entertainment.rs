@@ -1,34 +1,21 @@
-use crate::calculators::utils::read_input;
+use std::time::{SystemTime, UNIX_EPOCH};
 
-pub fn run_menu() {
-    loop {
-        println!("\n--- Entertainment ---");
-        println!("1. Dice Roller");
-        println!("2. Love Calculator (%)");
-        println!("0. Back");
-        let choice = read_input("Select an option: ");
-
-        match choice as i32 {
-            1 => dice_roller(),
-            2 => love_calc(),
-            0 => break,
-            _ => println!("Invalid choice."),
-        }
+pub fn roll_die(sides: u32) -> Result<u32, String> {
+    if sides == 0 {
+        return Err("Die must have at least one side".into());
     }
+    let seed = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_micros();
+    Ok((seed % sides as u128) as u32 + 1)
 }
 
-fn dice_roller() {
-    let sides = read_input("Sides on die: ") as i32;
-    use std::time::{SystemTime, UNIX_EPOCH};
-    let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_micros();
-    println!("Result: {}", (seed % sides as u128) as i32 + 1);
-}
-
-fn love_calc() {
-    println!("Enter names to calculate compatibility:");
-    let _n1 = read_input("Name 1: "); // Just for flavor
-    let _n2 = read_input("Name 2: ");
-    use std::time::{SystemTime, UNIX_EPOCH};
-    let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_micros();
-    println!("Love Compatibility: {}%", (seed % 101) as i32);
+pub fn love_compatibility(name1: &str, name2: &str) -> u32 {
+    let combined = format!("{}{}", name1, name2);
+    let mut sum: u32 = 0;
+    for b in combined.bytes() {
+        sum += b as u32;
+    }
+    sum % 101 // Deterministic based on names
 }

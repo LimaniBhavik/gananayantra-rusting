@@ -20,7 +20,7 @@ pub fn calculate_bmr(
 
     // Mifflin-St Jeor Formula
     let bmr = (10.0 * weight_kg) + (6.25 * height_cm) - (5.0 * age_years as f64);
-    
+
     if is_male {
         Ok(bmr + 5.0)
     } else {

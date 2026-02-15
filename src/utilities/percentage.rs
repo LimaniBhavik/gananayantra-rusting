@@ -14,18 +14,6 @@ pub fn percentage_of(value: f64, percent: f64) -> Result<f64, String> {
     Ok((percent / 100.0) * value)
 }
 
-pub fn run() {
-    println!("\n--- Percentage Calculator ---");
-    use crate::calculators::utils::read_input;
-    let value = read_input("Enter base value: ");
-    let percent = read_input("Enter percentage (e.g., 15 for 15%): ");
-
-    match percentage_of(value, percent) {
-        Ok(result) => println!("{:.2}% of {:.2} is: {:.2}", percent, value, result),
-        Err(e) => println!("Error: {}", e),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
