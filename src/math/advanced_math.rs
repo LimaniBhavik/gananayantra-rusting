@@ -84,3 +84,33 @@ pub fn add_fractions(n1: i64, d1: i64, n2: i64, d2: i64) -> Result<(i64, i64), S
     let numerator = n1 * d2 + n2 * d1;
     Ok((numerator, common_denom))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add_fractions() {
+        // 1/2 + 1/3 = 5/6
+        assert_eq!(add_fractions(1, 2, 1, 3), Ok((5, 6)));
+        // 1/4 + 1/4 = 8/16 (current implementation doesn't simplify)
+        assert_eq!(add_fractions(1, 4, 1, 4), Ok((8, 16)));
+        // 0/2 + 1/3 = 2/6
+        assert_eq!(add_fractions(0, 2, 1, 3), Ok((2, 6)));
+    }
+
+    #[test]
+    fn test_add_fractions_negative() {
+        // -1/2 + 1/3 = -1/6
+        assert_eq!(add_fractions(-1, 2, 1, 3), Ok((-1, 6)));
+        // 1/-2 + 1/3 = -1/6 (Result is 1/-6 which is equivalent)
+        assert_eq!(add_fractions(1, -2, 1, 3), Ok((1, -6)));
+    }
+
+    #[test]
+    fn test_add_fractions_zero_denominator() {
+        assert!(add_fractions(1, 0, 1, 3).is_err());
+        assert!(add_fractions(1, 2, 1, 0).is_err());
+        assert!(add_fractions(1, 0, 1, 0).is_err());
+    }
+}
