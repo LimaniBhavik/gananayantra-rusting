@@ -42,8 +42,8 @@ fn norm_cdf_approx(x: f64) -> f64 {
 /// # Returns
 /// * Option Price
 pub fn calculate_call_option_price(s: f64, k: f64, t: f64, r: f64, sigma: f64) -> Result<f64, String> {
-    if s < 0.0 || k < 0.0 || t < 0.0 || sigma < 0.0 {
-        return Err("Inputs cannot be negative".into());
+    if s <= 0.0 || k <= 0.0 || t <= 0.0 || sigma <= 0.0 {
+        return Err("Inputs (s, k, t, sigma) must be strictly positive".into());
     }
     let d1 = ( (s / k).ln() + (r + 0.5 * sigma.powi(2)) * t ) / (sigma * t.sqrt());
     let d2 = d1 - sigma * t.sqrt();
@@ -60,8 +60,8 @@ pub struct Greeks {
 
 /// Calculates Option Greeks (Delta, Gamma, Theta) for a Call Option.
 pub fn calculate_greeks(s: f64, k: f64, t: f64, r: f64, sigma: f64) -> Result<Greeks, String> {
-    if t <= 0.0 || sigma <= 0.0 {
-        return Err("Time and volatility must be positive for Greeks".into());
+    if s <= 0.0 || k <= 0.0 || t <= 0.0 || sigma <= 0.0 {
+        return Err("Inputs (s, k, t, sigma) must be strictly positive for Greeks calculation".into());
     }
     let d1 = ( (s / k).ln() + (r + 0.5 * sigma.powi(2)) * t ) / (sigma * t.sqrt());
     let d2 = d1 - sigma * t.sqrt();
